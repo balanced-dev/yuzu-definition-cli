@@ -1,4 +1,4 @@
-var fs = require('fs');
+var path = require('path');
 var common = require('./common.js');
 var jsonSchemaGenerator = require('json-schema-generator');
 
@@ -6,6 +6,7 @@ var extension = ".schema";
 
 const filename = function(settings) {
 
+    return path.join(settings.rootDirectory, `${settings.fileName}${extension}`);
     return `${settings.rootDirectory}/${settings.fileName}${extension}`;
 }
 

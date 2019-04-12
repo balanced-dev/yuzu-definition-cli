@@ -24,9 +24,9 @@ const getBlockSettings = function(name)
     };
 }
 
-const addBlock = function(blocName)
+const addBlock = function(name)
 {
-    var settings = getBlockSettings(blocName);
+    var settings = getBlockSettings(name);
 
     if (!fs.existsSync(settings.rootDirectory)){
 

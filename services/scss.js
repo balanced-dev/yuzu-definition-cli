@@ -1,10 +1,11 @@
-var fs = require('fs');
+var path = require('path');
 var common = require('./common.js');
 
 var extension = ".scss";
 
 const filename = function(settings) {
 
+    return path.join(settings.rootDirectory, `_${settings.fileName}${extension}`);
     return `${settings.rootDirectory}/_${settings.fileName}${extension}`;
 }
 

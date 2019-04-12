@@ -1,10 +1,11 @@
-var fs = require('fs');
+var path = require('path');
 var common = require('./common.js');
 
 var extension = ".hbs";
 
 const filename = function(settings) {
 
+    return path.join(settings.rootDirectory, `${settings.fileName}${extension}`);
     return `${settings.rootDirectory}/${settings.fileName}${extension}`;
 }
 

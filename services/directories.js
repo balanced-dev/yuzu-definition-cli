@@ -1,9 +1,10 @@
 var fs = require('fs');
+var path = require('path');
 const _ = require('lodash');
 
 const getSubPath = function(settings, subDirectory){
     
-    return `${settings.rootDirectory}/${settings.subDirectories[subDirectory]}/`;
+    return path.join(settings.rootDirectory, settings.subDirectories[subDirectory]);
 };
 
 const add = function(settings) {
