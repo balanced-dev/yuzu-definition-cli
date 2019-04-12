@@ -1,8 +1,10 @@
 {
-  "name": "yuzu.definition.cli",
+  "name": "yuzudef",
   "version": "1.0.0",
   "description": "A cli application for managing components in the Yuzu Definition pattern library",
+  "preferGlobal": true,
   "main": "index.js",
+  "bin": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,11 +16,14 @@
   "author": "Phil Whittaker",
   "license": "ISC",
   "dependencies": {
+    "app-root-path": "^2.2.1",
     "camel-case": "^3.0.0",
     "camelcase": "^5.3.1",
     "commander": "^2.20.0",
     "inquirer": "^6.2.2",
+    "json-schema-faker": "^0.5.0-rc16",
     "json-schema-generator": "^2.0.6",
+    "kebab-case": "^1.0.0",
     "lodash": "^4.17.11"
   }
 }

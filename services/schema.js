@@ -6,8 +6,7 @@ var extension = ".schema";
 
 const filename = function(settings) {
 
-    return path.join(settings.rootDirectory, `${settings.fileName}${extension}`);
-    return `${settings.rootDirectory}/${settings.fileName}${extension}`;
+    return path.join(settings.rootDirectory, `${common.prefixName(settings)}${extension}`);
 }
 
 const initialContent = function(settings) {
@@ -16,17 +15,22 @@ const initialContent = function(settings) {
     schemaBody.required = undefined;
 
     var schemaHeader = {};
-    schemaHeader.id = `/${settings.fileName}`;
+    schemaHeader.id = `/${common.prefixName(settings)}`;
 
     var schema = Object.assign({}, schemaHeader, schemaBody);
     schema.additionalProperties = false;
 
-    return JSON.stringify(schema, null, 4);;
+    return JSON.stringify(schema, null, 4);
 }
 
 const changeContent = function(content, oldSettings, newSettings) {
 
-    return content.replace(oldSettings.fileName, newSettings.fileName);
+    return content.replace(common.prefixName(oldSettings), common.prefixName(newSettings));
+}
+
+const get = function(settings)
+{
+    return common.get(filename, settings);
 }
 
 const add = function(settings) {
@@ -39,4 +43,4 @@ const rename = function(oldSettings, newSettings) {
     common.rename(changeContent, filename, oldSettings, newSettings);
 }
 
-module.exports = { add, rename };
+module.exports = { get, add, rename };

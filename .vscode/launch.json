@@ -7,11 +7,35 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Config Debug",
+            "program": "${workspaceFolder}\\index.js" ,
+            "args": [
+                "config",
+                "block",
+                "testCase2"
+			]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Add Block Debug",
             "program": "${workspaceFolder}\\index.js" ,
             "args": [
-                "ab",
-                "test2"
+                "add",
+                "block",
+                "testCase2"
+			]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Add Block Data State Debug",
+            "program": "${workspaceFolder}\\index.js" ,
+            "args": [
+                "addState",
+                "block",
+                "testCase2",
+                "newState"
 			]
         },
         {
@@ -20,9 +44,10 @@
             "name": "Rename Block Debug",
             "program": "${workspaceFolder}\\index.js" ,
             "args": [
-                "rb",
-                "test2",
-                "test3"
+                "rename",
+                "block",
+                "testCase2",
+                "testCase3"
 			]
         }
     ]

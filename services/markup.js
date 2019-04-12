@@ -5,8 +5,7 @@ var extension = ".hbs";
 
 const filename = function(settings) {
 
-    return path.join(settings.rootDirectory, `${settings.fileName}${extension}`);
-    return `${settings.rootDirectory}/${settings.fileName}${extension}`;
+    return path.join(settings.rootDirectory, `${common.prefixName(settings)}${extension}`);
 }
 
 const initialContent = function(settings) {

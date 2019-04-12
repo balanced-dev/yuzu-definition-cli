@@ -5,9 +5,14 @@ var directories = require('./directories.js');
 
 var extension = ".json";
 
-const filename = function(settings) {
+const filename = function(settings, state) {
 
-    return path.join(directories.getSubPath(settings, 'data'), `${settings.fileName}${extension}`);
+    if(state) {
+        return path.join(directories.getSubPath(settings, 'data'), `${common.prefixName(settings)}_${state}${extension}`);
+    }
+    else {
+        return path.join(directories.getSubPath(settings, 'data'), `${common.prefixName(settings)}${extension}`);
+    }
 }
 
 const initialContent = function(settings){
@@ -15,9 +20,28 @@ const initialContent = function(settings){
     return JSON.stringify(settings.data, null, 4);
 }
 
+const initialContentState = function(settings){
+
+    return get(settings);
+}
+
+const get = function(settings)
+{
+    return common.get(filename, settings);
+}
+
 const add = function(settings) {
 
     common.add(filename, initialContent, settings);
+}
+
+const addState = function(state, settings)
+{
+    var filenameState = (settings) => {
+        return filename(settings, state)
+    }
+
+    common.add(filenameState, initialContentState, settings);
 }
 
 const rename = function(oldSettings, newSettings) {
@@ -27,7 +51,7 @@ const rename = function(oldSettings, newSettings) {
     changeOtherDataFiles(oldSettings, newSettings);
 }
 
-module.exports = { add, rename };
+module.exports = { get, add, addState, rename };
 
 
 

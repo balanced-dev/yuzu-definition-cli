@@ -1,5 +1,26 @@
 var fs = require('fs');
 
+const prefixName = function(settings)
+{
+    if(settings.addPrefix)
+    {
+        var filename = capitalize(settings.fileName);
+        return `${settings.prefix}${filename}`;
+    }
+    else
+    {
+        return settings.fileName;
+    }
+}
+
+const get = function(filename, settings) {
+    
+    var fileName = filename(settings);
+
+    return fs.readFileSync(fileName, 'utf8');
+
+}
+
 const add = function(filename, initialContent, settings) {
     
     var fileName = filename(settings);
@@ -32,4 +53,9 @@ const rename = function(changeContent, filename, oldSettings, newSettings) {
 
 }
 
-module.exports = { add, rename };
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+module.exports = { prefixName, get, add, rename };

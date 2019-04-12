@@ -5,8 +5,7 @@ var extension = ".scss";
 
 const filename = function(settings) {
 
-    return path.join(settings.rootDirectory, `_${settings.fileName}${extension}`);
-    return `${settings.rootDirectory}/_${settings.fileName}${extension}`;
+    return path.join(settings.rootDirectory, `_${common.prefixName(settings)}${extension}`);
 }
 
 const initialContent = function(settings) {

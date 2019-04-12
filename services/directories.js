@@ -1,11 +1,20 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
+const appRoot = require('app-root-path');
 const _ = require('lodash');
 
 const getSubPath = function(settings, subDirectory){
     
     return path.join(settings.rootDirectory, settings.subDirectories[subDirectory]);
 };
+
+const getRoot = function(name, area = '', typeSettings){
+
+    if(process.cwd() == appRoot.path)
+        return path.join(process.cwd(), typeSettings.path, area, name);
+    else
+        return path.join(process.cwd(), name);
+}
 
 const add = function(settings) {
     
@@ -26,4 +35,4 @@ const rename = function(oldSettings, newSettings) {
     oldSettings.rootDirectory = newSettings.rootDirectory;
 }
 
-module.exports = { add, rename, getSubPath };
+module.exports = { add, rename, getSubPath, getRoot };
