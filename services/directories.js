@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const appRoot = require('app-root-path');
 const _ = require('lodash');
 
 const getSubPath = function(settings, subDirectory){
@@ -10,7 +9,9 @@ const getSubPath = function(settings, subDirectory){
 
 const getRoot = function(name, area = '', typeSettings){
 
-    if(process.cwd() == appRoot.path)
+    var isRoot = fs.existsSync(path.join(process.cwd(), 'node_modules'));
+
+    if(isRoot)
         return path.join(process.cwd(), typeSettings.path, area, name);
     else
         return path.join(process.cwd(), name);
