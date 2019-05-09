@@ -7,7 +7,7 @@ var scss = require('./services/scss.js');
 var dataProccess = require('./services/data.js');
 var schemaProcess = require('./services/schema.js');
 
-const getBlockSettings = function(name, area, typeSettings)
+const getBlockSettings = function(name, area, typeSettings, data = {})
 {
     return {
         prefix: 'par',
@@ -20,7 +20,7 @@ const getBlockSettings = function(name, area, typeSettings)
             data: 'data'
         },
         get data() {
-            return {};
+            return data;
         }
     };
 }
@@ -32,9 +32,9 @@ const settings = function(typeSettings)
     console.log(JSON.stringify(settings, null, 4));
 }
 
-const addBlock = function(name, area, typeSettings)
+const addBlock = function(name, area, typeSettings, initalData)
 {
-    var settings = getBlockSettings(name, area, typeSettings);
+    var settings = getBlockSettings(name, area, typeSettings, initalData);
 
     if (!fs.existsSync(settings.rootDirectory)){
 

@@ -70,3 +70,5 @@ program
     });
 
 program.parse(process.argv);
+
+module.exports = { getType, addBlock };
