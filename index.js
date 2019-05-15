@@ -5,7 +5,7 @@ const { settings, addBlock, addState, renameBlock } = require('./logic');
 const types = {
     page: { 
         prefix: false,
-        path: '/_dev/_templates/src/blocks'
+        path: '/_dev/_templates/src/pages'
     },
     block: { 
         prefix: true,
@@ -15,11 +15,11 @@ const types = {
 
 const getType = function(type) {
 
-    var type = types[type];
-    if(!type) {
+    var ouput = types[type];
+    if(!ouput) {
         console.error("Component type not recongnized should be block or page");
     }
-    return type;
+    return ouput;
 };
 
 program 
