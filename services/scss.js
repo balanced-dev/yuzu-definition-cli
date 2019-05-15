@@ -9,8 +9,12 @@ const filename = function(settings) {
 }
 
 const initialContent = function(settings) {
+    var scss = `.${settings.className} {\n\n}`;
 
-    return `.${settings.className} {\n\n}`;
+    if(settings.contentIntercepts.scss)
+        scss = settings.contentIntercepts.scss(scss); 
+
+    return scss;
 }
 
 const changeContent = function(content, oldSettings, newSettings) {

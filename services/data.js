@@ -17,7 +17,14 @@ const filename = function(settings, state) {
 
 const initialContent = function(settings){
 
-    return JSON.stringify(settings.data, null, 4);
+    var data = {};
+
+    if(settings.contentIntercepts.data)
+        data = settings.contentIntercepts.data(data); 
+
+    settings.data = data;
+    
+    return JSON.stringify(data, null, 4);
 }
 
 const initialContentState = function(settings){

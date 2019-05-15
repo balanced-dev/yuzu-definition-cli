@@ -20,6 +20,9 @@ const initialContent = function(settings) {
     var schema = Object.assign({}, schemaHeader, schemaBody);
     schema.additionalProperties = false;
 
+    if(settings.contentIntercepts.schema)
+        schema = settings.contentIntercepts.schema(schema); 
+
     return JSON.stringify(schema, null, 4);
 }
 

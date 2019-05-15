@@ -7,7 +7,7 @@ var scss = require('./services/scss.js');
 var dataProccess = require('./services/data.js');
 var schemaProcess = require('./services/schema.js');
 
-const getBlockSettings = function(name, area, typeSettings, data = {})
+const getBlockSettings = function(name, area, typeSettings, initialContentIntercepts)
 {
     return {
         prefix: 'par',
@@ -19,9 +19,7 @@ const getBlockSettings = function(name, area, typeSettings, data = {})
         subDirectories: {
             data: 'data'
         },
-        get data() {
-            return data;
-        }
+        contentIntercepts: initialContentIntercepts
     };
 }
 
@@ -32,16 +30,16 @@ const settings = function(typeSettings)
     console.log(JSON.stringify(settings, null, 4));
 }
 
-const addBlock = function(name, area, typeSettings, initalData)
+const addBlock = function(name, area, typeSettings, initialContentIntercepts)
 {
-    var settings = getBlockSettings(name, area, typeSettings, initalData);
+    var settings = getBlockSettings(name, area, typeSettings, initialContentIntercepts);
 
     if (!fs.existsSync(settings.rootDirectory)){
 
         directories.add(settings);
+        dataProccess.add(settings);
         markup.add(settings);
         scss.add(settings);
-        dataProccess.add(settings);
         schemaProcess.add(settings); 
 
         console.log('Added new block '+ settings.fileName);
@@ -49,6 +47,10 @@ const addBlock = function(name, area, typeSettings, initalData)
     else
     {
         console.warn(`This block already exists at ${settings.rootDirectory}`);
+    }
+
+    return {
+
     }
 
 }
