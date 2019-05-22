@@ -13,7 +13,7 @@ const initialContent = function(settings) {
     var html = `<div class="${settings.className}{{#if modifier}} {{modifier}}{{/if}}">\n\n</div>`;
 
     if(settings.contentIntercepts.markup)
-        html = settings.contentIntercepts.markup(html); 
+        html = settings.contentIntercepts.markup(html, settings); 
 
     return html;
 }
