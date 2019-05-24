@@ -21,7 +21,7 @@ const initialContent = function(settings) {
     schema.additionalProperties = false;
 
     if(settings.contentIntercepts.schema)
-        schema = settings.contentIntercepts.schema(schema); 
+        schema = settings.contentIntercepts.schema(schema, settings); 
 
     return JSON.stringify(schema, null, 4);
 }

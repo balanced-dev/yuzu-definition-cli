@@ -20,7 +20,7 @@ const initialContent = function(settings){
     var data = {};
 
     if(settings.contentIntercepts.data)
-        data = settings.contentIntercepts.data(data); 
+        data = settings.contentIntercepts.data(data, settings); 
 
     settings.data = data;
     

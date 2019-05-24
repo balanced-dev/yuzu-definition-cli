@@ -12,7 +12,7 @@ const initialContent = function(settings) {
     var scss = `.${settings.className} {\n\n}`;
 
     if(settings.contentIntercepts.scss)
-        scss = settings.contentIntercepts.scss(scss); 
+        scss = settings.contentIntercepts.scss(scss, settings); 
 
     return scss;
 }
