@@ -10,7 +10,7 @@ const filename = function(settings) {
 
 const initialContent = function(settings) {
 
-    var html = `<div class="${settings.className}{{#if modifier}} {{modifier}}{{/if}}">\n\n</div>`;
+    var html = `<div class="${settings.className}{{#each _modifiers}} ${settings.className}--{{this}}{{/each}}">\n\n</div>`;
 
     if(settings.contentIntercepts.markup)
         html = settings.contentIntercepts.markup(html, settings); 
