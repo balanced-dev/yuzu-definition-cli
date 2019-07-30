@@ -10,6 +10,10 @@ const types = {
     block: { 
         prefix: true,
         path: '/_dev/_templates/src/blocks'
+    },
+    layout: { 
+        prefix: false,
+        path: '/_dev/_templates/src/_layouts'
     }
 }
 
@@ -43,7 +47,7 @@ program
     .action((type, name, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            addBlock(name, area, typeSettings);
+            addBlock(name, area, typeSettings, {});
         }
     });
 
