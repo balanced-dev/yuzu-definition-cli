@@ -1,10 +1,12 @@
 {
-  "name": "yuzudef",
+  "name": "yuzu-definition-cli",
   "version": "1.0.0",
   "description": "A cli application for managing components in the Yuzu Definition pattern library",
   "preferGlobal": true,
   "main": "index.js",
-  "bin": "./index.js",
+  "bin": { 
+    "yuzudef": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,5 +23,10 @@
     "json-schema-generator": "^2.0.6",
     "kebab-case": "^1.0.0",
     "lodash": "^4.17.11"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+github.com/balanced-dev/yuzu-definition-cli.git"
+  },
+  "homepage": "https://github.com/balanced-dev/yuzu-definition-cli#readme"
 }
