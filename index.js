@@ -1,19 +1,20 @@
 #!/usr/bin/env node
 const program = require('commander');
+const project = require('./services/project.js');
 const { settings, addBlock, addState, renameBlock } = require('./logic');
 
 const types = {
     page: { 
         prefix: false,
-        path: '/_dev/_templates/src/pages'
+        path: '/_dev/_templates/pages'
     },
     block: { 
         prefix: true,
-        path: '/_dev/_templates/src/blocks'
+        path: '/_dev/_templates/blocks'
     },
     layout: { 
         prefix: false,
-        path: '/_dev/_templates/src/_layouts'
+        path: '/_dev/_templates/_layouts'
     }
 }
 
@@ -71,6 +72,14 @@ program
         if(typeSettings) {
             renameBlock(oldName, newName, area, typeSettings);
         }
+    });
+
+program
+    .command('create <name>')
+    .alias('c')
+    .description('Generate the definition side of a project with basic configuration')
+    .action((name) => {
+        project.initProject(name);
     });
 
 program.parse(process.argv);
