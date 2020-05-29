@@ -18,12 +18,11 @@
   "author": "Phil Whittaker",
   "license": "ISC",
   "dependencies": {
-    "camelcase": "^5.3.1",
+    "ansi-colors": "^4.1.1",
     "change-case": "^4.1.1",
     "commander": "^2.20.0",
     "download-git-repo": "^3.0.2",
     "json-schema-generator": "^2.0.6",
-    "kebab-case": "^1.0.0",
     "lodash": "^4.17.11"
   },
   "repository": {
