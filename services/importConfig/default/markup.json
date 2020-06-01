@@ -1,0 +1,6 @@
+{
+    "defaultMarkupTag": "div",
+    "classNameDivider": "__",
+    "indentSize": 4,
+    "backupRefArrayChildClass": "item"
+}

@@ -1,0 +1,16 @@
+{
+    "block": {
+        "card": "Block - ",
+        "fileName": "par"
+    },
+    "page": {
+        "card": "Page - ",
+        "fileName": ""
+    },
+    "schema": {
+        "card": "Schema"
+    },
+    "property": {
+        "card": "- "
+    }
+}

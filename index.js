@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const program = require('commander');
 const project = require('./services/project.js');
+const defImport = require('./services/import.js');
 const { settings, addBlock, addState, renameBlock } = require('./logic');
 
 const types = {
@@ -80,6 +81,22 @@ program
     .description('Generate the definition side of a project with basic configuration')
     .action((name) => {
         project.initProject(name);
+    });
+
+program
+    .command('import')
+    .alias('i')
+    .description('Scaffold a project from schema shortand, stored in Trello cards or .txt files')
+    .action(() => {
+        defImport.run();
+    });
+
+program
+    .command('updateKey')
+    .description('Update your YuzuPro key in your project config file to allow use of Yuzu Definition Import')
+    .action(() => {
+        defImport.ensureYuzuKeyExists();
+        defImport.updateYuzuProKey();
     });
 
 program.parse(process.argv);
