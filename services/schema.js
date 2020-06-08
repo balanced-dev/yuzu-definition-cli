@@ -10,8 +10,8 @@ const filename = function(settings) {
 }
 
 const initialContent = function(settings) {
-
-    var schemaBody = jsonSchemaGenerator(settings.data);
+    var data = settings.contentIntercepts.dataForSchemaGeneration ? settings.contentIntercepts.dataForSchemaGeneration : settings.data;
+    var schemaBody = jsonSchemaGenerator(data);
     schemaBody.required = undefined;
 
     var schemaHeader = {};

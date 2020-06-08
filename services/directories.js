@@ -9,8 +9,8 @@ const getSubPath = function(settings, subDirectory){
 
 const getRoot = function(name, area = '', typeSettings){
 
-    var isRoot = fs.existsSync(path.join(process.cwd(), 'node_modules'));
-
+    var isRoot = fs.existsSync(path.join(process.cwd(), './package.json'));
+    
     if(isRoot)
         return path.join(process.cwd(), typeSettings.path, area, name);
     else

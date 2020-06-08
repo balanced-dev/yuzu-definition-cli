@@ -5,14 +5,13 @@ const _ = require('lodash'),
 
 const trelloConfig = settings.trello;
 
-const t = new Trello(trelloConfig.key, trelloConfig.secret);
-
 const params = {
     filter: 'open', 
     fields: 'name'
 };
 
 const makeTrelloRequest = async function(url, params) {
+    const t = new Trello(trelloConfig.key, trelloConfig.secret);
     return new Promise(resolve => { 
         t.get(url, params, function (err, data) {
             if (err) throw err;            
