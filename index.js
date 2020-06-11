@@ -49,7 +49,7 @@ program
     .action((type, name, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            addBlock(name, area, typeSettings, {});
+            addBlock(type, name, area, typeSettings, {});
         }
     });
 
@@ -60,7 +60,7 @@ program
     .action((type, name, state, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            addState(name, area, state, typeSettings);
+            addState(type, name, area, state, typeSettings);
         }
     });
 
@@ -71,7 +71,7 @@ program
     .action((type, oldName, newName, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            renameBlock(oldName, newName, area, typeSettings);
+            renameBlock(type, oldName, newName, area, typeSettings);
         }
     });
 

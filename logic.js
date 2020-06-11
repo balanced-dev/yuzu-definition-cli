@@ -30,7 +30,7 @@ const settings = function(typeSettings)
     console.log(JSON.stringify(settings, null, 4));
 }
 
-const addBlock = function(name, area, typeSettings, initialContentIntercepts)
+const addBlock = function(type, name, area, typeSettings, initialContentIntercepts)
 {
     var settings = getBlockSettings(name, area, typeSettings, initialContentIntercepts);
 
@@ -42,7 +42,7 @@ const addBlock = function(name, area, typeSettings, initialContentIntercepts)
         scss.add(settings);
         schemaProcess.add(settings); 
 
-        console.log('Added new block '+ settings.fileName);
+        console.log(`Added new ${type} "${settings.fileName}"`);
     }
     else
     {
@@ -55,7 +55,7 @@ const addBlock = function(name, area, typeSettings, initialContentIntercepts)
 
 }
 
-const addState = function(name, area, state, typeSettings)
+const addState = function(type, name, area, state, typeSettings)
 {
     var settings = getBlockSettings(name, area, typeSettings);
     state = kebabCase(state);
@@ -64,16 +64,16 @@ const addState = function(name, area, state, typeSettings)
 
         dataProccess.addState(state, settings);
 
-        console.log('Added new block '+ settings.fileName);
+        console.log(`Added new state (${name}) to ${settings.fileName}`);
     }
     else
     {
-        console.warn(`This block doesn't exist ${settings.rootDirectory}`);
+        console.warn(`This ${type} doesn't exist ${settings.rootDirectory}`);
     }
 
 }
 
-const renameBlock = function(oldName, newName, area, typeSettings)
+const renameBlock = function(type, oldName, newName, area, typeSettings)
 {
 
     var oldSettings = getBlockSettings(oldName, area, typeSettings);
@@ -87,11 +87,11 @@ const renameBlock = function(oldName, newName, area, typeSettings)
         dataProccess.rename(oldSettings, newSettings);
         schemaProcess.rename(oldSettings, newSettings); 
 
-        console.log('Renamed block '+ oldName +' '+ newName);
+        console.log(`Renamed the ${type} "${oldName}" to "${newName}"`);
     }
     else
     {
-        console.warn(`Can't rename to new block it already exists at ${newSettings.rootDirectory}`);
+        console.warn(`Can't rename ${type}: it already exists at ${newSettings.rootDirectory}`);
     }
 }
 
