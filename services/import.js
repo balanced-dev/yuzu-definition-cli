@@ -2,7 +2,7 @@ const path = require('path'),
       inquirer = require('inquirer')
       fs = require('fs'),
       config = require('./importConfig/settings'),
-      configFile = require(config.jsonPath),
+      configFile = undefined,
       generationConfig = config.settings;
       
 const platform = process.platform;
@@ -13,6 +13,10 @@ const executableFilePrefix = 'yuzudef-import-'
 const blockGenerators = {
     localFiles: require('./importLists/localFiles'),
     trello: require('./importLists/trello'),    
+};
+
+const setConfigFile = function() {
+    configFile = require(config.jsonPath);
 };
 
 const finishExecutablePath = function() {
@@ -30,6 +34,7 @@ const finishExecutablePath = function() {
 };
 
 const ensureYuzuKeyExists = function() {
+    setConfigFile();
     let exists = false;
     if(!configFile.yuzuPro) {
         configFile.yuzuPro = {};
@@ -41,6 +46,7 @@ const ensureYuzuKeyExists = function() {
 };
 
 const updateYuzuProKey = function(callback) {
+    setConfigFile();
     inquirer.prompt([
         {
             type: 'input',
@@ -103,6 +109,7 @@ const runExecutable = function(list) {
 };
 
 const run = async function() {
+    setConfigFile();
     finishExecutablePath();
     if(ensureYuzuKeyExists()){
         getListOption();
