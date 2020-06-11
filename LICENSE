@@ -1,3 +1,5 @@
+License for yuzu-definition-cli
+
 MIT License
 
 Copyright (c) 2019 Hi-Fi Ltd
@@ -19,3 +21,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+License agreement for yuzu-definition-import
+
+Copyright (c) 2019 Hi-Fi Ltd
+
+This package also includes compiled versions of our yuzu-definition-import 
+product used to scaffold pattern libraries from test files or Trello cards.
+
+Definitions
+“Authors” refers to HiFi Ltd.
+“SOFTWARE” refers to the Yuzu Definition Import package associated providers and documentation.
+“DEVELOPER” a single use of the software
+“DEVELOPER LICENSE” is a paid for subscription to use the software as a subscription
+License
+HiFi grants you a revocable, non-exclusive, non-transferable right to download and use the software provided in accordance with this agreement. The developer must purchase a license to use this software on a subscription basis. They are entitled to use this software on two computers. Modification, renting, copying, publishing or redistributing of any part of the software is prohibited. Furthermore, selling the production of websites using Yuzu in a ‘Software as a service’ model is strictly prohibited.
+YUZU DEFINITION IMPORT IS DISTRIBUTED "AS IS". NO WARRANTY OF ANY KIND IS EXPRESSED OR IMPLIED. YOU USE THE PROGRAM AT YOUR OWN RISK. HIFI LTD DOES NOT WARRANT THAT THE SOFTWARE WILL MEET CUSTOMER'S NEEDS OR BE FREE FROM ERRORS, OR THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED.  HIFI LTD WILL NOT BE LIABLE FOR DATA LOSS, DAMAGES, LOSS OF PROFITS OR ANY OTHER KIND OF LOSS WHILE USING OR MISUSING THIS SOFTWARE.
+
