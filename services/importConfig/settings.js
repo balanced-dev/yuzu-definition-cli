@@ -22,10 +22,10 @@ const defaults = {
     // propertyTypes: require('./default/propertyTypes'),
     dataSettings: require('./default/dataSettings.json'),
     localFiles: require('./default/localFiles.json'),
-    // markupFragments: require('./default/markupFragments'),
+    markupFragments: require('./default/markupFragments.json'),
     generationSource: '',
     trello: require('./default/trello.json'),
-    yuzuPro: require('./default/yuzuPro.json')
+    yuzuPro: require('./default/yuzuPro.json'),
 };
 
 const overrides = {
@@ -34,7 +34,7 @@ const overrides = {
     // propertyTypes: getWorkingConfigFile('propertyTypes'),
     dataSettings: getWorkingConfigFile(settingsJson, 'dataSettings'),
     localFiles: getWorkingConfigFile(settingsJson, 'localFiles'),
-    // markupFragments: getWorkingConfigFile('markupFragments'),
+    markupFragments: getWorkingConfigFile(settingsJson, 'markupFragments'),
     generationSource: getWorkingConfigFile(settingsJson, 'generationSource'),
     trello: getWorkingConfigFile(settingsJson, 'trello'),
     yuzuPro: getWorkingConfigFile(settingsJson, 'yuzuPro'),

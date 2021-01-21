@@ -1,0 +1,73 @@
+{
+    "wrapperMarkupFragments": {
+        "array": {
+            "openingTagNoChildWrapper": [
+                "{{#if ${yuzu.relativePath}.[0]}}",
+                    "<${yuzu.defaultMarkupTag} ${yuzu.className}>",
+                        "{{#each ${yuzu.relativePath}}}"
+            ],
+            "closingTagNoChildWrapper": [
+                        "{{/each}}",
+                    "</${yuzu.defaultMarkupTag}>",
+                "{{/if}}"
+            ],
+            "openingTag": [
+                "<${yuzu.defaultMarkupTag} ${yuzu.childClassName}>"            
+            ],
+            "closingTag": [
+                "</${yuzu.defaultMarkupTag}>"
+            ]        
+        },
+        "object": {
+            "openingTag": [
+                "<${yuzu.defaultMarkupTag} ${yuzu.className}>"            
+            ],
+            "closingTag": [
+                "</${yuzu.defaultMarkupTag}>"            
+            ]
+        }
+    },
+    "contentMarkupFragments": {
+        "dynamicSubBlockArray": [
+            "{{{ dynPartial _ref ${yuzu.relativePath} }}}"        
+        ],
+        "namedSubBlockArray": [
+            "{{> ${yuzu.propertyValue} ${yuzu.relativePath} }}"        
+        ],
+        "subBlockObject": [
+            "{{#if ${yuzu.relativePath}}}",
+                "<${yuzu.defaultMarkupTag} ${yuzu.className}>",
+                    "{{> ${yuzu.propertyValue} ${yuzu.relativePath} }}",
+                "</${yuzu.defaultMarkupTag}>",
+            "{{/if}}"        
+        ],    
+        "dataImage": [
+            "{{#if ${yuzu.relativePath}.src}}",
+                "<picture ${yuzu.className}>",
+                    "<img src=\"{{${yuzu.relativePath}.src}}\" alt=\"{{${yuzu.relativePath}.alt}}\">",
+                "</picture>",
+            "{{/if}}"        
+        ],
+        "dataLink": [
+            "{{#if ${yuzu.relativePath}.href}}",
+                "<a ${yuzu.className} href=\"{{${yuzu.relativePath}.href}}\" title=\"{{${yuzu.relativePath}.title}}\" {{#if ${yuzu.relativePath}.isNewTab}}target=\"_blank\"{{/if}} {{#if ${yuzu.relativePath}.isExternalLink}}rel=\"noopener noreferrer\"{{/if}}>",
+                    "{{${yuzu.relativePath}.label}}",
+                "</a>",
+            "{{/if}}"        
+        ],
+        "dataForm": [
+            "{{#if ${yuzu.relativePath}}}",
+                "<div ${yuzu.className}>",
+                    "{{!-- {{> parForm ${yuzu.relativePath} }} --}}",
+                "</div>",
+            "{{/if}}"            
+        ],
+        "default": [
+            "{{#if ${yuzu.relativePath}}}",
+                "<${yuzu.defaultMarkupTag} ${yuzu.className}>",
+                    "{{${yuzu.relativePath}}}",
+                "</${yuzu.defaultMarkupTag}>",
+            "{{/if}}"        
+        ]
+    }
+}

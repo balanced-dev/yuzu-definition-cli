@@ -1,16 +1,17 @@
 var path = require('path');
 var common = require('./common.js');
-
-var extension = ".hbs";
+var config = require('./importConfig/settings').settings.markupSettings;
 
 const filename = function(settings) {
 
-    return path.join(settings.rootDirectory, `${common.prefixName(settings)}${extension}`);
+    return path.join(settings.rootDirectory, `${common.prefixName(settings)}${config.fileExtension}`);
 }
 
 const initialContent = function(settings) {
 
-    var html = `<div class="${settings.className}{{#each _modifiers}} ${settings.className}--{{this}}{{/each}}">\n\n</div>`;
+    var className = settings.className;
+    var searchRegExp = new RegExp('\\$\\{yuzu.className\\}', 'g');
+    var html = config.initalMarkup.replace(searchRegExp, className);
 
     if(settings.contentIntercepts.markup)
         html = settings.contentIntercepts.markup(html, settings); 
