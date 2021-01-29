@@ -35,11 +35,11 @@ steps:
     pipeline: '10'
     buildVersionToDownload: 'latest'
     downloadType: 'specific'
-    downloadPath: '$(System.ArtifactStagingDirectory)/yuzu-definition-import'
+    downloadPath: '$(System.DefaultWorkingDirectory)/yuzu-definition-import'
   displayName: 'Copy def import artifacts'
 
 - task: PublishBuildArtifacts@1
   inputs: 
-    PathtoPublish: $(Build.ArtifactStagingDirectory)
+    PathtoPublish: $(System.DefaultWorkingDirectory)
     ArtifactName: 'drop'
   displayName: 'Publish artifacts'
