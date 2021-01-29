@@ -19,15 +19,6 @@ steps:
     npm install
   displayName: 'npm install'
 
-- task: DownloadBuildArtifacts@0
-  inputs:
-    buildType: 'specific'
-    project: 'bfaa6bc6-9775-4d15-bf70-5bba69811803'
-    pipeline: '10'
-    buildVersionToDownload: 'latest'
-    downloadType: 'specific'
-    downloadPath: '$(System.ArtifactsDirectory)/yuzu-definition-import'
-
 - task: PublishBuildArtifacts@1
   inputs: 
     PathtoPublish: $(Build.ArtifactStagingDirectory)
