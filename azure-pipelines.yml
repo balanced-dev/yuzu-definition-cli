@@ -19,6 +19,15 @@ steps:
     npm install
   displayName: 'npm install'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)'
+    Contents: |
+      **\*.js
+      package.json
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Copy build files to staging'
+
 - task: DownloadBuildArtifacts@0
   inputs:
     buildType: 'specific'
@@ -26,10 +35,11 @@ steps:
     pipeline: '10'
     buildVersionToDownload: 'latest'
     downloadType: 'specific'
-    downloadPath: '$(System.DefaultWorkingDirectory)/yuzu-definition-import'
+    downloadPath: '$(System.ArtifactStagingDirectory)/yuzu-definition-import'
+  displayName: 'Copy def import artifacts'
 
 - task: PublishBuildArtifacts@1
   inputs: 
-    PathtoPublish: $(Build.DefaultWorkingDirectory)
+    PathtoPublish: $(Build.ArtifactStagingDirectory)
     ArtifactName: 'drop'
   displayName: 'Publish artifacts'
