@@ -3,6 +3,6 @@
 
 node_modules/
 platforms/
-plugins/
+/plugins/
 .editorconfig
 /_dev/
