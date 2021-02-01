@@ -1,8 +1,13 @@
 const   fs = require('fs'),
         path = require('path'),
-        settings = require('../importConfig/settings').settings;
-
-const localFilesDirectory = path.resolve(process.cwd(), settings.localFiles.directoryPath);
+        settings = require('../importConfig/settings').run();
+let localFilesDirectory;
+try {
+    localFilesDirectory = path.resolve(process.cwd(), settings.localFiles.directoryPath);
+}
+catch(err) {
+    console.log(err);
+}
 
 const getLists = function() {
     if (fs.existsSync(localFilesDirectory)) {        

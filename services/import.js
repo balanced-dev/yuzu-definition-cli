@@ -3,8 +3,8 @@ const path = require('path'),
       fs = require('fs'),
       config = require('./importConfig/settings'),
       configFile = undefined,
-      generationConfig = config.settings;
-      
+      generationConfig = config.run();
+
 const platform = process.platform;
 const exec = require('child_process').execFile;
 let executablePath = '../yuzu-definition-import/';
@@ -16,7 +16,7 @@ const blockGenerators = {
 };
 
 const setConfigFile = function() {
-    configFile = require(config.jsonPath);
+    configFile = require(config.settingsPath);
 };
 
 const finishExecutablePath = function() {
@@ -66,7 +66,7 @@ const updateYuzuProKey = function(callback) {
 const updateConfig = function() {    
     const jsonString = JSON.stringify(configFile, null, 4);
     
-    fs.writeFile(config.jsonPath, jsonString, err => {
+    fs.writeFile(config.settingsPath, jsonString, err => {
         if (err) {
             console.log('Error updating config file', err)
         } else {
@@ -100,7 +100,7 @@ const getListOption = async function() {
 };
 
 const runExecutable = function(list) {    
-    exec(executablePath, [list, JSON.stringify(generationConfig)], (error, stdout, stderr) => {
+    exec(executablePath, [list, config.settingsPath], (error, stdout, stderr) => {
         if(error) {
             throw error;
         }

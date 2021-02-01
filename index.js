@@ -2,6 +2,7 @@
 const program = require('commander');
 const project = require('./services/project.js');
 const defImport = require('./services/import.js');
+const importSettings = require('./services/importConfig/settings.js');
 const { settings, addBlock, addState, renameBlock } = require('./logic');
 
 const types = {
@@ -101,4 +102,4 @@ program
 
 program.parse(process.argv);
 
-module.exports = { getType, addBlock };
+module.exports = { getType, addBlock, importSettings };

@@ -1,8 +1,0 @@
-{
-    "defaultMarkupTag": "div",
-    "classNameDivider": "__",
-    "indentSize": 4,
-    "backupRefArrayChildClass": "item",
-    "fileExtension": ".hbs",
-    "initalMarkup": "<div class=\"${yuzu.className}{{#each _modifiers}} ${yuzu.className}--{{this}}{{/each}}\">\n\n</div>"
-}

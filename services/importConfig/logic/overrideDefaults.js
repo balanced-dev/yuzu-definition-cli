@@ -7,6 +7,9 @@ const run = function(defaults, overrides) {
         if (overrides.hasOwnProperty(key)) {
             output[key] = _.defaultsDeep(overrides[key], defaults[key]);
         }
+        else {
+            output[key] = defaults[key];
+        }
     }
 
     return output;

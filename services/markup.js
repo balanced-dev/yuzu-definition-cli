@@ -1,10 +1,10 @@
 var path = require('path');
 var common = require('./common.js');
-var config = require('./importConfig/settings').settings.markupSettings;
+var config = require('./importConfig/settings').run().markupSettings;
 
 const filename = function(settings) {
-
-    return path.join(settings.rootDirectory, `${common.prefixName(settings)}${config.fileExtension}`);
+    var pathName = path.join(settings.rootDirectory, `${common.prefixName(settings)}${config.fileExtension}`);
+    return pathName;
 }
 
 const initialContent = function(settings) {

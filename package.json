@@ -22,6 +22,7 @@
     "change-case": "^4.1.1",
     "commander": "^2.20.0",
     "download-git-repo": "^3.0.2",
+    "inflector-js": "^1.0.1",
     "inquirer": "^7.1.0",
     "json-schema-generator": "^2.0.6",
     "lodash": "^4.17.11",
