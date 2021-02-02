@@ -8,10 +8,7 @@ const filename = function(settings) {
 }
 
 const initialContent = function(settings) {
-
-    var className = settings.className;
-    var searchRegExp = new RegExp('\\$\\{yuzu.className\\}', 'g');
-    var html = config.initalMarkup.replace(searchRegExp, className);
+    var html = config.initalMarkup(settings);
 
     if(settings.contentIntercepts.markup)
         html = settings.contentIntercepts.markup(html, settings); 
