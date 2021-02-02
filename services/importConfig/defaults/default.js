@@ -131,6 +131,26 @@ module.exports = {
             }
         }
     },
+    dataStructures: {
+        dataImage: {
+            src: "",
+            alt: "",
+            height: 0,
+            width: 0
+        },
+        dataLink: {
+            label: "",
+            href: "#",
+            title: "",
+            isNewTab: false,
+            isExternalLink: false,
+            iconName: "",
+            isActive: false
+        },
+        dataForm: {
+            testForm: {}
+        }
+    },
     plugins: {
         changeCase: require('change-case'),
         inflector: require('inflector-js'),
