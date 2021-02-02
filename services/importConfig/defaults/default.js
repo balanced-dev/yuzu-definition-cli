@@ -65,7 +65,7 @@ module.exports = {
                     
                 },
                 openingTag: function(options) {
-                    let wrapperOptions = _.cloneDeep(options);
+                    let wrapperOptions = options.plugins._.cloneDeep(options);
                     options.plugins.buildClass.addChildClass(options);
                     return this.openingTagNoChildWrapper(wrapperOptions) + 
                             `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n`;
@@ -132,6 +132,7 @@ module.exports = {
         }
     },
     plugins: {
+        _: require('lodash'),
         changeCase: require('change-case'),
         inflector: require('inflector-js'),
         buildClass: require('../plugins/buildClass'),
