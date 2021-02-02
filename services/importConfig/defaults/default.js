@@ -134,6 +134,6 @@ module.exports = {
     plugins: {
         changeCase: require('change-case'),
         inflector: require('inflector-js'),
-        buildClass: require('./plugins/buildClass'),
+        buildClass: require('../plugins/buildClass'),
     },
 }
