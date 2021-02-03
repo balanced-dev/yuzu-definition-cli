@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 const program = require('commander');
 const project = require('./services/project.js');
 const defImport = require('./services/import.js');

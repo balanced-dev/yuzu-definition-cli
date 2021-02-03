@@ -1,3 +1,5 @@
+const { option } = require('commander');
+
 module.exports = {    
     generationSource: '',
     yuzuPro: {
@@ -53,10 +55,11 @@ module.exports = {
         wrapperMarkupFragments: {
             array: {
                 openingTagNoChildWrapper: function(options) {
-                    return `{{#if ${options.relativePath.join('.')}.[0]}}\n` +
+                    let output = `{{#if ${options.relativePath.join('.')}.[0]}}\n` +
                                 `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n` +
                                     `{{#each ${options.relativePath.join('.')}}}\n`;
-                    
+                    options.relativePath = [];
+                    return output;
                 },
                 closingTagNoChildWrapper: function(options) {
                     return         `{{/each}}\n` +
@@ -67,6 +70,7 @@ module.exports = {
                 openingTag: function(options) {
                     let wrapperOptions = options.plugins._.cloneDeep(options);
                     options.plugins.buildClass.addChildClass(options);
+                    options.relativePath = [];
                     return this.openingTagNoChildWrapper(wrapperOptions) + 
                             `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n`;
                 },

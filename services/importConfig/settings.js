@@ -4,7 +4,7 @@ const workingConfigDirectory = path.join(workingRootDirectory, 'config');
 const settingsFilename = 'yuzu.config.js';
 let settingsPath = path.resolve(workingConfigDirectory, settingsFilename);
 const override = require('./logic/overrideDefaults');
-const defaults = require('./defaults/default');
+const defaults = require('./defaults/hbs');
 const _ = require('lodash');
 
 const getConfigProperty = function(property) {
