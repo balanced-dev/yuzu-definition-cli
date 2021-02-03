@@ -42,7 +42,7 @@ module.exports = {
             array: {
                 openingTagNoChildWrapper: function(options) {
 
-                    var latestArrayContext = options.plugins._.first(options.relativePath);
+                    var latestArrayContext = options.plugins._.last(options.relativePath);
                     var childContext = options.plugins.inflector.singularize(latestArrayContext);
 
                     var output = `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-for="(${childContext}, index) in ${options.relativePath.join('.')}" :key="index">\n`;   
@@ -53,8 +53,9 @@ module.exports = {
                     return `</${options.markupSettings.defaultMarkupTag}>\n`;                    
                 },
                 openingTag: function(options) {
-                    //options.plugins.buildClass.addChildClass(options);
-                    return `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-if="${options.relativePath.join('.')}">\n`;
+                    let wrapperOptions = options.plugins._.cloneDeep(options);
+                    options.plugins.buildClass.addChildClass(options);
+                    return `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(wrapperOptions)}" v-if="${options.relativePath.join('.')}">\n ${this.openingTagNoChildWrapper(options)}`;
                 },
                 closingTag: function(options) {
                     return `</${options.markupSettings.defaultMarkupTag}>\n`;
