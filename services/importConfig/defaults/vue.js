@@ -40,25 +40,26 @@ module.exports = {
     markupFragments: {
         wrapperMarkupFragments: {
             array: {
-                openingTagNoChildWrapper: function(options) {
-
+                openingTagNoChildWrapper: function(options) {                    
+                    let wrapperOptions = options.plugins._.cloneDeep(options);
                     var latestArrayContext = options.plugins._.last(options.relativePath);
                     var childContext = options.plugins.inflector.singularize(latestArrayContext);
+                    options.plugins.buildClass.addChildClass(options);
 
-                    var output = `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-for="(${childContext}, index) in ${options.relativePath.join('.')}" :key="index">\n`;   
+                    var output = `<${wrapperOptions.markupSettings.defaultMarkupTag} class="${wrapperOptions.plugins.buildClass.run(wrapperOptions)}" v-if="${wrapperOptions.relativePath.join('.')}">\n` +
+                                        `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-for="(${childContext}, index) in ${options.relativePath.join('.')}" :key="index">\n`;   
                     options.relativePath = [childContext];
                     return output;
                 },
                 closingTagNoChildWrapper: function(options) {
-                    return `</${options.markupSettings.defaultMarkupTag}>\n`;                    
+                    return      `</${options.markupSettings.defaultMarkupTag}>\n` + 
+                            `</${options.markupSettings.defaultMarkupTag}>\n`;                    
                 },
                 openingTag: function(options) {
-                    let wrapperOptions = options.plugins._.cloneDeep(options);
-                    options.plugins.buildClass.addChildClass(options);
-                    return `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(wrapperOptions)}" v-if="${options.relativePath.join('.')}">\n ${this.openingTagNoChildWrapper(options)}`;
+                    return this.openingTagNoChildWrapper(options);
                 },
                 closingTag: function(options) {
-                    return `</${options.markupSettings.defaultMarkupTag}>\n`;
+                    return this.closingTagNoChildWrapper(options);
                 }        
             },
             object: {
@@ -68,19 +69,25 @@ module.exports = {
                 closingTag: function(options) {
                     return `</${options.markupSettings.defaultMarkupTag}>\n`;
                 }
-            }
+            },
         },
         contentMarkupFragments: {
             dynamicSubBlockArray: function(options) {
-                return `<component v-bind:is="item._ref.replace('/par', '')"  v-bind:key="index" v-bind="item"></component>\n`;                
+                return `<component v-bind:is="${options.relativePath.join('.')}._ref.replace('/par', '')" v-bind:key="index" v-bind="${options.relativePath.join('.')}"></component>\n`;                
             },
             namedSubBlockArray: function(options) {
-                return `<component v-bind:is="item._ref.replace('/par', '')"  v-bind:key="index" v-bind="item"></component>\n`;
-                
+                return `<component v-bind:is="${options.relativePath.join('.')}._ref.replace('/par', '')" v-bind:key="index" v-bind="${options.relativePath.join('.')}"></component>\n`;                
             },
             subBlockObject: function(options) {
-                return `<component v-if="${options.relativePath.join('.')}" v-bind:is="${options.value}.replace('par', '')"  v-bind:key="index" v-bind="item"></component>\n`;                        
+                return `<component v-if="${options.relativePath.join('.')}" v-bind:is="${options.relativePath.join('.')}.replace('par', '')" v-bind:key="index" v-bind="${options.relativePath.join('.')}"></component>\n`;                        
             },    
+            default: function(options) {
+                return `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-if="${options.relativePath.join('.')}">\n` +
+                `{{${options.relativePath.join('.')}}}\n` +
+                `</${options.markupSettings.defaultMarkupTag}>\n`;                        
+            },
+        },
+        dataStructureMarkupFragments: {
             dataImage: function(options) {
                 let relativePath = options.relativePath.join('.');
                 return `<picture v-if="${relativePath}.src" class="${options.plugins.buildClass.run(options)}">\n` +
@@ -96,11 +103,6 @@ module.exports = {
             dataForm: function(options) {
                 return `<!-- Insert ${options.relativePath.join('.')} form here -->\n`;                        
             },
-            default: function(options) {
-                return `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-if="${options.relativePath.join('.')}">\n` +
-                            `{{${options.relativePath.join('.')}}}\n` +
-                        `</${options.markupSettings.defaultMarkupTag}>\n`;                        
-            }
         }
     },
     markupSettings: {

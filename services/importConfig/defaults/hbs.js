@@ -86,7 +86,7 @@ module.exports = {
                 closingTag: function(options) {
                     return `</${options.markupSettings.defaultMarkupTag}>\n`;
                 }
-            }
+            },
         },
         contentMarkupFragments: {
             dynamicSubBlockArray: function(options) {
@@ -103,6 +103,15 @@ module.exports = {
                             `</${options.markupSettings.defaultMarkupTag}>\n` +
                         `{{/if}}\n`;
             },    
+            default: function(options) {
+                return `{{#if ${options.relativePath.join('.')}}}\n` +
+                `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n` +
+                `{{${options.relativePath.join('.')}}}\n` +
+                `</${options.markupSettings.defaultMarkupTag}>\n` +
+                `{{/if}}\n`;
+            },
+        },
+        dataStructureMarkupFragments: {
             dataImage: function(options) {
                 let relativePath = options.relativePath.join('.');
                 return `{{#if ${relativePath}.src}}\n` +
@@ -126,13 +135,6 @@ module.exports = {
                             `</div>\n` +
                         `{{/if}}\n`;
             },
-            default: function(options) {
-                return `{{#if ${options.relativePath.join('.')}}}\n` +
-                            `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n` +
-                                `{{${options.relativePath.join('.')}}}\n` +
-                            `</${options.markupSettings.defaultMarkupTag}>\n` +
-                        `{{/if}}\n`;
-            }
         }
     },
     dataStructures: {
