@@ -54,30 +54,47 @@ module.exports = {
     markupFragments: {
         wrapperMarkupFragments: {
             array: {
-                openingTagNoChildWrapper: function(options) {
-                    let output = `{{#if ${options.relativePath.join('.')}.[0]}}\n` +
-                                `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n` +
-                                    `{{#each ${options.relativePath.join('.')}}}\n`;
-                    options.relativePath = [];
-                    return output;
-                },
-                closingTagNoChildWrapper: function(options) {
-                    return         `{{/each}}\n` +
-                                `</${options.markupSettings.defaultMarkupTag}>\n` +
-                            `{{/if}}\n`;
-                    
-                },
-                openingTag: function(options) {
+                parentWrapperOpening: function(options, propertyCount) {
                     let wrapperOptions = options.plugins._.cloneDeep(options);
                     options.plugins.buildClass.addChildClass(options);
                     options.relativePath = [];
-                    return this.openingTagNoChildWrapper(wrapperOptions) + 
-                            `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n`;
+                    return  this.simpleTypeOpening(wrapperOptions) + 
+                                `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n`;
                 },
-                closingTag: function(options) {
-                    return `</${options.markupSettings.defaultMarkupTag}>\n`
-                            + this.closingTagNoChildWrapper(options);
-                }        
+                parentWrapperClosing: function(options, propertyCount) {
+                    return      `</${options.markupSettings.defaultMarkupTag}>\n` +
+                            this.simpleTypeClosing(options);  
+                },
+                simpleTypeOpening: function(options) {
+                    let output =    `{{#if ${options.relativePath.join('.')}.[0]}}\n` +
+                                        `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}">\n` +
+                                            `{{#each ${options.relativePath.join('.')}}}\n`;
+                    options.relativePath = [];
+                    return output;
+                },
+                simpleTypeClosing: function(options) {
+                    return                  `{{/each}}\n` +
+                                        `</${options.markupSettings.defaultMarkupTag}>\n` +
+                                `{{/if}}\n`;
+                },
+                dataStructuresOpening: function(options) {
+                    return this.simpleTypeOpening(options);
+                },
+                dataStructuresClosing: function(options) {
+                    return this.simpleTypeClosing(options);
+                },
+                dynamicRefsOpening: function(options) {
+                    return this.parentWrapperOpening(options);
+                },
+                dynamicRefsClosing: function(options) {
+                    return this.parentWrapperClosing(options);
+                },
+                refsOpening: function(options) {
+                    return this.simpleTypeOpening(options);
+                },
+                refsClosing: function(options) {
+                    return this.simpleTypeClosing(options);
+                }, 
             },
             object: {
                 openingTag: function(options) {

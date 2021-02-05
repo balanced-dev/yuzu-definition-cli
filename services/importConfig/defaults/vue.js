@@ -1,3 +1,17 @@
+const generateChildContext = function(options) {
+    const Inflector = options.plugins.inflector;
+    let lastArrayContext = options.plugins._.last(options.relativePath);
+    return Inflector.singularize(lastArrayContext) !== lastArrayContext ? Inflector.singularize(lastArrayContext) : 'item_' + options.absolutePath.length;
+};
+
+const getVuePartial = function(options) {
+    const kebabCase = options.plugins.changeCase.paramCase;
+    let hyphenatedPartial = kebabCase(options.value);
+    let partialPrefix = options.prefixes.block.fileName + '-';
+    hyphenatedPartial = hyphenatedPartial.substring(0, partialPrefix.length) === partialPrefix ? hyphenatedPartial.substring(partialPrefix.length) : hyphenatedPartial;
+    return hyphenatedPartial;
+};
+
 module.exports = {    
     generationSource: '',
     yuzuPro: {
@@ -40,27 +54,50 @@ module.exports = {
     markupFragments: {
         wrapperMarkupFragments: {
             array: {
-                openingTagNoChildWrapper: function(options) {                    
+                parentWrapperOpening: function(options, propertyCount) {
                     let wrapperOptions = options.plugins._.cloneDeep(options);
-                    var latestArrayContext = options.plugins._.last(options.relativePath);
-                    var childContext = options.plugins.inflector.singularize(latestArrayContext);
+                    let childContext = generateChildContext(options);
                     options.plugins.buildClass.addChildClass(options);
 
-                    var output = `<${wrapperOptions.markupSettings.defaultMarkupTag} class="${wrapperOptions.plugins.buildClass.run(wrapperOptions)}" v-if="${wrapperOptions.relativePath.join('.')}">\n` +
-                                        `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-for="(${childContext}, index) in ${options.relativePath.join('.')}" :key="index">\n`;   
+                    let output = `<${wrapperOptions.markupSettings.defaultMarkupTag} class="${wrapperOptions.plugins.buildClass.run(wrapperOptions)}" v-if="${wrapperOptions.relativePath.join('.')} && ${wrapperOptions.relativePath.join('.')}.length">\n` +
+                                        `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-for="(${childContext}, index) in ${wrapperOptions.relativePath.join('.')}" :key="index">\n`;   
                     options.relativePath = [childContext];
                     return output;
                 },
-                closingTagNoChildWrapper: function(options) {
+                parentWrapperClosing: function(options, propertyCount) {
                     return      `</${options.markupSettings.defaultMarkupTag}>\n` + 
-                            `</${options.markupSettings.defaultMarkupTag}>\n`;                    
+                            `</${options.markupSettings.defaultMarkupTag}>\n`;      
                 },
-                openingTag: function(options) {
-                    return this.openingTagNoChildWrapper(options);
+                simpleTypeOpening: function(options) {
+                    let wrapperOptions = options.plugins._.cloneDeep(options);
+                    let childContext = generateChildContext(options);
+                    let output = `<${wrapperOptions.markupSettings.defaultMarkupTag} class="${wrapperOptions.plugins.buildClass.run(wrapperOptions)}" v-if="${wrapperOptions.relativePath.join('.')} && ${wrapperOptions.relativePath.join('.')}.length">\n` +
+                                        `<template v-for="(${childContext}, index) in ${wrapperOptions.relativePath.join('.')}">\n`;   
+                    options.relativePath = [childContext];
+                    return output;
                 },
-                closingTag: function(options) {
-                    return this.closingTagNoChildWrapper(options);
-                }        
+                simpleTypeClosing: function(options) {
+                    return      `</template>\n` + 
+                            `</${options.markupSettings.defaultMarkupTag}>\n`;
+                },
+                dataStructuresOpening: function(options) {
+                    return this.simpleTypeOpening(options);
+                },
+                dataStructuresClosing: function(options) {
+                    return this.simpleTypeClosing(options);
+                },
+                dynamicRefsOpening: function(options) {
+                    return this.parentWrapperOpening(options);
+                },
+                dynamicRefsClosing: function(options) {
+                    return this.parentWrapperClosing(options);
+                },
+                refsOpening: function(options) {
+                    return this.simpleTypeOpening(options);
+                },
+                refsClosing: function(options) {
+                    return this.simpleTypeClosing(options);
+                },
             },
             object: {
                 openingTag: function(options) {
@@ -73,13 +110,15 @@ module.exports = {
         },
         contentMarkupFragments: {
             dynamicSubBlockArray: function(options) {
-                return `<component v-bind:is="${options.relativePath.join('.')}._ref.replace('/par', '')" v-bind:key="index" v-bind="${options.relativePath.join('.')}"></component>\n`;                
+                return `<component :is="${options.relativePath.join('.')}._ref.replace('/par', '')" :key="index" v-bind="${options.relativePath.join('.')}"></component>\n`;                
             },
             namedSubBlockArray: function(options) {
-                return `<component v-bind:is="${options.relativePath.join('.')}._ref.replace('/par', '')" v-bind:key="index" v-bind="${options.relativePath.join('.')}"></component>\n`;                
+                const partialReference = getVuePartial(options);
+                return `<${partialReference} v-if="${options.relativePath.join('.')}" :key="index" v-bind="${options.relativePath.join('.')}"></${partialReference}>\n`;                
             },
             subBlockObject: function(options) {
-                return `<component v-if="${options.relativePath.join('.')}" v-bind:is="${options.relativePath.join('.')}.replace('par', '')" v-bind:key="index" v-bind="${options.relativePath.join('.')}"></component>\n`;                        
+                const partialReference = getVuePartial(options);
+                return `<${partialReference} v-if="${options.relativePath.join('.')}" v-bind="${options.relativePath.join('.')}"></${partialReference}>\n`;                        
             },    
             default: function(options) {
                 return `<${options.markupSettings.defaultMarkupTag} class="${options.plugins.buildClass.run(options)}" v-if="${options.relativePath.join('.')}">\n` +
