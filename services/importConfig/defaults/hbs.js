@@ -26,9 +26,7 @@ module.exports = {
                     `</div>`
         }
     },
-    dataSettings: {
-        addModifiersProperty: false
-    },
+    dataSettings: {},
     styleSettings: {
         generateSeparateFile: true
     },
