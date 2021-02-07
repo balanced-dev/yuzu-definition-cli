@@ -1,7 +1,8 @@
 const program = require('commander');
 const project = require('./services/project.js');
 const defImport = require('./services/import.js');
-const importSettings = require('./services/importConfig/settings.js');
+const defImportLocal = require('./services/importLocal.js');
+const config = require('./services/config/config.js');
 const { settings, addBlock, addState, renameBlock } = require('./logic');
 
 const types = {
@@ -92,6 +93,14 @@ program
     });
 
 program
+    .command('import-local')
+    .alias('i')
+    .description('Scaffold a project from schema shortand, stored in Trello cards or .txt files')
+    .action(() => {
+        defImportLocal.run();
+    });    
+
+program
     .command('updateKey')
     .description('Update your YuzuPro key in your project config file to allow use of Yuzu Definition Import')
     .action(() => {
@@ -101,4 +110,4 @@ program
 
 program.parse(process.argv);
 
-module.exports = { getType, addBlock, importSettings };
+module.exports = { getType, addBlock, config };

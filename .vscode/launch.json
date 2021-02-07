@@ -49,6 +49,15 @@
                 "testCase2",
                 "testCase3"
 			]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Import",
+            "program": "${workspaceFolder}\\index.js" ,
+            "args": [
+                "import-local"
+			]
         }
     ]
 }

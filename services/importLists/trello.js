@@ -1,7 +1,7 @@
 const _ = require('lodash'),
     Trello = require("node-trello"),
     path = require('path'),
-    settings = require('../importConfig/settings').run();
+    settings = require('../config/config').run();
 
 const trelloConfig = settings.trello;
 

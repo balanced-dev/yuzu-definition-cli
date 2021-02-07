@@ -1,6 +1,6 @@
 const   fs = require('fs'),
         path = require('path'),
-        settings = require('../importConfig/settings').run();
+        settings = require('../config/config').run();
 let localFilesDirectory;
 try {
     localFilesDirectory = path.resolve(process.cwd(), settings.localFiles.directoryPath);

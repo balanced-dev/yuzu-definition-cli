@@ -1,7 +1,7 @@
 const path = require('path'),
       inquirer = require('inquirer')
       fs = require('fs'),
-      config = require('./importConfig/settings'),
+      config = require('./config/config'),
       configFile = undefined,
       generationConfig = config.run();
 
@@ -16,7 +16,7 @@ const blockGenerators = {
 };
 
 const setConfigFile = function() {
-    configFile = require(config.settingsPath);
+    configFile = require(config.userConfigPath);
 };
 
 const finishExecutablePath = function() {
@@ -66,7 +66,7 @@ const updateYuzuProKey = function(callback) {
 const updateConfig = function() {    
     const jsonString = JSON.stringify(configFile, null, 4);
     
-    fs.writeFile(config.settingsPath, jsonString, err => {
+    fs.writeFile(config.userConfigPath, jsonString, err => {
         if (err) {
             console.log('Error updating config file', err)
         } else {
@@ -100,7 +100,7 @@ const getListOption = async function() {
 };
 
 const runExecutable = function(list) {    
-    exec(executablePath, [list, config.settingsPath], (error, stdout, stderr) => {
+    exec(executablePath, [list, config.userConfigPath], (error, stdout, stderr) => {
         if(error) {
             throw error;
         }
