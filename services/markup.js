@@ -21,14 +21,14 @@ const changeContent = function(content, oldSettings, newSettings) {
     return content.replace(oldSettings.className, newSettings.className);
 }
 
-const add = function(settings) {
+const add = function(settings, fs) {
 
-    common.add(filename, initialContent, settings);
+    common.add(filename, initialContent, settings, fs);
 }
 
-const rename = function(oldSettings, newSettings) {
+const rename = function(oldSettings, newSettings, fs) {
     
-    common.rename(changeContent, filename, oldSettings, newSettings);
+    common.rename(changeContent, filename, oldSettings, newSettings, fs);
 }
 
 module.exports = { add, rename };

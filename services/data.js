@@ -1,4 +1,3 @@
-var fs = require('fs');
 var path = require('path');
 var common = require('./common.js');
 var directories = require('./directories.js');
@@ -32,30 +31,30 @@ const initialContentState = function(settings){
     return get(settings);
 }
 
-const get = function(settings)
+const get = function(settings, fs)
 {
-    return common.get(filename, settings);
+    return common.get(filename, settings, fs);
 }
 
-const add = function(settings) {
+const add = function(settings, fs) {
 
-    common.add(filename, initialContent, settings);
+    common.add(filename, initialContent, settings, fs);
 }
 
-const addState = function(state, settings)
+const addState = function(state, settings, fs)
 {
     var filenameState = (settings) => {
         return filename(settings, state)
     }
 
-    common.add(filenameState, initialContentState, settings);
+    common.add(filenameState, initialContentState, settings, fs);
 }
 
-const rename = function(oldSettings, newSettings) {
+const rename = function(oldSettings, newSettings, fs) {
 
-    common.rename(undefined, filename, oldSettings, newSettings);
+    common.rename(undefined, filename, oldSettings, newSettings, fs);
 
-    changeOtherDataFiles(oldSettings, newSettings);
+    changeOtherDataFiles(oldSettings, newSettings, fs);
 }
 
 module.exports = { get, add, addState, rename };
@@ -63,13 +62,13 @@ module.exports = { get, add, addState, rename };
 
 
 
-const changeOtherDataFiles = function(oldSettings, newSettings) {
+const changeOtherDataFiles = function(oldSettings, newSettings, fs) {
 
     var dataPath = directories.getSubPath(oldSettings, 'data');
     var original = filename(oldSettings).replace(extension, '');
     var latest = filename(newSettings).replace(extension, '');
 
-    var files = fs.readdirSync(dataPath);
+    var files = fs.readDir(dataPath);
 
     files.forEach(file => {
         
@@ -77,7 +76,7 @@ const changeOtherDataFiles = function(oldSettings, newSettings) {
         if(latest != current.replace(extension, ''))
         {
             var change = current.replace(original, latest);
-            fs.renameSync(current, change);
+            fs.rename(current, change);
         }
 
     });

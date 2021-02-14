@@ -1,7 +1,7 @@
 const { option } = require('commander');
 
 module.exports = {    
-    generationSource: '',
+    cardSource: '',
     yuzuPro: {
         key: ""
     },
@@ -172,10 +172,14 @@ module.exports = {
             testForm: {}
         }
     },
+    cardSources: {
+        trello: require("../../plugins/cardSources/trello.js"),
+        localFiles: require("../../plugins/cardSources/localFiles.js")
+    },
     plugins: {
         _: require('lodash'),
         changeCase: require('change-case'),
         inflector: require('inflector-js'),
-        buildClass: require('../plugins/buildClass'),
+        buildClass: require('../../plugins/style/buildClass'),
     },
 }

@@ -1,5 +1,5 @@
 module.exports = {
-    type: 'hbs',
+    type: 'vue',
     trello: {
         board: "Northern Group - Blocking",
         key: "a1572727cc6e8d4a94c51f284d323952",

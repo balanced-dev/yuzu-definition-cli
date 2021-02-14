@@ -7,7 +7,7 @@ var scss = require('./services/scss.js');
 var dataProccess = require('./services/data.js');
 var schemaProcess = require('./services/schema.js');
 
-const getBlockSettings = function(name, area, typeSettings, initialContentIntercepts)
+const getBlockSettings = function(name, area, typeSettings, initialContentIntercepts, fs)
 {
     return {
         prefix: 'par',
@@ -15,7 +15,7 @@ const getBlockSettings = function(name, area, typeSettings, initialContentInterc
         fileName: camelCase(name),
         className: kebabCase(name),
         directoryName: camelCase(name),
-        rootDirectory: directories.getRoot(name, area, typeSettings),
+        rootDirectory: directories.getRoot(name, area, typeSettings, fs),
         subDirectories: {
             data: 'data'
         },
@@ -30,17 +30,17 @@ const settings = function(typeSettings)
     console.log(JSON.stringify(settings, null, 4));
 }
 
-const addBlock = function(type, name, area, typeSettings, initialContentIntercepts)
+const addBlock = function(type, name, area, typeSettings, initialContentIntercepts, fs)
 {
-    var settings = getBlockSettings(name, area, typeSettings, initialContentIntercepts);
+    var settings = getBlockSettings(name, area, typeSettings, initialContentIntercepts, fs);
 
-    if (!fs.existsSync(settings.rootDirectory)){
+    if (!fs.dirExists(settings.rootDirectory)){
 
-        directories.add(settings);
-        dataProccess.add(settings);
-        markup.add(settings);
-        scss.add(settings);
-        schemaProcess.add(settings); 
+        directories.add(settings, fs);
+        dataProccess.add(settings, fs);
+        markup.add(settings, fs);
+        scss.add(settings, fs);
+        schemaProcess.add(settings, fs); 
 
         console.log(`Added new ${type} "${settings.fileName}"`);
     }

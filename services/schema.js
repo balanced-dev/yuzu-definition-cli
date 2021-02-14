@@ -31,19 +31,19 @@ const changeContent = function(content, oldSettings, newSettings) {
     return content.replace(common.prefixName(oldSettings), common.prefixName(newSettings));
 }
 
-const get = function(settings)
+const get = function(settings, fs)
 {
-    return common.get(filename, settings);
+    return common.get(filename, settings, fs);
 }
 
-const add = function(settings) {
+const add = function(settings, fs) {
 
-    common.add(filename, initialContent, settings);
+    common.add(filename, initialContent, settings, fs);
 }
 
-const rename = function(oldSettings, newSettings) {
+const rename = function(oldSettings, newSettings, fs) {
 
-    common.rename(changeContent, filename, oldSettings, newSettings);
+    common.rename(changeContent, filename, oldSettings, newSettings, fs);
 }
 
 module.exports = { get, add, rename };

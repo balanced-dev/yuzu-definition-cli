@@ -1,5 +1,3 @@
-var fs = require('fs');
-
 const prefixName = function(settings)
 {
     if(settings.addPrefix)
@@ -13,37 +11,37 @@ const prefixName = function(settings)
     }
 }
 
-const get = function(filename, settings) {
+const get = function(filename, settings, fs) {
     
     var fileName = filename(settings);
 
-    return fs.readFileSync(fileName, 'utf8');
+    return fs.readFile(fileName);
 
 }
 
-const add = function(filename, initialContent, settings) {
+const add = function(filename, initialContent, settings, fs) {
     
     var fileName = filename(settings);
     var contents = initialContent(settings);
 
-    fs.writeFileSync(fileName, contents);
+    fs.writeFile(fileName, contents);
 
 }
 
-const rename = function(changeContent, filename, oldSettings, newSettings) {
+const rename = function(changeContent, filename, oldSettings, newSettings, fs) {
 
     var oldFileName = filename(oldSettings);
 
-    if(fs.existsSync(oldFileName))
+    if(fs.fileExists(oldFileName))
     {
         if(changeContent) {
-            var contents = fs.readFileSync(oldFileName, "utf8");
+            var contents = fs.readFile(oldFileName);
             contents = changeContent(contents, oldSettings, newSettings);
-            fs.writeFileSync(oldFileName, contents);
+            fs.writeFile(oldFileName, contents);
         }
     
         var newFilename = filename(newSettings);
-        fs.renameSync(oldFileName, newFilename);
+        fs.renameFile(oldFileName, newFilename);
     }
     else
     {

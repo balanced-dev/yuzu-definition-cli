@@ -37,7 +37,7 @@ const common = (options) => {
 };
 
 module.exports = {
-  generationSource: "",
+  cardSource: "",
   yuzuPro: {
     key: "",
   },
@@ -221,10 +221,41 @@ module.exports = {
       testForm: {},
     },
   },
+  cardSources: {
+    trello: require("../../plugins/cardSources/trello.js"),
+    localFiles: require("../../plugins/cardSources/localFiles.js")
+  },
+  getInterceptors: function(json, config, data, schemaCleanup, markup, scss) {
+
+    let generatedMarkupContents = '';
+    let generatedMarkupFull = '';
+
+    return {        
+      schema: function(schema) {
+          return schemaCleanup.processProperties(schema, json);
+      },
+      data: function(jsonData) {
+          return data.removeDataStructureRefs(json, config); 
+      },
+      dataForSchemaGeneration: json,
+      markup: function(html, cardSettings) {
+          let markupGeneration = markup.run(html, cardSettings, json, config);
+          generatedMarkupContents = markupGeneration.contents;
+          generatedMarkupFull = markupGeneration.full;
+          
+          return generatedMarkupFull;
+      },
+      scss: function(defaultScss, cardSettings) {
+          return scss.run(defaultScss, cardSettings, generatedMarkupContents, config);
+      }
+    }
+
+  },
   plugins: {
     _: require("lodash"),
     changeCase: require("change-case"),
     inflector: require("inflector-js"),
-    buildClass: require("../plugins/buildClass"),
+    buildClass: require("../../plugins/style/buildClass"),
   },
+
 };
