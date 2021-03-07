@@ -1,0 +1,14 @@
+Schema:
+- object+address
+- address+subBlock+dataLink+email
+- address+subBlock+dataLink+telephone
+- address+array+addressLines
+- address+addressLines+string+line
+- array+links
+- links+subBlock+dataLink
+- array+documentLinks
+- documentLinks+subBlock+dataLink
+- array+socialLinks
+- socialLinks+subBlock+dataLink
+- string+copyrightMessage
+- subBlock+dataForm+form

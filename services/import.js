@@ -76,7 +76,7 @@ const updateConfig = function() {
 };
 
 const getListOption = async function() {
-    const generator = blockGenerators[generationConfig.generationSource];
+    const generator = blockGenerators[generationConfig.cardSource];
 
     if(generator) {
         let options = await generator.getLists();

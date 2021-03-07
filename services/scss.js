@@ -9,7 +9,7 @@ const filename = function(settings) {
 }
 
 const initialContent = function(settings) {
-    var scss = `.${settings.className} {\n\n}`;
+    var scss = settings.config.markupSettings.initialStyle(settings);
 
     if(settings.contentIntercepts.scss)
         scss = settings.contentIntercepts.scss(scss, settings); 
@@ -32,4 +32,4 @@ const rename = function(oldSettings, newSettings, fs) {
     common.rename(changeContent, filename, oldSettings, newSettings, fs);
 }
 
-module.exports = { add, rename };
+module.exports = { add, rename, initialContent };

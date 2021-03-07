@@ -1,6 +1,6 @@
 const prefixName = function(settings)
 {
-    if(settings.addPrefix)
+    if(settings.prefix)
     {
         var filename = capitalize(settings.fileName);
         return `${settings.prefix}${filename}`;

@@ -57,14 +57,24 @@ module.exports = {
   schemaSettings: {
     generateSeparateFile: true,
   },
+  blockPaths: {
+      page: { 
+          path: '/_dev/_templates/pages'
+      },
+      block: { 
+          path: '/_dev/_templates/blocks'
+      },
+      layout: { 
+          path: '/_dev/_templates/_layouts'
+      }
+  },
   prefixes: {
     block: {
       card: "Block - ",
-      fileName: "par",
+      file: "par",
     },
     page: {
       card: "Page - ",
-      fileName: "",
     },
     schema: {
       card: "Schema",
@@ -197,8 +207,11 @@ module.exports = {
     indentSize: 4,
     backupRefArrayChildClass: "item",
     fileExtension: ".vue",
-    initalMarkup: function (options) {
-      return `<script>\nexport default {\n    props: {}\n};\n</script>\n<template><div class=\"${options.className}\"><!-- YUZU MARKUP --></div></template>`;
+    initialStyle: function(options) {
+      return `.${options.className} {\n\n}`
+    },
+    initialMarkup: function (options) {
+      return `<script>\nexport default {\nprops: <!-- YUZU PROPS -->\n};\n</script>\n<template>\n<div class=\"${options.className}\">\n<!-- YUZU MARKUP -->\n</div>\n</template>\n<style lang="scss">\n<!-- YUZU STYLE -->\n</style>\n`;
     },
   },
   dataStructures: {
@@ -225,28 +238,38 @@ module.exports = {
     trello: require("../../plugins/cardSources/trello.js"),
     localFiles: require("../../plugins/cardSources/localFiles.js")
   },
+  processors: {
+    directories: require('../../directories'),
+    data: require('../../data'),
+    markup: require('../../markup'),
+    scss: require('../../scss'),
+    schema: require('../../schema') 
+  },
+  processThese: ['directories','data', 'markup'],
   getInterceptors: function(json, config, data, schemaCleanup, markup, scss) {
 
-    let generatedMarkupContents = '';
-    let generatedMarkupFull = '';
+    const sccsProcess = config.processors['schema'];
+    const prettier = require("prettier");
 
     return {        
-      schema: function(schema) {
-          return schemaCleanup.processProperties(schema, json);
-      },
-      data: function(jsonData) {
+      data: function() {
           return data.removeDataStructureRefs(json, config); 
       },
       dataForSchemaGeneration: json,
       markup: function(html, cardSettings) {
           let markupGeneration = markup.run(html, cardSettings, json, config);
-          generatedMarkupContents = markupGeneration.contents;
-          generatedMarkupFull = markupGeneration.full;
           
-          return generatedMarkupFull;
-      },
-      scss: function(defaultScss, cardSettings) {
-          return scss.run(defaultScss, cardSettings, generatedMarkupContents, config);
+          let defaultScss = config.markupSettings.initialStyle(cardSettings);
+          let style = scss.run(defaultScss, cardSettings, markupGeneration.content, config);
+          let output =  markupGeneration.full.replace('<!-- YUZU STYLE -->', style);
+
+          let defaultSchema = sccsProcess.initialContent(cardSettings);
+          let schema = schemaCleanup.processProperties(defaultSchema, json);
+          output = output.replace('<!-- YUZU PROPS -->', config.plugins.propsFromSchema(schema));
+
+          output = prettier.format(output, { semi: false, tabWidth: 4, parser: "vue" });
+
+          return output;
       }
     }
 
@@ -256,6 +279,7 @@ module.exports = {
     changeCase: require("change-case"),
     inflector: require("inflector-js"),
     buildClass: require("../../plugins/style/buildClass"),
-  },
+    propsFromSchema: require('./vue/vuePropsFromSchema')
+  }
 
 };

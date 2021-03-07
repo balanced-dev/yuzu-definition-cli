@@ -1,5 +1,5 @@
-const   fs = require('fs'),
-        path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 const getLists = function(config) {
     var localFilesDirectory = config.localFiles.directoryPath;
@@ -19,37 +19,49 @@ const getLists = function(config) {
     }
 }
 
-const buildList = function(list, config, addBlockPage) {
-    run(list, config, addBlockPage);
-};
 
-const run = function(list, config, addBlockPage) {
+const getCards = function(list, config) {
+    var output = [];
     var localFilesDirectory = path.join(config.localFiles.directoryPath, list);
     fs.readdirSync(localFilesDirectory).forEach(file => {
         let filePath = path.join(localFilesDirectory, file);
 
         let stat = fs.statSync(filePath);
         if(stat.isFile()) {
-            let extension = path.extname(filePath),
-                fileContents = fs.readFileSync(filePath, 'utf8'),
-                blockPageName = path.basename(filePath, extension),
-                type = getType(blockPageName, config);
-            
-            blockPageName = blockPageName.replace(settings.prefixes[type].card, '');
+            let extension = path.extname(filePath);
+            let name = path.basename(filePath, extension);
+            let type = getType(name, config);
+            name = name.replace(config.prefixes[type].card, '');
 
-            addBlockPage(type, 
-                {
-                    name: blockPageName,
-                    schema: fileContents
-                }, config
-            );
+            var file = {
+                contents: fs.readFileSync(filePath, 'utf8'),
+                name: name,
+                type: type
+            };
+            output.push(file);
         }
+    });
+    return output;
+};
+
+const buildList = function(list, config, addBlockPage, fsOutput) {
+    var cardList = getCards(list, config);
+
+    cardList.forEach(card => {
+       
+        addBlockPage(card.type, 
+            {
+                name: card.name,
+                schema: card.contents
+            }, config, fsOutput
+        );
+
     });
 };
 
 const getType = function(name, config) {
-    let blockPrefix = settings.prefixes.block.card,
-        pagePrefix = settings.prefixes.page.card;
+    let blockPrefix = config.prefixes.block.card,
+        pagePrefix = config.prefixes.page.card;
 
     if(name.startsWith(blockPrefix)) {
         return 'block';
@@ -59,4 +71,4 @@ const getType = function(name, config) {
     }
 };
 
-module.exports = { getLists, buildList };
+module.exports = { getLists, buildList, getCards };

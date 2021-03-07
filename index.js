@@ -3,26 +3,12 @@ const project = require('./services/project.js');
 const defImport = require('./services/import.js');
 const defImportLocal = require('./services/importLocal.js');
 const config = require('./services/config/config.js');
+const configSettings = config.run();
 const { settings, addBlock, addState, renameBlock } = require('./logic');
-
-const types = {
-    page: { 
-        prefix: false,
-        path: '/_dev/_templates/pages'
-    },
-    block: { 
-        prefix: true,
-        path: '/_dev/_templates/blocks'
-    },
-    layout: { 
-        prefix: false,
-        path: '/_dev/_templates/_layouts'
-    }
-}
 
 const getType = function(type) {
 
-    var ouput = types[type];
+    var ouput = configSettings.blockPaths[type];
     if(!ouput) {
         console.error("Component type not recongnized should be block or page");
     }

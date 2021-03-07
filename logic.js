@@ -1,25 +1,20 @@
 var fs = require('fs');
 var camelCase = require('change-case').camelCase;
 var kebabCase = require('change-case').paramCase;
-var directories = require('./services/directories.js');
-var markup = require('./services/markup.js');
-var scss = require('./services/scss.js');
-var dataProccess = require('./services/data.js');
-var schemaProcess = require('./services/schema.js');
 
-const getBlockSettings = function(name, area, typeSettings, initialContentIntercepts, fs)
+const getBlockSettings = function(type, name, area, typeSettings, initialContentIntercepts, config, fs)
 {
     return {
-        prefix: 'par',
-        addPrefix: typeSettings.prefix,
+        prefix: config.prefixes[type].file,
         fileName: camelCase(name),
         className: kebabCase(name),
         directoryName: camelCase(name),
-        rootDirectory: directories.getRoot(name, area, typeSettings, fs),
+        rootDirectory: fs.getRoot(name, area, typeSettings, fs),
         subDirectories: {
             data: 'data'
         },
-        contentIntercepts: initialContentIntercepts
+        contentIntercepts: initialContentIntercepts,
+        config: config
     };
 }
 
@@ -30,17 +25,18 @@ const settings = function(typeSettings)
     console.log(JSON.stringify(settings, null, 4));
 }
 
-const addBlock = function(type, name, area, typeSettings, initialContentIntercepts, fs)
+const addBlock = function(type, name, area, typeSettings, initialContentIntercepts, config, fs)
 {
-    var settings = getBlockSettings(name, area, typeSettings, initialContentIntercepts, fs);
+    var settings = getBlockSettings(type, name, area, typeSettings, initialContentIntercepts, config, fs);
 
     if (!fs.dirExists(settings.rootDirectory)){
 
-        directories.add(settings, fs);
-        dataProccess.add(settings, fs);
-        markup.add(settings, fs);
-        scss.add(settings, fs);
-        schemaProcess.add(settings, fs); 
+        var processors = Object.keys(config.processors)
+            .filter((item) => { return config.processThese.includes(item) })
+
+        processors.forEach((key) => {
+            config.processors[key].add(settings, fs);
+        });
 
         console.log(`Added new ${type} "${settings.fileName}"`);
     }

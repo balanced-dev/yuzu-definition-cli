@@ -1,0 +1,16 @@
+Schema:
+- array+primaryLinks
+- primaryLinks+subBlock+dataLink+link
+- primaryLinks+array+mobileLinks
+- primaryLinks+mobileLinks+subBlock+dataLink
+- array+secondaryLinks
+- secondaryLinks+subBlock+dataLink
+- array+documentLinks
+- documentLinks+subBlock+dataLink
+- array+socialLinks
+- socialLinks+subBlock+dataLink
+- object+address
+- address+subBlock+dataLink+email
+- address+subBlock+dataLink+telephone
+- address+array+addressLines
+- address+addressLines+string+line

@@ -1,4 +1,5 @@
-var fs = require('fs');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
 
@@ -9,7 +10,7 @@ module.exports = {
         return fs.readdirSync(path);
     },
     mkdir: function(dir) {
-        fs.mkdir(settings.rootDirectory)
+        fs.mkdirSync(dir)
     },
     renameDir: function(oldDir, newDir) {
         fs.renameSync(oldDir, newDir)
@@ -26,5 +27,15 @@ module.exports = {
     },
     renameFile: function(oldFilename, newFilename) {
         fs.renameSync(oldFilename, newFilename)
+    },
+
+    getRoot: function(name, area = '', typeSettings, fs){
+
+        var isRoot = fs.fileExists(path.join(process.cwd(), './package.json'));
+        
+        if(isRoot)
+            return path.join(process.cwd(), typeSettings.path, area, name);
+        else
+            return path.join(process.cwd(), name);
     }
  };

@@ -7,16 +7,6 @@ const getSubPath = function(settings, subDirectory){
     return path.join(settings.rootDirectory, settings.subDirectories[subDirectory]);
 };
 
-const getRoot = function(name, area = '', typeSettings, fs){
-
-    var isRoot = fs.fileExists(path.join(process.cwd(), './package.json'));
-    
-    if(isRoot)
-        return path.join(process.cwd(), typeSettings.path, area, name);
-    else
-        return path.join(process.cwd(), name);
-}
-
 const add = function(settings, fs) {
     
     fs.mkdir(settings.rootDirectory);
@@ -36,4 +26,4 @@ const rename = function(oldSettings, newSettings, fs) {
     oldSettings.rootDirectory = newSettings.rootDirectory;
 }
 
-module.exports = { add, rename, getSubPath, getRoot };
+module.exports = { add, rename, getSubPath };

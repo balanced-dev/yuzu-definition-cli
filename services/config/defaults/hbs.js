@@ -172,9 +172,43 @@ module.exports = {
             testForm: {}
         }
     },
+    ,
     cardSources: {
-        trello: require("../../plugins/cardSources/trello.js"),
-        localFiles: require("../../plugins/cardSources/localFiles.js")
+      trello: require("../../plugins/cardSources/trello.js"),
+      localFiles: require("../../plugins/cardSources/localFiles.js")
+    },
+    processors: {
+      directories: require('../../../services/directories'),
+      data: require('../../../services/data'),
+      markup: require('../../../services/markup'),
+      scss: require('../../../services/scss'),
+      schema: require('../../../services/schema') 
+    },
+    getInterceptors: function(json, config, data, schemaCleanup, markup, scss) {
+  
+      let generatedMarkupContents = '';
+      let generatedMarkupFull = '';
+  
+      return {        
+        schema: function(schema) {
+            return schemaCleanup.processProperties(schema, json);
+        },
+        data: function(jsonData) {
+            return data.removeDataStructureRefs(json, config); 
+        },
+        dataForSchemaGeneration: json,
+        markup: function(html, cardSettings) {
+            let markupGeneration = markup.run(html, cardSettings, json, config);
+            generatedMarkupContents = markupGeneration.contents;
+            generatedMarkupFull = markupGeneration.full;
+            
+            return generatedMarkupFull;
+        },
+        scss: function(defaultScss, cardSettings) {
+            return scss.run(defaultScss, cardSettings, generatedMarkupContents, config);
+        }
+      }
+  
     },
     plugins: {
         _: require('lodash'),

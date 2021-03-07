@@ -1,7 +1,6 @@
-const fs = require('fs'),
+const fs = require('./fs'),
       config = require('./config/config'),
-      generationConfig = config.run(),
-      localImport = require('../../yuzu-def-import/indexLocal');
+      generationConfig = config.run();
 
 const blockGenerators = {
     localFiles: require('./importLists/localFiles'),
@@ -9,13 +8,15 @@ const blockGenerators = {
 };
 
 const getListOption = async function() {
-    const generator = blockGenerators[generationConfig.generationSource];
+    const generator = blockGenerators[generationConfig.cardSource];
 
     if(generator) {
         let options = await generator.getLists();
         if(options) {
 
-            localImport(options[0], generationConfig)
+            const localImport = require('../../yuzu-def-import/indexLocal');
+            const addBlockPage = require('../../yuzu-def-import/services/blockGeneration/addBlockPage');
+            localImport(options[0], generationConfig, addBlockPage, fs)
         }
     }
     else {

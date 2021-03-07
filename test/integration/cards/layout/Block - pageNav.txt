@@ -1,0 +1,6 @@
+Schema:
+- string+title
+- array+internalLinks
+- internalLinks+subBlock+dataLink
+- array+externalLinks
+- externalLinks+subBlock+dataLink

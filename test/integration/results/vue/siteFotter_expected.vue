@@ -1,0 +1,145 @@
+<script>
+export default {
+    props: {
+        address: Object,
+        links: Array,
+        documentLinks: Array,
+        socialLinks: Array,
+        copyrightMessage: String,
+        form: Object,
+    },
+}
+</script>
+<template>
+    <div class="site-fotter">
+        <div class="site-fotter__address">
+            <a
+                v-if="address.email.href && address.email.label"
+                class="site-fotter__address__email"
+                :href="address.email.href"
+                :title="address.email.title"
+                :target="address.email.isNewTab ? '_blank' : false"
+                :rel="
+                    address.email.isExternalLink ? 'noopener noreferrer' : false
+                "
+            >
+                {{ address.email.label }}
+            </a>
+            <a
+                v-if="address.telephone.href && address.telephone.label"
+                class="site-fotter__address__telephone"
+                :href="address.telephone.href"
+                :title="address.telephone.title"
+                :target="address.telephone.isNewTab ? '_blank' : false"
+                :rel="
+                    address.telephone.isExternalLink
+                        ? 'noopener noreferrer'
+                        : false
+                "
+            >
+                {{ address.telephone.label }}
+            </a>
+            <div
+                class="site-fotter__address__address-lines"
+                v-if="address.addressLines && address.addressLines.length"
+            >
+                <div
+                    class="site-fotter__address__address-lines__address-line"
+                    v-for="(addressLine, index) in address.addressLines"
+                    :key="index"
+                >
+                    <div
+                        class="site-fotter__address__address-lines__address-line__line"
+                        v-if="addressLine.line"
+                    >
+                        {{ addressLine.line }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="site-fotter__links" v-if="links && links.length">
+            <a
+                v-for="(link, index) in links"
+                :key="index"
+                v-if="link.href && link.label"
+                class="site-fotter__links__link"
+                :href="link.href"
+                :title="link.title"
+                :target="link.isNewTab ? '_blank' : false"
+                :rel="link.isExternalLink ? 'noopener noreferrer' : false"
+            >
+                {{ link.label }}
+            </a>
+        </div>
+        <div
+            class="site-fotter__document-links"
+            v-if="documentLinks && documentLinks.length"
+        >
+            <a
+                v-for="(documentLink, index) in documentLinks"
+                :key="index"
+                v-if="documentLink.href && documentLink.label"
+                class="site-fotter__document-links__document-link"
+                :href="documentLink.href"
+                :title="documentLink.title"
+                :target="documentLink.isNewTab ? '_blank' : false"
+                :rel="
+                    documentLink.isExternalLink ? 'noopener noreferrer' : false
+                "
+            >
+                {{ documentLink.label }}
+            </a>
+        </div>
+        <div
+            class="site-fotter__social-links"
+            v-if="socialLinks && socialLinks.length"
+        >
+            <a
+                v-for="(socialLink, index) in socialLinks"
+                :key="index"
+                v-if="socialLink.href && socialLink.label"
+                class="site-fotter__social-links__social-link"
+                :href="socialLink.href"
+                :title="socialLink.title"
+                :target="socialLink.isNewTab ? '_blank' : false"
+                :rel="socialLink.isExternalLink ? 'noopener noreferrer' : false"
+            >
+                {{ socialLink.label }}
+            </a>
+        </div>
+        <div class="site-fotter__copyright-message" v-if="copyrightMessage">
+            {{ copyrightMessage }}
+        </div>
+        <!-- Insert form form here -->
+    </div>
+</template>
+<style lang="scss">
+.site-fotter {
+    &__address {
+        &__email {
+        }
+        &__telephone {
+        }
+        &__address-lines {
+            &__address-line {
+                &__line {
+                }
+            }
+        }
+    }
+    &__links {
+        &__link {
+        }
+    }
+    &__document-links {
+        &__document-link {
+        }
+    }
+    &__social-links {
+        &__social-link {
+        }
+    }
+    &__copyright-message {
+    }
+}
+</style>

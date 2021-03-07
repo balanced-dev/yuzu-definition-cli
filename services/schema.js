@@ -46,4 +46,4 @@ const rename = function(oldSettings, newSettings, fs) {
     common.rename(changeContent, filename, oldSettings, newSettings, fs);
 }
 
-module.exports = { get, add, rename };
+module.exports = { get, add, rename, initialContent };

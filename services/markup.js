@@ -1,14 +1,13 @@
 var path = require('path');
 var common = require('./common.js');
-var config = require('./config/config').run().markupSettings;
 
 const filename = function(settings) {
-    var pathName = path.join(settings.rootDirectory, `${common.prefixName(settings)}${config.fileExtension}`);
+    var pathName = path.join(settings.rootDirectory, `${common.prefixName(settings)}${settings.config.markupSettings.fileExtension}`);
     return pathName;
 }
 
 const initialContent = function(settings) {
-    var html = config.initalMarkup(settings);
+    var html = settings.config.markupSettings.initialMarkup(settings);
 
     if(settings.contentIntercepts.markup)
         html = settings.contentIntercepts.markup(html, settings); 
@@ -31,4 +30,4 @@ const rename = function(oldSettings, newSettings, fs) {
     common.rename(changeContent, filename, oldSettings, newSettings, fs);
 }
 
-module.exports = { add, rename };
+module.exports = { add, rename, initialContent };
