@@ -1,8 +1,8 @@
 const program = require('commander');
-const project = require('./services/project.js');
-const defImport = require('./services/import.js');
-const defImportLocal = require('./services/importLocal.js');
-const config = require('./services/config/config.js');
+const project = require('./creation/creators/project.js');
+const defImport = require('./creation/services/import.js');
+const defImportLocal = require('./creation/services/importLocal.js');
+const config = require('./config/config.js');
 const configSettings = config.run();
 const { settings, addBlock, addState, renameBlock } = require('./logic');
 

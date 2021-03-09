@@ -1,6 +1,6 @@
 const init_tests_by_writing_actual_to_expected = false;
 
-const config = require('../../services/config/defaults/vue');
+const config = require('../../config/defaults/vue');
 
 const tests = require('./helpers/test-helper')(config, 'vue', 'vue', init_tests_by_writing_actual_to_expected);
 const source = tests.setupLocalFileSource('test', 'integration', 'cards');

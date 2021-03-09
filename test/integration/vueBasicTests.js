@@ -1,4 +1,4 @@
-const config = require('../../services/config/defaults/vue');
+const config = require('../../config/defaults/vue');
 
 const tests = require('./helpers/test-helper')(config, 'vue', 'vue');
 tests.setupLocalFileSource('test', 'integration', 'cards');

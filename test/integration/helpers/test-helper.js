@@ -1,6 +1,6 @@
-const localImport = require('../../../../yuzu-def-import/indexLocal');
-const addBlockPage = require('../../../../yuzu-def-import/services/blockGeneration/addBlockPage');
-const localFileSource = require('../../../services/plugins/cardSources/localFiles');
+const localImport = require('../../../generation/index');
+const addBlockPage = require('../../../generation/addBlockPage');
+const localFileSource = require('../../../generation/plugins/cardSources/localFiles');
 const fsStub = require('./fsStub');
 const should = require('should');
 const path = require('path');
@@ -26,7 +26,7 @@ module.exports = (config, lang, ext, writeExpected) => {
         },
         setupLocalFileSource: (...args) => {
 
-            config.prefixes.block.file = '';
+            //config.prefixes.block.file = '';
 
             config.cardSource = 'test';
             config.cardSources.test = localFileSource;
