@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
 
     dirExists: function(dir) {
-        fs.existsSync(dir);
+        return fs.existsSync(dir);
     },
     readDir: function(path) {
         return fs.readdirSync(path);
@@ -17,10 +17,10 @@ module.exports = {
     },
 
     fileExists: function(filename) {
-        fs.existsSync(filename);
+        return fs.existsSync(filename);
     },
     readFile: function(filename) {
-        fs.readFileSync(filename, 'utf8')
+        return fs.readFileSync(filename, 'utf8')
     },
     writeFile: function(filename, contents) {
         fs.writeFileSync(filename, contents);

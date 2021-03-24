@@ -1,14 +1,14 @@
 const program = require('commander');
 const project = require('./creation/creators/project.js');
-const defImport = require('./creation/services/import.js');
-const defImportLocal = require('./creation/services/importLocal.js');
-const config = require('./config/config.js');
-const configSettings = config.run();
-const { settings, addBlock, addState, renameBlock } = require('./logic');
+const create = require('./creation');
+const generate = require('./generation/index.js');
+const config = require('./config/configFactory.js').create();
+ 
+var isDebugging = typeof v8debug === 'object'
 
 const getType = function(type) {
 
-    var ouput = configSettings.blockPaths[type];
+    var ouput = config.blockPaths[type];
     if(!ouput) {
         console.error("Component type not recongnized should be block or page");
     }
@@ -25,7 +25,7 @@ program
     .action((type) => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            settings(typeSettings);
+            create.settings(typeSettings);
         }
     });
 
@@ -36,7 +36,7 @@ program
     .action((type, name, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            addBlock(type, name, area, typeSettings, {});
+            create.addBlock(type, name, area, typeSettings, {});
         }
     });
 
@@ -47,7 +47,7 @@ program
     .action((type, name, state, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            addState(type, name, area, state, typeSettings);
+            create.addState(type, name, area, state, typeSettings);
         }
     });
 
@@ -58,7 +58,7 @@ program
     .action((type, oldName, newName, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            renameBlock(type, oldName, newName, area, typeSettings);
+            create.renameBlock(type, oldName, newName, area, typeSettings);
         }
     });
 
@@ -73,27 +73,10 @@ program
 program
     .command('import')
     .alias('i')
-    .description('Scaffold a project from schema shortand, stored in Trello cards or .txt files')
+    .description('Scaffold a project from schema shorthand, stored in Trello cards or .txt files')
     .action(() => {
-        defImport.run();
-    });
+        generate.run(config, true);
+    });          
 
-program
-    .command('import-local')
-    .alias('i')
-    .description('Scaffold a project from schema shortand, stored in Trello cards or .txt files')
-    .action(() => {
-        defImportLocal.run();
-    });    
-
-program
-    .command('updateKey')
-    .description('Update your YuzuPro key in your project config file to allow use of Yuzu Definition Import')
-    .action(() => {
-        defImport.ensureYuzuKeyExists();
-        defImport.updateYuzuProKey();
-    });
 
 program.parse(process.argv);
-
-module.exports = { getType, addBlock, config };

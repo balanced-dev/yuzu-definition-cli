@@ -56,7 +56,7 @@
             "name": "Import",
             "program": "${workspaceFolder}\\index.js" ,
             "args": [
-                "import-local"
+                "import"
 			]
         },
         {

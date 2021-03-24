@@ -1,4 +1,4 @@
-const localImport = require('../../../generation/index');
+const generator = require('../../../generation/index');
 const addBlockPage = require('../../../generation/addBlockPage');
 const localFileSource = require('../../../generation/plugins/cardSources/localFiles');
 const fsStub = require('./fsStub');
@@ -7,11 +7,15 @@ const path = require('path');
 
 let addedFiles = {};
 
-module.exports = (config, lang, ext, writeExpected) => {
+module.exports = (lang, ext, writeExpected) => {
 
     const resultOutput = require('./readWriteResults')(lang, ext);
+    const config = require('../../../config/configFactory').createForTesting(lang);
 
     return {
+        get config() {
+            return config;
+        },
         beforeEach: () => {   
             expected = '';
         },
@@ -26,7 +30,7 @@ module.exports = (config, lang, ext, writeExpected) => {
         },
         setupLocalFileSource: (...args) => {
 
-            //config.prefixes.block.file = '';
+            config.prefixes.block.file = '';
 
             config.cardSource = 'test';
             config.cardSources.test = localFileSource;
@@ -56,7 +60,7 @@ module.exports = (config, lang, ext, writeExpected) => {
         load_list: (list) => {
         
             addedFiles = {};
-            localImport(list, config, addBlockPage, fsStub(addedFiles));
+            generator.runSingleList(list, config, addBlockPage, fsStub(addedFiles));
 
         }
     }
