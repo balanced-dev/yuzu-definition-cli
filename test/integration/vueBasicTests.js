@@ -1,5 +1,5 @@
 const tests = require('./helpers/test-helper')('vue', 'vue');
-tests.setupLocalFileSource('test', 'integration', 'cards');
+tests.buildConfig(['yuzu', 'scss', 'vue.settings', 'vue.single-file-component'], ['test', 'integration', 'cards']);
 
 describe('vue basic integration tests', function() {
 

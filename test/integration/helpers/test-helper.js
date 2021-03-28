@@ -10,7 +10,7 @@ let addedFiles = {};
 module.exports = (lang, ext, writeExpected) => {
 
     const resultOutput = require('./readWriteResults')(lang, ext);
-    const config = require('../../../config/configFactory').createForTesting(lang);
+    let config = {};
 
     return {
         get config() {
@@ -28,16 +28,20 @@ module.exports = (lang, ext, writeExpected) => {
         setupResultsOutput: (...args) => {
             resultOutput.setupOutputDir(...args);
         },
-        setupLocalFileSource: (...args) => {
+        buildConfig: (modules, sourceDirs) => {
 
-            config.prefixes.block.file = '';
-
-            config.cardSource = 'test';
-            config.cardSources.test = localFileSource;
-            config.localFiles.directoryPath = path.resolve(...args);
-
-            return config.cardSources.test;
-
+            const userConfig = 
+            {
+                modules: modules,
+                source: {
+                    name: 'localFiles',
+                    settings: {
+                        directoryPath: path.resolve(...sourceDirs)
+                    }
+                }
+            }
+        
+            config = require('../../../config/configFactory').createForTesting(userConfig);
         },
         shouldHaveNoOfFiles: (no) => {
             Object.keys(addedFiles).length.should.equal(no);

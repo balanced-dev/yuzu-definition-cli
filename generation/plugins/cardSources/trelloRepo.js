@@ -9,7 +9,7 @@ const params = {
 };
 
 const makeTrelloRequest = async function(url, params, config) {
-    const t = new Trello(config.trello.key, config.trello.secret);
+    const t = new Trello(config.sourceSettings.key, config.sourceSettings.secret);
     return new Promise(resolve => { 
         t.get(url, params, function (err, data) {
             if (err) throw err;            
@@ -19,9 +19,9 @@ const makeTrelloRequest = async function(url, params, config) {
 };
 
 const getBoardLists = async function(config) {
-    var boardName = config.trello.board;
+    var boardName = config.sourceSettings.board;
     if(boardName) {
-        if(config.trello.key && config.trello.secret) {
+        if(config.sourceSettings.key && config.sourceSettings.secret) {
             let boards = await makeTrelloRequest("/1/members/me/boards", params, config),
                 board = _.find(boards, function (o) { return o.name == boardName });
             
@@ -30,7 +30,7 @@ const getBoardLists = async function(config) {
                 return lists;
             }
             else {
-                console.error('The board "' + config.trello.board + '" cannot be found');
+                console.error('The board "' + config.sourceSettings.board + '" cannot be found');
             }
         }
         else {
@@ -61,7 +61,7 @@ const getCardLists = async function (list, config, addBlockPage, fs, callback) {
         });*/
     }
     else {
-        console.error('The list "' + configList + '" on the board "' + config.trello.board + '" cannot be found');
+        console.error('The list "' + configList + '" on the board "' + config.sourceSettings.board + '" cannot be found');
     }
 };
 

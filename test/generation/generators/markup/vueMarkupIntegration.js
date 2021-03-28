@@ -1,5 +1,5 @@
 const should = require('should'),
-    base = require('./base.js')('vue');
+    base = require('./base.js')(['yuzu', 'scss', 'vue.settings']);
 
 const formatHtmlArray = function(lines) {
     return lines.join('\n') + '\n';

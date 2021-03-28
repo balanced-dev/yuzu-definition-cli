@@ -36,55 +36,8 @@ const common = (options) => {
   };
 };
 
-module.exports = {
-  cardSource: "",
-  yuzuPro: {
-    key: "",
-  },
-  trello: {
-    list: "",
-    board: "",
-    key: "",
-    secret: "",
-  },
-  localFiles: {
-    directoryPath: "./blockGeneration",
-  },
-  dataSettings: {},
-  styleSettings: {
-    generateSeparateFile: true,
-  },
-  schemaSettings: {
-    generateSeparateFile: true,
-  },
-  blockPaths: {
-      page: { 
-          path: '/_dev/_templates/pages'
-      },
-      block: { 
-          path: '/_dev/_templates/blocks'
-      },
-      layout: { 
-          path: '/_dev/_templates/_layouts'
-      }
-  },
-  prefixes: {
-    block: {
-      card: "Block - ",
-      file: "par",
-    },
-    page: {
-      card: "Page - ",
-    },
-    schema: {
-      card: "Schema",
-    },
-    property: {
-      card: "- ",
-    },
-  },
-  markupFragments: {
-    wrapperMarkupFragments: {
+module.exports = (config) => {
+  config.markupFragments.wrapperMarkupFragments = {
       array: {
         parentWrapperOpening: function (options, propertyCount) {
           let wrapperOptions = options.plugins._.cloneDeep(options);
@@ -148,8 +101,8 @@ module.exports = {
           return `</${options.markupSettings.defaultMarkupTag}>\n`;
         },
       },
-    },
-    contentMarkupFragments: {
+    };
+  config.markupFragments.contentMarkupFragments = {
       dynamicSubBlockArray: function (options) {
         return `<component :is="${options.relativePath.join(
           "."
@@ -173,8 +126,8 @@ module.exports = {
           `<${d.tag} class="${d.class}"${getLogic(options, d, true)}>\n{{${d.path}}}\n</${d.tag}>\n`.replace(' >', '>')
         );
       },
-    },
-    dataStructureMarkupFragments: {
+    };
+  config.markupFragments.dataStructureMarkupFragments = {
       dataImage: function (options) {
         let relativePath = options.relativePath.join(".");
         return (
@@ -199,87 +152,9 @@ module.exports = {
       dataForm: function (options) {
         return `<!-- Insert ${options.relativePath.join(".")} form here -->\n`;
       },
-    },
-  },
-  markupSettings: {
-    defaultMarkupTag: "div",
-    classNameDivider: "__",
-    indentSize: 4,
-    backupRefArrayChildClass: "item",
-    fileExtension: ".vue",
-    initialStyle: function(options) {
-      return `.${options.className} {\n\n}`
-    },
-    initialMarkup: function (options) {
-      return `<script>\nexport default {\nprops: <!-- YUZU PROPS -->\n};\n</script>\n<template>\n<div class=\"${options.className}\">\n<!-- YUZU MARKUP -->\n</div>\n</template>\n<style lang="scss">\n<!-- YUZU STYLE -->\n</style>\n`;
-    },
-  },
-  dataStructures: {
-    dataImage: {
-      src: "",
-      alt: "",
-      height: 0,
-      width: 0,
-    },
-    dataLink: {
-      label: "",
-      href: "#",
-      title: "",
-      isNewTab: false,
-      isExternalLink: false,
-      iconName: "",
-      isActive: false,
-    },
-    dataForm: {
-      testForm: {},
-    },
-  },
-  cardSources: {
-    trello: require("../../generation/plugins/cardSources/trello"),
-    localFiles: require("../../generation/plugins/cardSources/localFiles")
-  },
-  processors: {
-    directories: require('../../creation/creators/directories'),
-    data: require('../../creation/creators/data'),
-    markup: require('../../creation/creators/markup'),
-    scss: require('../../creation/creators/scss'),
-    schema: require('../../creation/creators/schema') 
-  },
-  processThese: ['directories','data', 'markup'],
-  getInterceptors: function(json, config, data, schemaCleanup, markup, scss) {
-
-    const sccsProcess = config.processors['schema'];
-    const prettier = require("prettier");
-
-    return {        
-      data: function() {
-          return data.removeDataStructureRefs(json, config); 
-      },
-      dataForSchemaGeneration: json,
-      markup: function(html, cardSettings) {
-          let markupGeneration = markup.run(html, cardSettings, json, config);
-          
-          let defaultScss = config.markupSettings.initialStyle(cardSettings);
-          let style = scss.run(defaultScss, cardSettings, markupGeneration.content, config);
-          let output =  markupGeneration.full.replace('<!-- YUZU STYLE -->', style);
-
-          let defaultSchema = sccsProcess.initialContent(cardSettings);
-          let schema = schemaCleanup.processProperties(defaultSchema, json);
-          output = output.replace('<!-- YUZU PROPS -->', config.plugins.propsFromSchema(schema));
-
-          output = prettier.format(output, { semi: false, tabWidth: 4, parser: "vue" });
-
-          return output;
-      }
-    }
-
-  },
-  plugins: {
-    _: require("lodash"),
-    changeCase: require("change-case"),
-    inflector: require("inflector-js"),
-    buildClass: require("../../generation/plugins/style/buildClass"),
-    propsFromSchema: require('../../generation/plugins/vue/vuePropsFromSchema')
-  }
+    };
+  config.plugins._ = require("lodash");
+  config.plugins.changeCase = require("change-case");
+  config.plugins.inflector = require("inflector-js");
 
 };

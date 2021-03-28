@@ -73,7 +73,6 @@ const baseSettings = {
             }
         }
     },
-    dataSettings: {},
     dataStructures: {
         "dataImage": {
             "src": "",

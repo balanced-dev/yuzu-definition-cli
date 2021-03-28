@@ -3,9 +3,9 @@ const rewire = require('rewire'),
     svc = rewire('../../../../generation/generators/markup/markup'),
     _ = require('lodash');
 
-const output = (type) => {
+const output = (modules) => {
 
-    const typeSettings = require('../../../../config/defaults/'+ type);
+    const typeSettings = require('../../../../config/configFactory').createForTesting({ modules: ['yuzu', 'scss', 'vue.settings'] });
 
     const mockupSettings = {
         className: 'test-block',

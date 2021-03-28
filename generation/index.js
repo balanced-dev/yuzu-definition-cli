@@ -6,17 +6,14 @@ const runSingleList = (list, config, addBlockPage, fs) => {
 
     config.propertyTypes = require('../config/propertyTypes');
 
-    let generator = config.cardSources[config.cardSource];
-
-    generator.buildList(list, config, addBlockPage, fs);
+    config.source.buildList(list, config, addBlockPage, fs);
 
 }
 
 const run = async function(config, isDebugging) {
-    const source = config.cardSources[config.cardSource];
 
-    if(source) {
-        let options = await source.getLists(config);
+    if(config.source) {
+        let options = await config.source.getLists(config);
         if(options) {
 
             if(isDebugging) {
@@ -39,7 +36,7 @@ const run = async function(config, isDebugging) {
         }
     }
     else {
-        console.error('Generation source option in config not defined/found. Options are: ' + Object.keys(blockGenerators).join(', '));
+        console.error('Generation source option in config not defined/found.');
     }
 };
 

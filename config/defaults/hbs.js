@@ -2,8 +2,9 @@ const { option } = require('commander');
 
 module.exports = {    
     cardSource: '',
-    yuzuPro: {
-        key: ""
+    cardSources: {
+        trello: require("../../generation/plugins/cardSources/trello"),
+        localFiles: require("../../generation/plugins/cardSources/localFiles")
     },
     trello: {
         list: "",
@@ -25,13 +26,6 @@ module.exports = {
                         `<!-- YUZU MARKUP -->` +
                     `</div>`
         }
-    },
-    dataSettings: {},
-    styleSettings: {
-        generateSeparateFile: true
-    },
-    schemaSettings: {
-        generateSeparateFile: true
     },
     prefixes: {
         block: {
@@ -172,10 +166,7 @@ module.exports = {
             testForm: {}
         }
     },
-    cardSources: {
-        trello: require("../../generation/plugins/cardSources/trello"),
-        localFiles: require("../../generation/plugins/cardSources/localFiles")
-    },
+
     processors: {
         directories: require('../../creation/creators/directories'),
         data: require('../../creation/creators/data'),

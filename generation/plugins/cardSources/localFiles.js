@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const getLists = function(config) {
-    var localFilesDirectory = config.localFiles.directoryPath;
+    var localFilesDirectory = config.sourceSettings.directoryPath;
     if (fs.existsSync(localFilesDirectory)) {        
         let lists =  fs.readdirSync(localFilesDirectory);
         lists = lists.filter(item => fs.statSync(path.join(localFilesDirectory, item)).isDirectory());
@@ -22,7 +22,7 @@ const getLists = function(config) {
 
 const getCards = function(list, config) {
     var output = [];
-    var localFilesDirectory = path.join(config.localFiles.directoryPath, list);
+    var localFilesDirectory = path.join(config.sourceSettings.directoryPath, list);
     fs.readdirSync(localFilesDirectory).forEach(file => {
         let filePath = path.join(localFilesDirectory, file);
 
@@ -71,4 +71,12 @@ const getType = function(name, config) {
     }
 };
 
-module.exports = { getLists, buildList, getCards };
+module.exports = () => {
+
+    return { 
+        getLists, 
+        buildList, 
+        getCards 
+    };
+
+};

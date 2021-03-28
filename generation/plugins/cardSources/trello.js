@@ -33,4 +33,8 @@ const processCard = function(card, type, config, addBlockPage, fs) {
     });
 };
 
-module.exports = { getLists, buildList };
+module.exports = () => {
+
+    return { getLists, buildList };
+
+};

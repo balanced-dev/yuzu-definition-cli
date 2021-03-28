@@ -1,4 +1,5 @@
-let config = require('../../../../config/defaults/vue');
+const userConfig = { modules: ['yuzu','scss','vue.settings'] };
+let config = require('../../../../config/configFactory').createForTesting(userConfig);
 const fragments = config.markupFragments;
 const wrapperMarkupFragments = fragments.wrapperMarkupFragments;
 const contentMarkupFragments = fragments.contentMarkupFragments;
@@ -19,7 +20,7 @@ const generateOptions = function(propertyNames, classNames = propertyNames) {
 describe('Vue Markup unit tests', function() {
 
     beforeEach(() => {
-        config = require('../../../../config/defaults/vue');
+        config = require('../../../../config/configFactory').createForTesting(userConfig);
     });
 
 	it('Creates data structure array markup', function() {

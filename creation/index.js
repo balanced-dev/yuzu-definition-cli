@@ -31,11 +31,11 @@ const addBlock = function(type, name, area, typeSettings, initialContentIntercep
 
     if (!fs.dirExists(settings.rootDirectory)){
 
-        var processors = Object.keys(config.processors)
-            .filter((item) => { return config.processThese.includes(item) })
+        var processors = config.processors
+            .filter((item) => { return config.processThese.includes(item.name) })
 
-        processors.forEach((key) => {
-            config.processors[key].add(settings, fs);
+        processors.forEach((processor) => {
+            processor.module.add(settings, fs);
         });
 
         console.log(`Added new ${type} "${settings.fileName}"`);
