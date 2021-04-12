@@ -9,7 +9,7 @@ const run = function (options) {
     let contentOptions = { ...options,  ...{
         value: refValue,
     }};
-    return options.markupFragments.dataStructureMarkupFragments[refValue](contentOptions);
+    return options.markup.fragments.dataStructureMarkupFragments[refValue](contentOptions);
 };
 
 module.exports = { isValid, run };

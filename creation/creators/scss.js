@@ -9,7 +9,7 @@ const filename = function(settings) {
 }
 
 const initialContent = function(settings) {
-    var scss = settings.config.markupSettings.initialStyle(settings);
+    var scss = settings.config.style.settings.initialStyle(settings);
 
     if(settings.contentIntercepts.scss)
         scss = settings.contentIntercepts.scss(scss, settings); 

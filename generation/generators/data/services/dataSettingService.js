@@ -20,10 +20,10 @@ const set = function(obj, segments, scope, typeIndexes, getValueFromSegment, set
     }
 };
 
-const getValue = function(segments, typeIndexes, getValueFromSegment, settings) {
+const getValue = function(segments, typeIndexes, getValueFromSegment, config) {
 
     let typeValue = getValueFromSegment ? helper.getSegmentAttribute(segments, typeIndexes, 'value') : undefined,
-        propertyType = settings.propertyTypes[helper.getSegmentAttribute(segments, typeIndexes, 'type')];
+        propertyType = config.propertyTypes[helper.getSegmentAttribute(segments, typeIndexes, 'type')];
 
     if(propertyType)
         return propertyType.defaultValue(typeValue);

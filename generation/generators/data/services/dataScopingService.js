@@ -30,12 +30,12 @@ const isRefArray = function(value) {
     return value.length > 0 && value[0].$ref;
 };
 
-const removeUnwantedPropertyAttributes = function(segments, structure, settings) {
+const removeUnwantedPropertyAttributes = function(segments, structure, config) {
     let attributeCountToRemove = Object.keys(structure).length - 1; // -1 because 'type' will be removed if set
 
     // Remove any type keywords from segments array (e.g. string, array, object...)
     segments = segments.filter(function(segment) {
-        return settings.propertyTypes[segment] === undefined;
+        return config.propertyTypes[segment] === undefined;
     });
 
     // Trim end of array to remove property attributes (ie. name, subblock value)
@@ -46,9 +46,9 @@ const removeUnwantedPropertyAttributes = function(segments, structure, settings)
     return segments;
 };
 
-const get = function(segments, obj, structure, settings)
+const get = function(segments, obj, structure, config)
 {
-    segments = removeUnwantedPropertyAttributes(segments, structure, settings);
+    segments = removeUnwantedPropertyAttributes(segments, structure, config);
     let location = buildLocation(segments, obj);
 
     return {

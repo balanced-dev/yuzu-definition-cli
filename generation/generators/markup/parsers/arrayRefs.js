@@ -10,8 +10,8 @@ const isValid = function (options) {
 
 const run = function (options) {
     let refValue = trimRefValue.run(options.value[0].$ref);
-    let wrapperTags = options.markupFragments.wrapperMarkupFragments.array;
-    let contentTags = options.markupFragments.contentMarkupFragments;
+    let wrapperTags = options.markup.fragments.wrapperMarkupFragments.array;
+    let contentTags = options.markup.fragments.contentMarkupFragments;
 
     
     let openingTagMarkup = wrapperTags.refsOpening(options);

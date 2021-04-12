@@ -4,8 +4,6 @@ const inquirer = require('inquirer');
 
 const runSingleList = (list, config, addBlockPage, fs) => {
 
-    config.propertyTypes = require('../config/propertyTypes');
-
     config.source.buildList(list, config, addBlockPage, fs);
 
 }

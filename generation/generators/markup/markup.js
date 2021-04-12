@@ -35,16 +35,16 @@ const generateMarkup = function(options) {
                 let fragment = scoping.run(fragmentOptions);
 
                 let fragmentMarkupOptions = { ...options,  ...{
-                    markup: '',
+                    output: '',
                     data: fragment.data,
                     absolutePath: options.absolutePath.concat(property),
                     relativePath: fragment.relativePath,
                     classArray: fragment.classArray
                 }};
                 
-                options.markup += fragment.openingTag;
-                options.markup += generateMarkup(fragmentMarkupOptions);
-                options.markup += fragment.closingTag;
+                options.output += fragment.openingTag;
+                options.output += generateMarkup(fragmentMarkupOptions);
+                options.output += fragment.closingTag;
             }
         });
 
@@ -56,16 +56,16 @@ const generateMarkup = function(options) {
                     relativePath: options.relativePath.concat(property),
                     classArray: options.classArray.concat(property),
                 }};
-                options.markup += parser.run(fragmentOptions);
+                options.output += parser.run(fragmentOptions);
                 break;
             }
         };
     }
     logger.log({
         level: 'info',
-        message: options.markup
+        message: options.output
     });
-    return options.markup;
+    return options.output;
 };
 
 const run = function(markup, cardSettings, json, config) {
@@ -78,7 +78,7 @@ const run = function(markup, cardSettings, json, config) {
         message: 'json= ' + json
     });
     let options = { ...config,  ...{
-        markup: '', 
+        output: '', 
         cardSettings: cardSettings, 
         data: json,
         absolutePath: [],

@@ -5,11 +5,11 @@ const isValid = function(segments)
     return (segments.length == 1);
 };
 
-const run = function(segments, object, settings)
+const run = function(segments, object, config)
 {
     let name = camelCase(segments[0]);
 
-    object[name] = settings.propertyTypes['string'].defaultValue();
+    object[name] = config.propertyTypes['string'].defaultValue();
 };
 
 module.exports= { isValid: isValid, run: run  }

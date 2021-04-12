@@ -2,12 +2,12 @@ var path = require('path');
 var common = require('./common.js');
 
 const filename = function(settings) {
-    var pathName = path.join(settings.rootDirectory, `${common.prefixName(settings)}${settings.config.markupSettings.fileExtension}`);
+    var pathName = path.join(settings.rootDirectory, `${common.prefixName(settings)}${settings.config.markup.settings.fileExtension}`);
     return pathName;
 }
 
 const initialContent = function(settings) {
-    var html = settings.config.markupSettings.initialMarkup(settings);
+    var html = settings.config.markup.settings.initialMarkup(settings);
 
     if(settings.contentIntercepts.markup)
         html = settings.contentIntercepts.markup(html, settings); 

@@ -6,7 +6,7 @@ const isValid = function (options) {
 };
 
 const run = function (options) {
-    let tags = options.markupFragments.wrapperMarkupFragments.object;
+    let tags = options.markup.fragments.wrapperMarkupFragments.object;
     let openingTagMarkup = tags.openingTag(options);
     let closingTagMarkup = tags.closingTag(options);
 

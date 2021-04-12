@@ -6,7 +6,7 @@ const isValid = function (options) {
 };
 
 const run = function (options) {
-    let tags = options.markupFragments.wrapperMarkupFragments.array;
+    let tags = options.markup.fragments.wrapperMarkupFragments.array;
     let propertyCount = Object.keys(options.value[0]).length;
     let openingTagMarkup = '';
     let closingTagMarkup = '';

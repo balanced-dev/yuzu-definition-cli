@@ -3,12 +3,19 @@ const _ = require('lodash');
 let userConfigPath = path.resolve('./yuzu.config.js');
 const overrideConfig = require('./services/overrideDefaults');
 
-const initialConfig = require('./defaults/intiial');
+const configDefaults = require('./configDefaults');
 
 const cardSources = {
     trello: require("../generation/plugins/cardSources/trello"),
     localFiles: require("../generation/plugins/cardSources/localFiles")
 };
+
+let modules = [];
+const internalPlugins = ['vue', 'yuzu', 'scss'];
+internalPlugins.forEach((plugin) => {
+    const pluginModules = require(`../plugins/${plugin}/index`)().modules;
+    modules = [...modules, ...pluginModules];
+});
 
 const addSourceModule = function(userConfig, defaultConfig) {
 
@@ -33,10 +40,10 @@ const create = () => {
 
     try {
         let userConfig = require(userConfigPath);
-        const defaultConfig = initialConfig();
+        const defaultConfig = configDefaults();
 
-        userConfig.modules.forEach((module) => {
-            require(`./defaults/${module}`)(defaultConfig);
+        userConfig.modules.forEach((name) => {
+            modules[name].module(defaultConfig);
         });
 
         addSourceModule(userConfig, defaultConfig);
@@ -57,21 +64,19 @@ const create = () => {
 
 const createForTesting = (userConfig) => {
 
-    try {
-        const defaultConfig = initialConfig();
+    const defaultConfig = configDefaults();
 
-        userConfig.modules.forEach((module) => {
-            require(`./defaults/${module}`)(defaultConfig);
-        });
+    userConfig.modules.forEach((name) => {
+        const module = modules.find((module) => { return module.name == name; });
+        if(module) 
+            module.init(defaultConfig);
+        else 
+            throw `${name} module not found`;
+    });
 
-        addSourceModule(userConfig, defaultConfig);
+    addSourceModule(userConfig, defaultConfig);
 
-        return _.defaultsDeep({}, defaultConfig);
-    }
-    catch (e) {
-        console.log(e);
-    }
-    return {};
+    return _.defaultsDeep({}, defaultConfig);
 
 }
 

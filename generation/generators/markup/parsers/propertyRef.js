@@ -10,7 +10,7 @@ const run = function (options) {
         value: refValue
     }};
 
-    return options.markupFragments.contentMarkupFragments.subBlockObject(contentOptions);
+    return options.markup.fragments.contentMarkupFragments.subBlockObject(contentOptions);
 };
 
 module.exports = { isValid, run };

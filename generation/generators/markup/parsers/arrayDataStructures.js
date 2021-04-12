@@ -15,9 +15,9 @@ const isValid = function (options) {
 
 const run = function (options) {
     let refValue = trimRefValue.run(options.value[0].$ref);
-    let wrapperTags = options.markupFragments.wrapperMarkupFragments.array;
-    let contentTags = options.markupFragments.dataStructureMarkupFragments;
-    let childClassArray = generateChildClass([...options.classArray], options.markupSettings);
+    let wrapperTags = options.markup.fragments.wrapperMarkupFragments.array;
+    let contentTags = options.markup.fragments.dataStructureMarkupFragments;
+    let childClassArray = generateChildClass([...options.classArray], options.style.settings);
 
     let openingTagMarkup = wrapperTags.dataStructuresOpening(options);
     

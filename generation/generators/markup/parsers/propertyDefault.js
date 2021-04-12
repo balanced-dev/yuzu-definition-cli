@@ -5,7 +5,7 @@ const isValid = function (options) {
 };
 
 const run = function (options) {
-    return options.markupFragments.contentMarkupFragments.default(options);
+    return options.markup.fragments.contentMarkupFragments.default(options);
 };
 
 module.exports = { isValid, run };

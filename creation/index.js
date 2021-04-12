@@ -27,15 +27,15 @@ const settings = function(typeSettings)
 
 const addBlock = function(type, name, area, typeSettings, initialContentIntercepts, config, fs)
 {
-    var settings = getBlockSettings(type, name, area, typeSettings, initialContentIntercepts, config, fs);
+    let settings = getBlockSettings(type, name, area, typeSettings, initialContentIntercepts, config, fs);
 
     if (!fs.dirExists(settings.rootDirectory)){
 
-        var processors = config.processors
-            .filter((item) => { return config.processThese.includes(item.name) })
+        let creators = config.creators
+            .filter((item) => { return config.createThese.includes(item.name) })
 
-        processors.forEach((processor) => {
-            processor.module.add(settings, fs);
+        creators.forEach((creator) => {
+            creator.module.add(settings, fs);
         });
 
         console.log(`Added new ${type} "${settings.fileName}"`);

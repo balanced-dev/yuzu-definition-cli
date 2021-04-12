@@ -1,6 +1,6 @@
 const _ = require('lodash'),
     scopeSvc = require('../services/dataScopingService'),
-    propertySettingService = require('../services/dataSettingService'),
+    dataSettingService = require('../services/dataSettingService'),
     helper = require('../services/dataHelper');
 
 const segmentStructure = ['type', 'name'];
@@ -14,11 +14,11 @@ const isValid = function(segments)
     return (segments.length > 1 && !_.includes(segments, 'subBlock'));
 };
 
-const run = function(segments, object, settings)
+const run = function(segments, object, config)
 {
-    let scope = scopeSvc.get(segments, object, segmentStructure, settings);
+    let scope = scopeSvc.get(segments, object, segmentStructure, config);
     object = scope.object;
-    propertySettingService.set(object, segments, scope, segmentIndexes, false, settings);
+    dataSettingService.set(object, segments, scope, segmentIndexes, false, config);
 };
 
 module.exports= { isValid: isValid, run: run, structure: segmentStructure}

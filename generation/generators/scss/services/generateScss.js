@@ -1,6 +1,6 @@
 const run = function(scss, obj, settings) {    
     for (const key in obj) {
-        let openingTag = '&' + settings.markupSettings.classNameDivider + key + ' {',
+        let openingTag = '&' + settings.style.settings.classNameDivider + key + ' {',
             contentTags = '\n ',
             closingTag = '}';
 
