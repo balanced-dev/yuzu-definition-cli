@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = {
-
     dirExists: function(dir) {
         return fs.existsSync(dir);
     },
@@ -28,7 +27,6 @@ module.exports = {
     renameFile: function(oldFilename, newFilename) {
         fs.renameSync(oldFilename, newFilename)
     },
-
     getRoot: function(name, area = '', typeSettings, fs){
 
         var isRoot = fs.fileExists(path.join(process.cwd(), './package.json'));
