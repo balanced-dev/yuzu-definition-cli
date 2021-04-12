@@ -1,4 +1,5 @@
-const config = require('../../../../../config/defaults/hbs');
+const userConfig = { modules: ['yuzu','scss','hbs.settings'] };
+let config = require('../../../../../config/configFactory').createForTesting(userConfig);
 const fragments = config.markup.fragments;
 const wrapperMarkupFragments = fragments.wrapperMarkupFragments;
 const contentMarkupFragments = fragments.contentMarkupFragments;

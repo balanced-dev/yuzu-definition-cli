@@ -5,7 +5,7 @@ const rewire = require('rewire'),
 
 const output = (modules) => {
 
-    const typeSettings = require('../../../../../config/configFactory').createForTesting({ modules: ['yuzu', 'scss', 'vue.settings'] });
+    const typeSettings = require('../../../../../config/configFactory').createForTesting({ modules: modules });
 
     const mockupSettings = {
         className: 'test-block',

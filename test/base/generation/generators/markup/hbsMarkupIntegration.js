@@ -1,5 +1,5 @@
 const should = require('should'),
-    base = require('./base.js')('hbs');
+    base = require('./base')(['yuzu', 'scss', 'hbs.settings']);
 
 const formatHtmlArray = function(lines) {
     return lines.join('\n') + '\n';
