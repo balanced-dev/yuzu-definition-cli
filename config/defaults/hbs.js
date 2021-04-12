@@ -1,4 +1,20 @@
-const { option } = require('commander');
+const getPropertyCount = function(options) {
+    return Object.keys(options.value[0]).length;
+}
+
+const basicArrayOpening = function(options, newContext) {
+    let output =    `{{#if ${options.relativePath.join('.')}.[0]}}\n` +
+                        `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n` +
+                            `{{#each ${options.relativePath.join('.')}}}\n`;
+    options.relativePath = !newContext ? [] : [newContext];
+    
+    return output;
+};
+const basicArrayClosing = function(options) {
+    return                  `{{/each}}\n` +
+                        `</${options.markup.settings.defaultTag}>\n` +
+                    `{{/if}}\n`;
+};
 
 module.exports = {    
     cardSource: '',
@@ -35,46 +51,54 @@ module.exports = {
         fragments: {
             wrapperMarkupFragments: {
                 array: {
-                    parentWrapperOpening: function(options, propertyCount) {
-                        let wrapperOptions = options.plugins._.cloneDeep(options);
-                        options.plugins.buildClass.addChildClass(options);
-                        options.relativePath = [];
-                        return  this.simpleTypeOpening(wrapperOptions) + 
-                                    `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n`;
+                    parentWrapperOpening: function(options, newContext, forceWrapper) {
+                        let propertyCount = getPropertyCount(options);
+    
+                        if(propertyCount && propertyCount === 1 && !forceWrapper) {
+                            return basicArrayOpening(options, newContext)
+                        }
+                        else {
+                            let wrapperOptions = options.plugins._.cloneDeep(options);
+                            options.plugins.buildClass.addChildClass(options);
+                            options.relativePath = !newContext ? [] : [newContext];
+                            return  basicArrayOpening(wrapperOptions, newContext) + 
+                                        `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n`;
+                        }
                     },
-                    parentWrapperClosing: function(options, propertyCount) {
-                        return      `</${options.markup.settings.defaultTag}>\n` +
-                                this.simpleTypeClosing(options);  
+                    parentWrapperClosing: function(options, newContext, forceWrapper) {
+                        let propertyCount = getPropertyCount(options);
+    
+                        if(propertyCount && propertyCount === 1 && !forceWrapper) {
+                            return basicArrayClosing(options, newContext);
+                        }
+                        else {
+                            return      `</${options.markup.settings.defaultTag}>\n` +
+                                    basicArrayClosing(options, newContext); 
+                        } 
                     },
                     simpleTypeOpening: function(options) {
-                        let output =    `{{#if ${options.relativePath.join('.')}.[0]}}\n` +
-                                            `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n` +
-                                                `{{#each ${options.relativePath.join('.')}}}\n`;
-                        options.relativePath = [];
-                        return output;
+                        return basicArrayOpening(options, 'this');
                     },
                     simpleTypeClosing: function(options) {
-                        return                  `{{/each}}\n` +
-                                            `</${options.markup.settings.defaultTag}>\n` +
-                                    `{{/if}}\n`;
+                        return basicArrayClosing(options);
                     },
                     dataStructuresOpening: function(options) {
-                        return this.simpleTypeOpening(options);
+                        return basicArrayOpening(options, 'this');
                     },
                     dataStructuresClosing: function(options) {
-                        return this.simpleTypeClosing(options);
+                        return basicArrayClosing(options);
                     },
                     dynamicRefsOpening: function(options) {
-                        return this.parentWrapperOpening(options);
+                        return this.parentWrapperOpening(options, 'this', true);
                     },
                     dynamicRefsClosing: function(options) {
-                        return this.parentWrapperClosing(options);
+                        return this.parentWrapperClosing(options, 'this', true);
                     },
                     refsOpening: function(options) {
-                        return this.simpleTypeOpening(options);
+                        return this.parentWrapperOpening(options, 'this', true);
                     },
                     refsClosing: function(options) {
-                        return this.simpleTypeClosing(options);
+                        return this.parentWrapperClosing(options, 'this', true);
                     }, 
                 },
                 object: {

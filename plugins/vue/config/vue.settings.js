@@ -39,7 +39,7 @@ const common = (options) => {
 module.exports = (config) => {
   config.markup.fragments.wrapperMarkupFragments = {
       array: {
-        parentWrapperOpening: function (options, propertyCount) {
+        parentWrapperOpening: function (options) {
           let wrapperOptions = options.plugins._.cloneDeep(options);
           let childContext = generateChildContext(options);
           options.plugins.buildClass.addChildClass(options);
@@ -53,7 +53,7 @@ module.exports = (config) => {
           options.relativePath = [childContext];
           return output;
         },
-        parentWrapperClosing: function (options, propertyCount) {
+        parentWrapperClosing: function (options) {
           let d = common(options);
           return `</${d.tag}>\n` + `</${d.tag}>\n`;
         },

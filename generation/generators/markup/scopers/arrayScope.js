@@ -7,12 +7,11 @@ const isValid = function (options) {
 
 const run = function (options) {
     let tags = options.markup.fragments.wrapperMarkupFragments.array;
-    let propertyCount = Object.keys(options.value[0]).length;
     let openingTagMarkup = '';
     let closingTagMarkup = '';
 
-    openingTagMarkup = tags.parentWrapperOpening(options, propertyCount);
-    closingTagMarkup = tags.parentWrapperClosing(options, propertyCount);
+    openingTagMarkup = tags.parentWrapperOpening(options);
+    closingTagMarkup = tags.parentWrapperClosing(options);
 
     return {
         data: options.value[0],

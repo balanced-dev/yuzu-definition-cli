@@ -4,7 +4,7 @@ const wrapperMarkupFragments = fragments.wrapperMarkupFragments;
 const contentMarkupFragments = fragments.contentMarkupFragments;
 const dataStructureMarkupFragments = fragments.dataStructureMarkupFragments;
 
-const generateOptions = function(propertyNames, classNames = propertyNames) {
+const generateOptions = function(propertyNames, classNames = propertyNames, value = [{property1: "", property2: ""}]) {
     return {
         className: 'test-block',
         absolutePath: propertyNames,
@@ -13,6 +13,7 @@ const generateOptions = function(propertyNames, classNames = propertyNames) {
             className: 'test-block'
         },
         classArray: classNames,
+        value: value,
     };
 }
 
@@ -61,16 +62,18 @@ describe('Hbs Markup unit tests', function() {
     });
 
 	it('Creates refs array markup', function() {
-        let settings = {...config,  ...generateOptions(['links'])};
+        let settings = {...config,  ...generateOptions(['links'], ['links'], [{"$ref": "/dataLink"}])};
 
         let expectedOpeningHtml =
             `{{#if links.[0]}}\n` +
                 `<div class="test-block__links">\n` +
-                    `{{#each links}}\n`
+                    `{{#each links}}\n` +
+                        `<div class="test-block__links__link">\n`
         ;
         let expectedClosingHtml =
-                        `{{/each}}\n` +
-                    `</div>\n` +
+                        `</div>\n` +
+                    `{{/each}}\n` +
+                `</div>\n` +
             `{{/if}}\n`
         ;
 
@@ -101,7 +104,7 @@ describe('Hbs Markup unit tests', function() {
     });
 
 	it('Creates parent wrapper array markup', function() {
-        let settings = {...config,  ...generateOptions(['objects'])};
+        let settings = {...config,  ...generateOptions(['objects'], ['objects'])};
 
         let expectedOpeningHtml =
             `{{#if objects.[0]}}\n` +
