@@ -43,7 +43,11 @@ const create = () => {
         const defaultConfig = configDefaults();
 
         userConfig.modules.forEach((name) => {
-            modules[name].module(defaultConfig);
+            const module = modules.find((module) => { return module.name == name; });
+            if(module) 
+                module.init(defaultConfig);
+            else 
+                throw `${name} module not found`;
         });
 
         addSourceModule(userConfig, defaultConfig);
