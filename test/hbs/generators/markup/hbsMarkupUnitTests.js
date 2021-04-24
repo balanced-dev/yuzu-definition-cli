@@ -1,11 +1,11 @@
-const userConfig = { modules: ['yuzu','scss','vue.settings'] };
+const userConfig = { modules: ['yuzu','scss','hbs.settings'] };
 let config = require('../../../../config/configFactory').createForTesting(userConfig);
 const fragments = config.markup.fragments;
 const wrapperMarkupFragments = fragments.wrapperMarkupFragments;
 const contentMarkupFragments = fragments.contentMarkupFragments;
 const dataStructureMarkupFragments = fragments.dataStructureMarkupFragments;
 
-const generateOptions = function(propertyNames, classNames = propertyNames) {
+const generateOptions = function(propertyNames, classNames = propertyNames, value = [{property1: "", property2: ""}]) {
     return {
         className: 'test-block',
         absolutePath: propertyNames,
@@ -14,25 +14,26 @@ const generateOptions = function(propertyNames, classNames = propertyNames) {
             className: 'test-block'
         },
         classArray: classNames,
+        value: value,
     };
 }
 
-describe('vue unit', function() {
+describe('hbs unit', function() {
 
-    describe('markup unit', function() {
-
-        beforeEach(() => {
-            config = require('../../../../config/configFactory').createForTesting(userConfig);
-        });
+    describe('markup unit tests', function() {
 
         it('Creates data structure array markup', function() {
             let settings = {...config,  ...generateOptions(['links'])};
 
             let expectedOpeningHtml =
-                `<div class="test-block__links" v-if="links && links.length">\n`
+                `{{#if links.[0]}}\n` +
+                    `<div class="test-block__links">\n` +
+                        `{{#each links}}\n`
             ;
             let expectedClosingHtml =
-                `</div>\n`
+                            `{{/each}}\n` +
+                        `</div>\n` +
+                `{{/if}}\n`
             ;
 
             let opening = wrapperMarkupFragments.array.dataStructuresOpening(settings);
@@ -45,12 +46,16 @@ describe('vue unit', function() {
             let settings = {...config,  ...generateOptions(['rows'])};
 
             let expectedOpeningHtml =
-                `<div class="test-block__rows" v-if="rows && rows.length">\n` +
-                    `<div class="test-block__rows__row" v-for="(row, index) in rows" :key="index">\n`
+                `{{#if rows.[0]}}\n` +
+                    `<div class="test-block__rows">\n` +
+                        `{{#each rows}}\n` +
+                            `<div class="test-block__rows__row">\n`
             ;
             let expectedClosingHtml =
-                    `</div>\n`+
-                `</div>\n`
+                            `</div>\n` +                        
+                        `{{/each}}\n` +
+                    `</div>\n` +
+                `{{/if}}\n`;
             ;
 
             let opening = wrapperMarkupFragments.array.dynamicRefsOpening(settings);
@@ -60,13 +65,19 @@ describe('vue unit', function() {
         });
 
         it('Creates refs array markup', function() {
-            let settings = {...config,  ...generateOptions(['links'])};
+            let settings = {...config,  ...generateOptions(['links'], ['links'], [{"$ref": "/dataLink"}])};
 
             let expectedOpeningHtml =
-                `<div class="test-block__links" v-if="links && links.length">\n`
+                `{{#if links.[0]}}\n` +
+                    `<div class="test-block__links">\n` +
+                        `{{#each links}}\n` +
+                            `<div class="test-block__links__link">\n`
             ;
             let expectedClosingHtml =
-                `</div>\n`
+                            `</div>\n` +
+                        `{{/each}}\n` +
+                    `</div>\n` +
+                `{{/if}}\n`
             ;
 
             let opening = wrapperMarkupFragments.array.refsOpening(settings);
@@ -79,10 +90,14 @@ describe('vue unit', function() {
             let settings = {...config,  ...generateOptions(['strings'])};
 
             let expectedOpeningHtml =
-                `<div class="test-block__strings" v-if="strings && strings.length">\n` 
+                `{{#if strings.[0]}}\n` +
+                    `<div class="test-block__strings">\n` +
+                        `{{#each strings}}\n`
             ;
             let expectedClosingHtml =
-                `</div>\n`
+                            `{{/each}}\n` +
+                        `</div>\n` +
+                `{{/if}}\n`
             ;
 
             let opening = wrapperMarkupFragments.array.simpleTypeOpening(settings);
@@ -92,15 +107,19 @@ describe('vue unit', function() {
         });
 
         it('Creates parent wrapper array markup', function() {
-            let settings = {...config,  ...generateOptions(['objects'])};
+            let settings = {...config,  ...generateOptions(['objects'], ['objects'])};
 
             let expectedOpeningHtml =
-                `<div class="test-block__objects" v-if="objects && objects.length">\n` +
-                    `<div class="test-block__objects__object" v-for="(object, index) in objects" :key="index">\n`
+                `{{#if objects.[0]}}\n` +
+                    `<div class="test-block__objects">\n` +
+                        `{{#each objects}}\n` +
+                            `<div class="test-block__objects__object">\n`
             ;
             let expectedClosingHtml =
-                    `</div>\n`+
-                `</div>\n`
+                            `</div>\n` +                        
+                        `{{/each}}\n` +
+                    `</div>\n` +
+                `{{/if}}\n`;
             ;
 
             let opening = wrapperMarkupFragments.array.parentWrapperOpening(settings);
@@ -113,12 +132,16 @@ describe('vue unit', function() {
             let settings = {...config,  ...generateOptions(['stringArray'], ['string-array'])};
 
             let expectedOpeningHtml =
-                `<div class="test-block__string-array" v-if="stringArray && stringArray.length">\n` +
-                    `<div class="test-block__string-array__item" v-for="(item_${settings.absolutePath.length}, index) in stringArray" :key="index">\n`
+                `{{#if stringArray.[0]}}\n` +
+                    `<div class="test-block__string-array">\n` +
+                        `{{#each stringArray}}\n` +
+                            `<div class="test-block__string-array__item">\n`
             ;
             let expectedClosingHtml =
-                    `</div>\n`+
-                `</div>\n`
+                            `</div>\n` +                        
+                        `{{/each}}\n` +
+                    `</div>\n` +
+                `{{/if}}\n`;
             ;
 
             let opening = wrapperMarkupFragments.array.parentWrapperOpening(settings);
@@ -147,7 +170,7 @@ describe('vue unit', function() {
             let settings = {...config,  ...generateOptions(['item'])};
 
             let expectedOutputHtml =
-                `<component :is="item._ref.replace('/par', '')" :key="index" v-bind="item"></component>\n`
+                `{{{ dynPartial _ref item }}}\n`
             ;
 
             let output = contentMarkupFragments.dynamicSubBlockArray(settings);
@@ -156,35 +179,12 @@ describe('vue unit', function() {
         });
 
         it('Creates named sub-block array child markup', function() {
-            let options = {...generateOptions(['employee']), ...{value: 'parTeamMember', isArray: true, arrayContext: ['employees']}};
+            let options = {...generateOptions(['this']), ...{value: 'parTeamMember'}};
             let settings = {...config,  ...options};
 
             let expectedOutputHtml =
-                `<team-member v-for=\"(employee, index) in employees\" :key=\"index\" v-bind=\"employee\"></team-member>\n`;
-
-            let output = contentMarkupFragments.namedSubBlockArray(settings);
-
-            output.should.equal(expectedOutputHtml);
-        });
-
-        it('Creates named sub-block array child in a parent array markup', function() {
-            let options = {...generateOptions(['employee']), ...{value: 'parTeamMember', isArray: true, arrayContext: ['staff', 'employees']}};
-            let settings = {...config,  ...options};
-
-            let expectedOutputHtml =
-                `<team-member v-for=\"(employee, index) in staff.employees\" :key=\"index\" v-bind=\"employee\"></team-member>\n`;
-
-            let output = contentMarkupFragments.namedSubBlockArray(settings);
-
-            output.should.equal(expectedOutputHtml);
-        });
-
-        it('Creates named sub-block child markup', function() {
-            let options = {...generateOptions(['employee']), ...{value: 'parTeamMember'}};
-            let settings = {...config,  ...options};
-
-            let expectedOutputHtml =
-                `<team-member v-if=\"employee\" v-bind=\"employee\"></team-member>\n`;
+                `{{> parTeamMember this }}\n`
+            ;
 
             let output = contentMarkupFragments.namedSubBlockArray(settings);
 
@@ -196,33 +196,11 @@ describe('vue unit', function() {
             let settings = {...config,  ...options};
 
             let expectedOutputHtml =
-                `<site-footer v-if="footer" v-bind="footer"></site-footer>\n`
-            ;
-
-            let output = contentMarkupFragments.subBlockObject(settings);
-
-            output.should.equal(expectedOutputHtml);
-        });
-
-        it('Creates sub-block array property markup', function() {
-            let options = {...generateOptions(['footer']), ...{value: 'parSiteFooter', isArray: true, arrayContext: ['footers']}};
-            let settings = {...config,  ...options};
-
-            let expectedOutputHtml =
-                `<site-footer v-for=\"(footer, index) in footers\" :key=\"index\" v-bind="footer"></site-footer>\n`
-            ;
-
-            let output = contentMarkupFragments.subBlockObject(settings);
-
-            output.should.equal(expectedOutputHtml);
-        });
-
-        it('Creates sub-block array property in parent array markup', function() {
-            let options = {...generateOptions(['footer']), ...{value: 'parSiteFooter', isArray: true, arrayContext: ['site', 'footers']}};
-            let settings = {...config,  ...options};
-
-            let expectedOutputHtml =
-                `<site-footer v-for=\"(footer, index) in site.footers\" :key=\"index\" v-bind="footer"></site-footer>\n`
+                `{{#if footer}}\n` +
+                    `<div class="test-block__footer">\n` +
+                        `{{> parSiteFooter footer }}\n` +
+                    `</div>\n` +
+                `{{/if}}\n`
             ;
 
             let output = contentMarkupFragments.subBlockObject(settings);
@@ -234,9 +212,11 @@ describe('vue unit', function() {
             let settings = {...config,  ...generateOptions(['name'])};
 
             let expectedOutputHtml =
-                `<div class="test-block__name" v-if="name">\n` +
+                `{{#if name}}\n` +
+                    `<div class="test-block__name">\n` +
                     `{{name}}\n` +
-                `</div>\n`
+                    `</div>\n` +
+                `{{/if}}\n`
             ;
 
             let output = contentMarkupFragments.default(settings);
@@ -248,9 +228,11 @@ describe('vue unit', function() {
             let settings = {...config,  ...generateOptions(['image'])};
 
             let expectedOutputHtml =
-                `<picture v-if="image.src" class="test-block__image">\n` +
-                    `<img :src="image.src" :alt="image.alt">\n` +
-                `</picture>\n`;
+                `{{#if image.src}}\n` +
+                    `<picture class="test-block__image">\n` +
+                        `<img src="{{image.src}}" alt="{{image.alt}}">\n` +
+                    `</picture>\n` +
+                `{{/if}}\n`
             ;
 
             let output = dataStructureMarkupFragments.dataImage(settings);
@@ -258,14 +240,15 @@ describe('vue unit', function() {
             output.should.equal(expectedOutputHtml);
         });
 
-
         it('Creates link data structure markup', function() {
             let settings = {...config,  ...generateOptions(['link'])};
 
             let expectedOutputHtml =
-                `<a v-if="link.href && link.label" class="test-block__link" :href="link.href" :title="link.title" :target="link.isNewTab ? '_blank' : false" :rel="link.isExternalLink ? 'noopener noreferrer' : false">\n` +
-                    `{{link.label}}\n` +
-                `</a>\n`
+                `{{#if link.href}}\n` +
+                    `<a class="test-block__link" href="{{link.href}}" title="{{link.title}}" {{#if link.isNewTab}}target="_blank"{{/if}} {{#if link.isExternalLink}}rel="noopener noreferrer"{{/if}}>\n` +
+                        `{{link.label}}\n` +
+                    `</a>\n` +
+                `{{/if}}\n`
             ;
 
             let output = dataStructureMarkupFragments.dataLink(settings);
@@ -277,7 +260,11 @@ describe('vue unit', function() {
             let settings = {...config,  ...generateOptions(['contact', 'form'])};
 
             let expectedOutputHtml =
-                `<!-- Insert contact.form form here -->\n`
+                `{{#if contact.form}}\n` +
+                    `<div class="test-block__contact__form">\n` +
+                        `{{!-- {{> parForm contact.form }} --}}\n` +
+                    `</div>\n` +
+                `{{/if}}\n`
             ;
 
             let output = dataStructureMarkupFragments.dataForm(settings);
@@ -285,5 +272,5 @@ describe('vue unit', function() {
             output.should.equal(expectedOutputHtml);
         });
 
-    })
+    });
 });

@@ -21,7 +21,9 @@ module.exports = (ext, writeExpected) => {
         },
         afterEach: (test) => {
             if (test.state === 'failed') 
-                resultOutput.writeActual(test.title, addedFiles[test.title].content);
+                if(addedFiles && addedFiles[`${test.title}.${ext}`]) {
+                    resultOutput.writeActual(test.title, addedFiles[`${test.title}.${ext}`]);
+                }
             else    
                 resultOutput.deleteActual(test.title);
         },
@@ -57,7 +59,7 @@ module.exports = (ext, writeExpected) => {
                 actual.should.equal(expected);
             }
             else if (test) {
-                output.writeExpected(test.title, actual);
+                resultOutput.writeExpected(test.title, actual);
             }
 
         },

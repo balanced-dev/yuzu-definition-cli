@@ -23,72 +23,75 @@ const formatScss = function(start, lines) {
     return returnString;
 };
 
-describe('Scss service integration tests', function() {
+describe('base', function() {
 
-	it('Creates simple, single property stylesheeet', function() {
-        base.mockSettings();
+    describe('scss service integration tests', function() {
 
-        var html = [
-            `{{#if text}}`,
-                `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__text">`,
-                    `{{text}}`,
-                `</${base.settings.markup.settings.defaultTag}>`,
-            `{{/if}}`
-        ];
+        it('Creates simple, single property stylesheeet', function() {
+            base.mockSettings();
 
-        var expectedScss = `${base.scssStart}&__text {\n }}`;
-
-        var output = base.svc.run(base.scssStart + '}', base.cardSettings, formatHtmlArray(html), base.settings);
-
-        output.should.equal(expectedScss);
-    });
-
-	it('Creates nested stylesheeet', function() {
-        base.mockSettings();
-
-        var html = [
-            `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__obj">`,
-                `{{#if obj.text}}`,
-                    `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__obj__text">`,
+            var html = [
+                `{{#if text}}`,
+                    `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__text">`,
                         `{{text}}`,
                     `</${base.settings.markup.settings.defaultTag}>`,
-                `{{/if}}`,
-            `</${base.settings.markup.settings.defaultTag}>`
-        ];
+                `{{/if}}`
+            ];
 
-        var expectedScss = `${base.scssStart}&__obj {\n \n &__text {\n }}}`;
+            var expectedScss = `${base.scssStart}&__text {\n }}`;
 
-        var output = base.svc.run(base.scssStart + '}', base.cardSettings, formatHtmlArray(html), base.settings);
+            var output = base.svc.run(base.scssStart + '}', base.cardSettings, formatHtmlArray(html), base.settings);
 
-        output.should.equal(expectedScss);
-    });
+            output.should.equal(expectedScss);
+        });
 
-	it("Doesn't pollute class name", function() {
-        base.mockSettings();
+        it('Creates nested stylesheeet', function() {
+            base.mockSettings();
 
-        var html = [
-            `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__obj {{#each _modifiers}} {{this}}{{/each}}">`
-        ];
+            var html = [
+                `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__obj">`,
+                    `{{#if obj.text}}`,
+                        `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__obj__text">`,
+                            `{{text}}`,
+                        `</${base.settings.markup.settings.defaultTag}>`,
+                    `{{/if}}`,
+                `</${base.settings.markup.settings.defaultTag}>`
+            ];
 
-        var expectedScss = `${base.scssStart}&__obj {\n }}`;
+            var expectedScss = `${base.scssStart}&__obj {\n \n &__text {\n }}}`;
 
-        var output = base.svc.run(base.scssStart + '}', base.cardSettings, formatHtmlArray(html), base.settings);
+            var output = base.svc.run(base.scssStart + '}', base.cardSettings, formatHtmlArray(html), base.settings);
 
-        output.should.equal(expectedScss);
-    });
+            output.should.equal(expectedScss);
+        });
 
-	it("Doesn't include all classes on element (just first)", function() {
-        base.mockSettings();
+        it("Doesn't pollute class name", function() {
+            base.mockSettings();
 
-        var html = [
-            `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__obj-test box additional-class">`
-        ];
+            var html = [
+                `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__obj {{#each _modifiers}} {{this}}{{/each}}">`
+            ];
 
-        var expectedScss = `${base.scssStart}&__obj-test {\n }}`;
+            var expectedScss = `${base.scssStart}&__obj {\n }}`;
 
-        var output = base.svc.run(base.scssStart + '}', base.cardSettings, formatHtmlArray(html), base.settings);
+            var output = base.svc.run(base.scssStart + '}', base.cardSettings, formatHtmlArray(html), base.settings);
 
-        output.should.equal(expectedScss);
-    });
+            output.should.equal(expectedScss);
+        });
 
+        it("Doesn't include all classes on element (just first)", function() {
+            base.mockSettings();
+
+            var html = [
+                `<${base.settings.markup.settings.defaultTag} class="${base.cardSettings.className}__obj-test box additional-class">`
+            ];
+
+            var expectedScss = `${base.scssStart}&__obj-test {\n }}`;
+
+            var output = base.svc.run(base.scssStart + '}', base.cardSettings, formatHtmlArray(html), base.settings);
+
+            output.should.equal(expectedScss);
+        });
+
+    })
 });

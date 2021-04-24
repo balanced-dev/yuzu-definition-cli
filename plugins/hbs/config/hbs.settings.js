@@ -150,7 +150,7 @@ module.exports = (config) => {
       dataForSchemaGeneration: json,
       markup: function(html, cardSettings) {
           let markupGeneration = markup.run(html, cardSettings, json, config);
-          generatedMarkupContents = markupGeneration.contents;
+          generatedMarkupContents = markupGeneration.content;
           generatedMarkupFull = markupGeneration.full;
           
           return generatedMarkupFull;
