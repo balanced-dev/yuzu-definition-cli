@@ -2,7 +2,6 @@ const generator = require('../../../../generation/index');
 const addBlockPage = require('../../../../generation/addBlockPage');
 const localFileSource = require('../../../../generation/plugins/cardSources/localFiles');
 const fsStub = require('./fsStub');
-const should = require('should');
 const path = require('path');
 
 let addedFiles = {};
@@ -16,6 +15,9 @@ module.exports = (ext, writeExpected) => {
         get config() {
             return config;
         },
+        get addedFiles() {
+            return addedFiles;
+        },
         beforeEach: () => {   
             expected = '';
         },
@@ -27,8 +29,8 @@ module.exports = (ext, writeExpected) => {
             else    
                 resultOutput.deleteActual(test.title);
         },
-        setupResultsOutput: (...args) => {
-            resultOutput.setupOutputDir(...args);
+        setupResultsOutput: (dirs) => {
+            resultOutput.setupOutputDir(dirs);
         },
         buildConfig: (modules, sourceDirs) => {
 
@@ -45,11 +47,8 @@ module.exports = (ext, writeExpected) => {
         
             config = require('../../../../config/configFactory').createForTesting(userConfig);
         },
-        shouldHaveNoOfFiles: (no) => {
-            Object.keys(addedFiles).length.should.equal(no);
-        },
         shouldHaveComponentName: (name) => {
-            Object.keys(addedFiles).includes(name);
+            Object.keys(addedFiles).includes(name).should.equal(true);
         },
         actualEqualsExpected: (test) => {
 

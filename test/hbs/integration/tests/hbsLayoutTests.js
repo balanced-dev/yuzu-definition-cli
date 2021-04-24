@@ -1,30 +1,16 @@
-const init_tests_by_writing_actual_to_expected = false;
-
-const tests = require('../../../base/integration/_helpers/test-helper')('hbs', init_tests_by_writing_actual_to_expected);
-tests.buildConfig(['scss', 'hbs.settings'], ['test', 'base', 'integration', 'input']);
+const tests = require('../../../testIndex');
 
 describe('hbs integration', function() {
-    describe('cards tests', function() {
 
-        this.beforeAll(function() {
-            tests.setupResultsOutput('test', 'hbs', 'integration', 'output');
-        });
+    const createExpected = false;
+    const cardTests = tests.cardTests('hbs', createExpected);
 
-        beforeEach(tests.beforeEach);
+    const context = {
+        modules: ['scss', 'hbs.settings'],
+        output: ['test', 'hbs', 'integration', 'output'],
+        createdFiles: ['simplest.hbs', '_simplest.scss', 'simplest.schema']
+    };
 
-        afterEach(function() { tests.afterEach(this.currentTest); });
+    cardTests.run(context);
 
-        it('load-list', function() {
-            tests.load_list('layout');
-        });
-
-        tests.config.source.getCards('layout', tests.config).forEach(element => {
-
-            it(element.name, function() {
-                tests.actualEqualsExpected(this.test);
-            });
-
-        });
-        
-    }) 
 });
