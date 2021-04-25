@@ -1,6 +1,6 @@
 module.exports = () => {
 
-  return {
+  var config = {
     blockPaths: {
         page: { 
             path: '/pages/'
@@ -112,10 +112,57 @@ module.exports = () => {
 
         }
     },
+    script: {
+        settings: {
+            
+        }
+    },
+    generators: {
+        markup: require('../generation/generators/markup/markup'),
+        scss: require('../generation/generators/scss/scss'),
+        schemaCleanup: require('../generation/generators/schemaCleanup/schemaCleanup')
+    },
+    interceptorsPipeline: [],
     creators: [
         { name: 'markup', module: require('../creation/creators/markup') }, 
         { name: 'schema', module: require('../creation/creators/schema') }
     ],
     plugins: {}
   };
+
+  config.markup.settings.fileExtension = ".html";
+  config.markup.settings.initialMarkup = function (options) {
+    return ``;
+  };
+
+    config.interceptorsPipeline.push({
+        name: 'schema',
+        apply: (interceptors, json, config) => {
+            interceptors.schema = function(schema, cardSettings) {
+                return config.generators.schemaCleanup.processProperties(schema, json);
+            } 
+        }
+    });
+
+    config.interceptorsPipeline.push({
+        name: 'markup',
+        apply: (interceptors, json, config) => {
+            interceptors.markup = function(html, cardSettings) {
+                let markupGeneration = config.generators.markup.run(html, cardSettings, json, cardSettings.config);
+                cardSettings.markup = markupGeneration.content;
+                return markupGeneration.full;
+            } 
+        }
+    });
+
+    config.interceptorsPipeline.push({
+        name: 'scss',
+        apply: (interceptors, json, config) => {
+            interceptors.scss = function(defaultScss, cardSettings) {
+                return config.generators.scss.run(defaultScss, cardSettings, cardSettings.markup, config);
+            } 
+        }
+    });
+
+    return config;
 } 

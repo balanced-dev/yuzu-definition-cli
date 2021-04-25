@@ -47,9 +47,6 @@ module.exports = (ext, writeExpected) => {
         
             config = require('../../../../config/configFactory').createForTesting(userConfig);
         },
-        shouldHaveComponentName: (name) => {
-            Object.keys(addedFiles).includes(name).should.equal(true);
-        },
         actualEqualsExpected: (test) => {
 
             let actual = addedFiles[`${test.title}.${ext}`];

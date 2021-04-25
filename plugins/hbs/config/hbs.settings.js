@@ -11,7 +11,7 @@ const basicArrayOpening = function(options, newContext) {
     return output;
 };
 const basicArrayClosing = function(options) {
-    return                  `{{/each}}\n` +
+    return          `{{/each}}\n` +
                         `</${options.markup.settings.defaultTag}>\n` +
                     `{{/if}}\n`;
 };
@@ -135,32 +135,7 @@ module.exports = (config) => {
     }
 };
   config.createThese = ['directories', 'schema', 'data', 'markup', 'scss']; 
-  config.getInterceptors= function(json, config, data, schemaCleanup, markup, scss) {
-  
-    let generatedMarkupContents = '';
-    let generatedMarkupFull = '';
 
-    return {        
-      schema: function(schema) {
-          return schemaCleanup.processProperties(schema, json);
-      },
-      data: function(jsonData) {
-          return data.removeDataStructureRefs(json, config); 
-      },
-      dataForSchemaGeneration: json,
-      markup: function(html, cardSettings) {
-          let markupGeneration = markup.run(html, cardSettings, json, config);
-          generatedMarkupContents = markupGeneration.content;
-          generatedMarkupFull = markupGeneration.full;
-          
-          return generatedMarkupFull;
-      },
-      scss: function(defaultScss, cardSettings) {
-          return scss.run(defaultScss, cardSettings, generatedMarkupContents, config);
-      }
-    }
-
-  },
   config.plugins._ = require("lodash");
   config.plugins.changeCase = require("change-case");
   config.plugins.inflector = require("inflector-js");

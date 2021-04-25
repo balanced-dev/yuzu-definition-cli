@@ -1,9 +1,6 @@
 // Schema cleanup & generation of other files
 const data = require('./generators/data/data'),
-    creation = require('../creation/index'),
-    schemaCleanup = require('./generators/schemaCleanup/schemaCleanup'),
-    markup = require('./generators/markup/markup'),
-    scss = require('./generators/scss/scss');
+    creation = require('../creation/index');
 
     const logger = require('./logger');
 
@@ -11,7 +8,17 @@ const addBlockPage = function(type, schema, config, fs) {
 
     let json = data.createCardJson(schema.schema, config);
     let blockTypeSettings = config.blockPaths[type];
-    let interceptors = config.getInterceptors(json, config, data, schemaCleanup, markup, scss);
+
+    let interceptors = {        
+        data: function(jsonData) {
+            return data.removeDataStructureRefs(json, config); 
+        },
+        dataForSchemaGeneration: json,
+    }
+
+    config.interceptorsPipeline.forEach(interceptor => {
+        interceptor.apply(interceptors, json, config);
+    });
 
     logger.log({
         level: 'info',

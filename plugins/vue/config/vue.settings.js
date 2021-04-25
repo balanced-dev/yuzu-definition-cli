@@ -1,3 +1,5 @@
+const configDefaults = require("../../../config/configDefaults");
+
 const generateChildContext = function (options) {
   const Inflector = options.plugins.inflector;
   let lastArrayContext = options.plugins._.last(options.relativePath);
@@ -37,6 +39,17 @@ const common = (options) => {
 };
 
 module.exports = (config) => {
+
+  config.creators.push({
+    name: 'script',
+    module: require('../../../creation/creators/script')
+  })
+
+  config.script.settings.fileExtension = ".js";
+  config.script.settings.initialScript = function (options) {
+    return 'export default {\nprops: <!-- YUZU PROPS -->\n};';
+  };
+
   config.markup.fragments.wrapperMarkupFragments = {
       array: {
         parentWrapperOpening: function (options) {
@@ -153,8 +166,26 @@ module.exports = (config) => {
         return `<!-- Insert ${options.relativePath.join(".")} form here -->\n`;
       },
     };
+
+    config.interceptorsPipeline.push({
+      name: 'vue-single-file',
+      apply: (interceptors, json, config) => {
+          interceptors.script = function(script, cardSettings) {
+            const schemaProcess = config.creators.find((item) => { return item.name == 'schema'; });
+    
+            let defaultSchema = schemaProcess.module.initialContent(cardSettings);
+            let schema = config.generators.schemaCleanup.processProperties(defaultSchema, json);
+            script = script.replace('<!-- YUZU PROPS -->', config.plugins.propsFromSchema(schema));
+    
+            return script;
+          } 
+      }
+  });
+
+  config.createThese = ['directories', 'schema', 'data', 'markup', 'scss', 'script']; 
   config.plugins._ = require("lodash");
   config.plugins.changeCase = require("change-case");
   config.plugins.inflector = require("inflector-js");
+    config.plugins.propsFromSchema = require('../generation/plugins/vuePropsFromSchema');
 
 };

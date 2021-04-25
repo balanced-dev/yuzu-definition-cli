@@ -14,7 +14,8 @@ const getBlockSettings = function(type, name, area, typeSettings, initialContent
             data: 'data'
         },
         contentIntercepts: initialContentIntercepts,
-        config: config
+        config: config,
+        markup: ''
     };
 }
 
