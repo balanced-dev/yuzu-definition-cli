@@ -11,11 +11,12 @@ const deleteFile = (testName, actualSuffix, ext) => {
 };
 
 const write = (testName, content, suffix, ext) => {
-    fs.writeFileSync(`${resultsDir}${path.sep}${testName}_${suffix}.${ext}`, content);
+    fs.writeFileSync(`${resultsDir}${path.sep}${testName}_${suffix}.${ext}`, content, 'utf8');
 }
 
 const read = (testName, suffix, ext) => {
-    return fs.readFileSync(`${resultsDir}${path.sep}${testName}_${suffix}.${ext}`, 'utf8');
+    let d = fs.readFileSync(`${resultsDir}${path.sep}${testName}_${suffix}.${ext}`, 'utf8');
+    return d.replace(/\r\n/ig, '\n');
 }
 
 module.exports = (ext) => {
