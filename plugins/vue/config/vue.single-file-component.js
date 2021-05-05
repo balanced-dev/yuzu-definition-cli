@@ -5,7 +5,19 @@ module.exports = (config) => {
 
   config.markup.settings.fileExtension = ".vue";
   config.markup.settings.initialMarkup = function (options) {
-    return `<script>\nexport default {\nprops: <!-- YUZU PROPS -->\n};\n</script>\n<template>\n<div class=\"${options.className}\">\n<!-- YUZU MARKUP -->\n</div>\n</template>\n<style lang="scss">\n<!-- YUZU STYLE -->\n</style>\n`;
+    return `<script>\n`+
+              `export default {\n`+
+                `props: <!-- YUZU PROPS -->\n`+
+              `};\n`+
+            `</script>\n`+
+            `<template>\n`+
+              `<div class=\"${options.className}\">\n`+
+                `<!-- YUZU MARKUP -->\n`+
+              `</div>\n`+
+            `</template>\n`+
+            `<style lang="scss">\n`+
+              `/* YUZU STYLE */\n`+
+            `</style>\n`;
   };
 
 
@@ -14,7 +26,7 @@ module.exports = (config) => {
   config.interceptorsPipeline.push({
       name: 'vue-single-file',
       apply: (interceptors, json, config) => {
-          interceptors.scss = null;
+          interceptors.style = null;
           interceptors.schema = null;
           interceptors.markup = function(html, cardSettings) {
             const schemaProcess = config.creators.find((item) => { return item.name == 'schema'; });
@@ -22,8 +34,8 @@ module.exports = (config) => {
             let markupGeneration = config.generators.markup.run(html, cardSettings, json, config);
             
             let defaultScss = config.style.settings.initialStyle(cardSettings);
-            let style = config.generators.scss.run(defaultScss, cardSettings, markupGeneration.content, config);
-            let output =  markupGeneration.full.replace('<!-- YUZU STYLE -->', style);
+            let style = config.generators.style.run(defaultScss, cardSettings, markupGeneration.content, config);
+            let output =  markupGeneration.full.replace('/* YUZU STYLE */', style);
     
             let defaultSchema = schemaProcess.module.initialContent(cardSettings);
             let schema = config.generators.schemaCleanup.processProperties(defaultSchema, json);

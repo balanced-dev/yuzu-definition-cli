@@ -6,7 +6,7 @@ describe('hbs integration', function() {
     const cardTests = tests.cardTests('hbs', createExpected);
 
     const context = {
-        modules: ['scss', 'hbs.settings'],
+        modules: ['bem.scss', 'hbs.settings'],
         output: ['test', 'hbs', 'integration', 'output'],
         createdFiles: ['simplest.hbs', '_simplest.scss', 'simplest.schema']
     };

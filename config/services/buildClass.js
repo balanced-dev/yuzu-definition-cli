@@ -1,4 +1,4 @@
-const addChildClass = function(options) {
+const appendChildContextClass = function(options) {
     let lastSection = options.classArray[options.classArray.length - 1],
         childClass = '';
 
@@ -6,7 +6,7 @@ const addChildClass = function(options) {
     options.classArray.push(childClass);
 }; 
 
-const run = function(options) {
+const generateClassString = function(options) {
     let className = '' + options.cardSettings.className;
 
     options.classArray.forEach(property => {
@@ -16,4 +16,4 @@ const run = function(options) {
     return className;
 };
 
-module.exports = {run, addChildClass};
+module.exports = {generateClassString, appendChildContextClass};

@@ -34,7 +34,7 @@ const common = (options) => {
   return {
     tag: options.markup.settings.defaultTag,
     path: options.relativePath.join("."),
-    class: options.plugins.buildClass.run(options),
+    class: options.style.generateClassString(options),
   };
 };
 
@@ -55,7 +55,7 @@ module.exports = (config) => {
         parentWrapperOpening: function (options) {
           let wrapperOptions = options.plugins._.cloneDeep(options);
           let childContext = generateChildContext(options);
-          options.plugins.buildClass.addChildClass(options);
+          options.style.appendChildContextClass(options);
 
           let dp = common(wrapperOptions);
           let dc = common(options);
@@ -108,7 +108,7 @@ module.exports = (config) => {
         openingTag: function (options) {
           return `<${
             options.markup.settings.defaultTag
-          } class="${options.plugins.buildClass.run(options)}">\n`;
+          } class="${options.style.generateClassString(options)}">\n`;
         },
         closingTag: function (options) {
           return `</${options.markup.settings.defaultTag}>\n`;
@@ -144,7 +144,7 @@ module.exports = (config) => {
       dataImage: function (options) {
         let relativePath = options.relativePath.join(".");
         return (
-          `<picture v-if="${relativePath}.src" class="${options.plugins.buildClass.run(
+          `<picture v-if="${relativePath}.src" class="${options.style.generateClassString(
             options
           )}">\n` +
           `<img :src="${relativePath}.src" :alt="${relativePath}.alt">\n` +
@@ -182,7 +182,7 @@ module.exports = (config) => {
       }
   });
 
-  config.createThese = ['directories', 'schema', 'data', 'markup', 'scss', 'script']; 
+  config.createThese = ['directories', 'schema', 'data', 'markup', 'style', 'script']; 
   config.plugins._ = require("lodash");
   config.plugins.changeCase = require("change-case");
   config.plugins.inflector = require("inflector-js");

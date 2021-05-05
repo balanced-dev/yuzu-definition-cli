@@ -1,20 +1,17 @@
 var path = require('path');
 var common = require('./common.js');
 
-var extension = ".scss";
-
 const filename = function(settings) {
-
-    return path.join(settings.rootDirectory, `_${common.prefixName(settings)}${extension}`);
+    return path.join(settings.rootDirectory, `_${common.prefixName(settings)}${settings.config.style.settings.fileExtension}`);    
 }
 
 const initialContent = function(settings) {
-    var scss = settings.config.style.settings.initialStyle(settings);
+    let style = settings.config.style.settings.initialStyle(settings);
 
-    if(settings.contentIntercepts.scss)
-        scss = settings.contentIntercepts.scss(scss, settings); 
+    if(settings.contentIntercepts.style)
+        style = settings.contentIntercepts.style(style, settings); 
 
-    return scss;
+    return style;
 }
 
 const changeContent = function(content, oldSettings, newSettings) {

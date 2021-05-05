@@ -1,8 +1,8 @@
 const run = function(scss, obj, settings) {    
     for (const key in obj) {
-        let openingTag = '&' + settings.style.settings.classNameDivider + key + ' {',
-            contentTags = '\n ',
-            closingTag = '}';
+        const openingTag = '&' + settings.style.settings.classNameDivider + key + ' {';
+        let contentTags = '\n\n';
+        const closingTag = '}\n';
 
         scss += openingTag;
 
@@ -11,7 +11,7 @@ const run = function(scss, obj, settings) {
             
             // If object or array
             if(Object.keys(value).length > 0) {
-                contentTags += run(contentTags, value, settings);
+                contentTags += run('', value, settings);
             }
         }
 

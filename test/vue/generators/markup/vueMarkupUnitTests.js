@@ -1,4 +1,4 @@
-const userConfig = { modules: ['yuzu','scss','vue.settings'] };
+const userConfig = { modules: ['yuzu', 'bem.scss', 'vue.settings'] };
 let config = require('../../../../config/configFactory').createForTesting(userConfig);
 const fragments = config.markup.fragments;
 const wrapperMarkupFragments = fragments.wrapperMarkupFragments;

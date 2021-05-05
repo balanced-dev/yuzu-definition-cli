@@ -4,7 +4,7 @@ const getPropertyCount = function(options) {
 
 const basicArrayOpening = function(options, newContext) {
     let output =    `{{#if ${options.relativePath.join('.')}.[0]}}\n` +
-                        `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n` +
+                        `<${options.markup.settings.defaultTag} class="${options.style.generateClassString(options)}">\n` +
                             `{{#each ${options.relativePath.join('.')}}}\n`;
     options.relativePath = !newContext ? [] : [newContext];
     
@@ -34,10 +34,10 @@ module.exports = (config) => {
                 }
                 else {
                     let wrapperOptions = options.plugins._.cloneDeep(options);
-                    options.plugins.buildClass.addChildClass(options);
+                    options.style.appendChildContextClass(options);
                     options.relativePath = !newContext ? [] : [newContext];
                     return  basicArrayOpening(wrapperOptions, newContext) + 
-                                `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n`;
+                                `<${options.markup.settings.defaultTag} class="${options.style.generateClassString(options)}">\n`;
                 }
             },
             parentWrapperClosing: function(options, newContext, forceWrapper) {
@@ -78,7 +78,7 @@ module.exports = (config) => {
         },
         object: {
             openingTag: function(options) {
-                return `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n`;        
+                return `<${options.markup.settings.defaultTag} class="${options.style.generateClassString(options)}">\n`;        
             },
             closingTag: function(options) {
                 return `</${options.markup.settings.defaultTag}>\n`;
@@ -95,14 +95,14 @@ module.exports = (config) => {
         subBlockObject: function(options) {
             let relativePath = options.relativePath.join('.');
             return `{{#if ${relativePath}}}\n` +
-                        `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n` +
+                        `<${options.markup.settings.defaultTag} class="${options.style.generateClassString(options)}">\n` +
                             `{{> ${options.value} ${relativePath} }}\n` +
                         `</${options.markup.settings.defaultTag}>\n` +
                     `{{/if}}\n`;
         },    
         default: function(options) {
             return `{{#if ${options.relativePath.join('.')}}}\n` +
-            `<${options.markup.settings.defaultTag} class="${options.plugins.buildClass.run(options)}">\n` +
+            `<${options.markup.settings.defaultTag} class="${options.style.generateClassString(options)}">\n` +
             `{{${options.relativePath.join('.')}}}\n` +
             `</${options.markup.settings.defaultTag}>\n` +
             `{{/if}}\n`;
@@ -112,7 +112,7 @@ module.exports = (config) => {
         dataImage: function(options) {
             let relativePath = options.relativePath.join('.');
             return `{{#if ${relativePath}.src}}\n` +
-                        `<picture class="${options.plugins.buildClass.run(options)}">\n` +
+                        `<picture class="${options.style.generateClassString(options)}">\n` +
                             `<img src="{{${relativePath}.src}}" alt="{{${relativePath}.alt}}">\n` +
                         `</picture>\n` +
                     `{{/if}}\n`;
@@ -120,21 +120,21 @@ module.exports = (config) => {
         dataLink: function(options) {
             let relativePath = options.relativePath.join('.');
             return `{{#if ${relativePath}.href}}\n` +
-                        `<a class="${options.plugins.buildClass.run(options)}" href="{{${relativePath}.href}}" title="{{${relativePath}.title}}" {{#if ${relativePath}.isNewTab}}target="_blank"{{/if}} {{#if ${relativePath}.isExternalLink}}rel="noopener noreferrer"{{/if}}>\n` +
+                        `<a class="${options.style.generateClassString(options)}" href="{{${relativePath}.href}}" title="{{${relativePath}.title}}" {{#if ${relativePath}.isNewTab}}target="_blank"{{/if}} {{#if ${relativePath}.isExternalLink}}rel="noopener noreferrer"{{/if}}>\n` +
                             `{{${relativePath}.label}}\n` +
                         `</a>\n` +
                     `{{/if}}\n`;
         },
         dataForm: function(options) {
             return `{{#if ${options.relativePath.join('.')}}}\n` +
-                        `<div class="${options.plugins.buildClass.run(options)}">\n` +
+                        `<div class="${options.style.generateClassString(options)}">\n` +
                             `{{!-- {{> parForm ${options.relativePath.join('.')} }} --}}\n` +
                         `</div>\n` +
                     `{{/if}}\n`;
         },
     }
 };
-  config.createThese = ['directories', 'schema', 'data', 'markup', 'scss']; 
+  config.createThese = ['directories', 'schema', 'data', 'markup', 'style']; 
 
   config.plugins._ = require("lodash");
   config.plugins.changeCase = require("change-case");
