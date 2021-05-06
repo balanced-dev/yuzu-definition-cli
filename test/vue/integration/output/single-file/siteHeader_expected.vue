@@ -1,13 +1,7 @@
 <script>
 export default {
-    props: {
-        primaryLinks: Array,
-        secondaryLinks: Array,
-        documentLinks: Array,
-        socialLinks: Array,
-        address: Object,
-    },
-}
+props: <!-- YUZU PROPS -->
+};
 </script>
 <template>
     <div class="site-header">

@@ -1,14 +1,7 @@
 <script>
 export default {
-    props: {
-        address: Object,
-        links: Array,
-        documentLinks: Array,
-        socialLinks: Array,
-        copyrightMessage: String,
-        form: Object,
-    },
-}
+props: <!-- YUZU PROPS -->
+};
 </script>
 <template>
     <div class="site-footer">

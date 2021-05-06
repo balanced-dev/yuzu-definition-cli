@@ -124,8 +124,7 @@ module.exports = () => {
     },
     interceptorsPipeline: [],
     creators: [
-        { name: 'markup', module: require('../creation/creators/markup') }, 
-        { name: 'schema', module: require('../creation/creators/schema') }
+        { name: 'markup', module: require('../creation/creators/markup') }
     ],
     plugins: {}
   };

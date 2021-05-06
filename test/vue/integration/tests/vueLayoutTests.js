@@ -2,7 +2,7 @@ const tests = require('../../../testIndex');
 
 describe('vue integration', function() {
 
-    const createExpected = false;
+    const createExpected = true;
 
     describe('single-file', function() {
 
@@ -11,7 +11,7 @@ describe('vue integration', function() {
         let context = {
             name: 'single-file',
             modules: ['scss', 'vue.settings', 'vue.single-file-component'],
-            output: ['test', 'vue', 'integration', 'output'],
+            output: ['test', 'vue', 'integration', 'output', 'single-file'],
             createdFiles: ['simplest.vue']
         };
 
@@ -20,12 +20,13 @@ describe('vue integration', function() {
 
     describe('normal', function() {
 
-        const cardTests = tests.cardTests('vue', createExpected);
+        const cardTests = tests.cardTests('html', createExpected);
 
         let context = {
             name: 'normal',
             modules: ['scss', 'vue.settings'],
-            createdFiles: ['simplest.html', '_simplest.scss', 'simplest.js', 'simplest.schema']
+            output: ['test', 'vue', 'integration', 'output', 'normal'],
+            createdFiles: ['simplest.html', '_simplest.scss', 'simplest.js']
         };
 
         cardTests.run(context);

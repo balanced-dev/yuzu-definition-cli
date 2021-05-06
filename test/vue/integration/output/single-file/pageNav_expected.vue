@@ -1,11 +1,7 @@
 <script>
 export default {
-    props: {
-        title: String,
-        internalLinks: Array,
-        externalLinks: Array,
-    },
-}
+props: <!-- YUZU PROPS -->
+};
 </script>
 <template>
     <div class="page-nav">

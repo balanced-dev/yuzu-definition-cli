@@ -6,7 +6,7 @@ const path = require('path');
 
 let addedFiles = {};
 
-module.exports = (ext, writeExpected) => {
+module.exports = (, writeExpected) => {
 
     const resultOutput = require('./readWriteResults')(ext);
     let config = {};

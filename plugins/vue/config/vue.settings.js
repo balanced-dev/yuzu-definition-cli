@@ -171,21 +171,23 @@ module.exports = (config) => {
       name: 'vue-single-file',
       apply: (interceptors, json, config) => {
           interceptors.script = function(script, cardSettings) {
-            const schemaProcess = config.creators.find((item) => { return item.name == 'schema'; });
     
-            let defaultSchema = schemaProcess.module.initialContent(cardSettings);
-            let schema = config.generators.schemaCleanup.processProperties(defaultSchema, json);
-            script = script.replace('<!-- YUZU PROPS -->', config.plugins.propsFromSchema(schema));
+            const schemaProcess = config.creators.find((item) => { return item.name == 'schema'; });
+            if(schemaProcess) {
+              let defaultSchema = schemaProcess.module.initialContent(cardSettings);
+              let schema = config.generators.schemaCleanup.processProperties(defaultSchema, json);
+              script = script.replace('<!-- YUZU PROPS -->', config.plugins.propsFromSchema(schema));
+            }
     
             return script;
           } 
       }
   });
 
-  config.createThese = ['directories', 'schema', 'data', 'markup', 'scss', 'script']; 
+  config.createThese = ['markup', 'scss', 'script']; 
   config.plugins._ = require("lodash");
   config.plugins.changeCase = require("change-case");
   config.plugins.inflector = require("inflector-js");
-    config.plugins.propsFromSchema = require('../generation/plugins/vuePropsFromSchema');
+  config.plugins.propsFromSchema = require('../generation/plugins/vuePropsFromSchema');
 
 };
