@@ -1,0 +1,13 @@
+Schema:
+- array+parentNamedStringArray
+- parentNamedStringArray+stringArray+childStringArray
+- array+parentStringArray
+- parentStringArray+stringArray
+- array+parentNamedNumberArray
+- parentNamedNumberArray+numberArray+childNumberArray
+- array+parentNumberArray
+- parentNumberArray+numberArray
+- array+parentNamedIntegerArray
+- parentNamedIntegerArray+integerArray+childStringArray
+- array+parentIntegerArray
+- parentIntegerArray+integerArray

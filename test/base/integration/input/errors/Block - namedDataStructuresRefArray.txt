@@ -1,0 +1,4 @@
+Schema:
+- array+blocks
+- blocks+subBlock+parExample
+- blocks+subBlock+parFooBar+fooBar

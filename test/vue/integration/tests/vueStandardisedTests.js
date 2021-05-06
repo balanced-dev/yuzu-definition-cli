@@ -20,7 +20,7 @@ describe('vue integration', function() {
 
     describe('normal', function() {
 
-        const cardTests = tests.cardTests('vue', createExpected);
+        const cardTests = tests.cardTests('html', createExpected);
 
         let context = {
             name: 'normal',

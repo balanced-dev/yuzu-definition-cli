@@ -1,0 +1,5 @@
+Schema:
+- string+
+- number+ itemCount
+ -integer+value
+-- string+name

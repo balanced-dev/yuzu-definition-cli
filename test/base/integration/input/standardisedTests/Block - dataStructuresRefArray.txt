@@ -1,0 +1,6 @@
+Schema:
+- array+blocks
+- blocks+subBlock+parExample1
+- blocks+subBlock+parExample2
+- array+people
+- people+subBlock+parPerson

@@ -40,10 +40,10 @@ module.exports = (ext, createExpected) => {
                 afterEach(function() { tests.afterEach(this.currentTest); });
             
                 it('load-list', function() {
-                    tests.load_list('layout');
+                    tests.load_list('standardisedTests');
                 });
             
-                tests.config.source.getCards('layout', tests.config).forEach(element => {
+                tests.config.source.getCards('standardisedTests', tests.config).forEach(element => {
             
                     it(element.name, function() {
                         tests.actualEqualsExpected(this.test);

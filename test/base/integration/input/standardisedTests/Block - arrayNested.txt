@@ -1,0 +1,5 @@
+Schema:
+- array+parentArray
+- parentArray+array+childArray
+- parentArray+childArray+string+exampleString
+- parentArray+childArray+integer+exampleInteger

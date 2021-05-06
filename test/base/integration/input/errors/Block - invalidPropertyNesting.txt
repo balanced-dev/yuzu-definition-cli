@@ -1,0 +1,3 @@
+Schema:
+- string+example
+- example+object+exampleObj
