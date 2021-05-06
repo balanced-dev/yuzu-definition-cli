@@ -1,3 +1,4 @@
+const buildClass = require('./services/buildClass');
 module.exports = () => {
 
   var config = {
@@ -109,8 +110,19 @@ module.exports = () => {
     },
     style: {
         settings: {
-
-        }
+            fileExtension: '.css',
+            classNameDivider: '__',
+            backupRefArrayChildClass: 'item',
+            initialStyle: function(options) {
+                return `.${options.className} {\n\n`+
+                
+                `}\n\n` +
+                
+                `/* YUZU STYLE */`;
+            }
+        },
+        appendChildContextClass: buildClass.appendChildContextClass,
+        generateClassString: buildClass.generateClassString
     },
     script: {
         settings: {
@@ -119,12 +131,13 @@ module.exports = () => {
     },
     generators: {
         markup: require('../generation/generators/markup/markup'),
-        scss: require('../generation/generators/scss/scss'),
+        style: require('../generation/generators/style/style'),
         schemaCleanup: require('../generation/generators/schemaCleanup/schemaCleanup')
     },
     interceptorsPipeline: [],
     creators: [
-        { name: 'markup', module: require('../creation/creators/markup') }
+        { name: 'markup', module: require('../creation/creators/markup') },
+        { name: 'style', module: require('../creation/creators/style') }
     ],
     plugins: {}
   };
@@ -155,10 +168,10 @@ module.exports = () => {
     });
 
     config.interceptorsPipeline.push({
-        name: 'scss',
+        name: 'style',
         apply: (interceptors, json, config) => {
-            interceptors.scss = function(defaultScss, cardSettings) {
-                return config.generators.scss.run(defaultScss, cardSettings, cardSettings.markup, config);
+            interceptors.style = function(styles, cardSettings) {
+                return config.generators.style.run(styles, cardSettings, cardSettings.markup, config);
             } 
         }
     });

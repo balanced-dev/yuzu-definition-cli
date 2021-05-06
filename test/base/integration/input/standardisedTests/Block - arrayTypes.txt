@@ -1,0 +1,4 @@
+Schema:
+- integerArray+integers
+- numberArray+numbers
+- stringArray+strings

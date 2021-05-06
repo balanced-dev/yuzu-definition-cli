@@ -1,0 +1,3 @@
+Schema:
+- string+validName
+- string+alsoValid

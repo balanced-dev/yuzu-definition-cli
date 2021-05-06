@@ -1,0 +1,6 @@
+Schema:
+- array+singlePropertyObjects
+- singlePropertyObjects+string+exampleProperty
+- array+multiplePropertyObjects
+- multiplePropertyObjects+string+exampleString
+- multiplePropertyObjects+integer+exampleInteger

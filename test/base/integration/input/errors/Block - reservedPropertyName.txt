@@ -1,0 +1,3 @@
+Schema:
+- string+string
+- number+integer

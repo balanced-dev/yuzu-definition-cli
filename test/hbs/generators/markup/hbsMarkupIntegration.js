@@ -1,5 +1,5 @@
-const should = require('should'),
-    base = require('../../../base/generation/generators/markup/base')(['yuzu', 'scss', 'hbs.settings']);
+const should = require('should');
+const base = require('../../../base/generation/generators/markup/base')(['yuzu', 'bem.scss', 'hbs.settings']);
 
 const formatHtmlArray = function(lines) {
     return lines.join('\n') + '\n';

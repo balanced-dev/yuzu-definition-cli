@@ -1,0 +1,12 @@
+This is some additional text, which should be ignored. This should not be included should effect what the Schema looks like really.
+
+Schema:
+- title
+- bodyText
+
+Here's some more text which should also be ignored. This should also be discounted.
+
+Here's a list, this shouldn't be used despite being in the same format:
+- item_1
+- item_2
+- item_3

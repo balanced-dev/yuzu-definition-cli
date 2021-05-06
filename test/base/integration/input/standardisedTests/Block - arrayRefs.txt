@@ -1,0 +1,6 @@
+Schema:
+- array+mixedDataStructures
+- mixedDataStructures+subBlock+dataImage
+- mixedDataStructures+subBlock+dataLink
+- array+forms
+- forms+dataForm

@@ -1,0 +1,7 @@
+Schema:
+- default
+- string+exampleString
+- boolean+exampleBoolean
+- integer+exampleInteger
+- number+exampleNumber
+- subBlock+parExample+exampleSubBlock

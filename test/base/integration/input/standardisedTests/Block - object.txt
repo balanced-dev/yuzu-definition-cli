@@ -1,0 +1,4 @@
+Schema:
+- object+parentObject
+- parentObject+integer+exampleInteger
+- parentObject+string+exampleString

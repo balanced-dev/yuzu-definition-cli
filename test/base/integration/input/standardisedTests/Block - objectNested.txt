@@ -1,0 +1,4 @@
+Schema:
+- object+parentObject
+- parentObject+object+childObject
+- parentObject+childObject+string+exampleString

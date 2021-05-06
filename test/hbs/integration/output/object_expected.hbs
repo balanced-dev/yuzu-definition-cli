@@ -1,0 +1,14 @@
+<div class="object{{#each _modifiers}} object--{{this}}{{/each}}">
+<div class="object__parent-object">
+{{#if parentObject.exampleInteger}}
+<div class="object__parent-object__example-integer">
+{{parentObject.exampleInteger}}
+</div>
+{{/if}}
+{{#if parentObject.exampleString}}
+<div class="object__parent-object__example-string">
+{{parentObject.exampleString}}
+</div>
+{{/if}}
+</div>
+</div>

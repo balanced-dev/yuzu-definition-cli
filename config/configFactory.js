@@ -11,7 +11,7 @@ const cardSources = {
 };
 
 let modules = [];
-const internalPlugins = ['hbs', 'vue', 'yuzu', 'scss'];
+const internalPlugins = ['hbs', 'vue', 'yuzu', 'bem'];
 internalPlugins.forEach((plugin) => {
     const pluginModules = require(`../plugins/${plugin}/index`)().modules;
     modules = [...modules, ...pluginModules];

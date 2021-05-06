@@ -1,0 +1,22 @@
+<div class="array-refs{{#each _modifiers}} array-refs--{{this}}{{/each}}">
+{{#if mixedDataStructures.[0]}}
+<div class="array-refs__mixed-data-structures">
+{{#each mixedDataStructures}}
+<div class="array-refs__mixed-data-structures__mixed-data-structure">
+{{{ dynPartial _ref this }}}
+</div>
+{{/each}}
+</div>
+{{/if}}
+{{#if forms.[0]}}
+<div class="array-refs__forms">
+{{#each forms}}
+{{#if dataForm}}
+<div class="array-refs__forms__data-form">
+{{dataForm}}
+</div>
+{{/if}}
+{{/each}}
+</div>
+{{/if}}
+</div>

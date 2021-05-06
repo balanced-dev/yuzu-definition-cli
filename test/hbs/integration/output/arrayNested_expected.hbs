@@ -1,0 +1,26 @@
+<div class="array-nested{{#each _modifiers}} array-nested--{{this}}{{/each}}">
+{{#if parentArray.[0]}}
+<div class="array-nested__parent-array">
+{{#each parentArray}}
+{{#if childArray.[0]}}
+<div class="array-nested__parent-array__child-array">
+{{#each childArray}}
+<div class="array-nested__parent-array__child-array__item">
+{{#if exampleString}}
+<div class="array-nested__parent-array__child-array__item__example-string">
+{{exampleString}}
+</div>
+{{/if}}
+{{#if exampleInteger}}
+<div class="array-nested__parent-array__child-array__item__example-integer">
+{{exampleInteger}}
+</div>
+{{/if}}
+</div>
+{{/each}}
+</div>
+{{/if}}
+{{/each}}
+</div>
+{{/if}}
+</div>
