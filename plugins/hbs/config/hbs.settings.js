@@ -18,7 +18,7 @@ const basicArrayClosing = function(options) {
 
 module.exports = (config) => {
   config.markup.settings.fileExtension = ".hbs";
-  config.markup.settings.initialMarkup = function(options) {
+  config.markup.settings.initialContent = function(options) {
             return `<div class=\"${options.className}{{#each _modifiers}} ${options.className}--{{this}}{{/each}}">\n` +
                         `<!-- YUZU MARKUP -->` +
                     `</div>`

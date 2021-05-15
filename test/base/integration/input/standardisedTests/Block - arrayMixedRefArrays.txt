@@ -1,0 +1,19 @@
+Schema:
+- array+blocks
+- blocks+subBlock+parExample
+- blocks+subBlock+parFooBar+fooBar
+
+(an array of refs or an array of object not both )
+
+"links": [
+    {
+        "$ref": "/dataLink"
+    }
+]
+"links": [
+    {
+        "link": {
+            "$ref": "/dataLink"
+        }
+    }
+]

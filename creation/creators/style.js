@@ -2,16 +2,13 @@ var path = require('path');
 var common = require('./common.js');
 
 const filename = function(settings) {
-    return path.join(settings.rootDirectory, `_${common.prefixName(settings)}${settings.config.style.settings.fileExtension}`);    
+    const prefix = settings.config.style.settings.filePrefix;
+    return path.join(settings.rootDirectory, `${common.prefixName(settings, prefix)}${settings.config.style.settings.fileExtension}`);    
 }
 
 const initialContent = function(settings) {
-    let style = settings.config.style.settings.initialStyle(settings);
 
-    if(settings.contentIntercepts.style)
-        style = settings.contentIntercepts.style(style, settings); 
-
-    return style;
+    return common.initialContent(settings, 'style');
 }
 
 const changeContent = function(content, oldSettings, newSettings) {

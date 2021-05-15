@@ -1,92 +1,77 @@
 <div class="array-nested-array-types{{#each _modifiers}} array-nested-array-types--{{this}}{{/each}}">
-{{#if parentNamedStringArray.[0]}}
-<div class="array-nested-array-types__parent-named-string-array">
-{{#each parentNamedStringArray}}
-{{#if childStringArray.[0]}}
-<div class="array-nested-array-types__parent-named-string-array__child-string-array">
-{{#each childStringArray}}
-{{#if this}}
-<div class="array-nested-array-types__parent-named-string-array__child-string-array__item">
-{{this}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{#if parentStringArray.[0]}}
-<div class="array-nested-array-types__parent-string-array">
-{{#each parentStringArray}}
-<div class="array-nested-array-types__parent-string-array__item">
-</div>
-{{/each}}
-</div>
-{{/if}}
-{{#if stringArray}}
-<div class="array-nested-array-types__string-array">
-{{stringArray}}
-</div>
-{{/if}}
-{{#if parentNamedNumberArray.[0]}}
-<div class="array-nested-array-types__parent-named-number-array">
-{{#each parentNamedNumberArray}}
-{{#if childNumberArray.[0]}}
-<div class="array-nested-array-types__parent-named-number-array__child-number-array">
-{{#each childNumberArray}}
-{{#if this}}
-<div class="array-nested-array-types__parent-named-number-array__child-number-array__item">
-{{this}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{#if parentNumberArray.[0]}}
-<div class="array-nested-array-types__parent-number-array">
-{{#each parentNumberArray}}
-<div class="array-nested-array-types__parent-number-array__item">
-</div>
-{{/each}}
-</div>
-{{/if}}
-{{#if numberArray}}
-<div class="array-nested-array-types__number-array">
-{{numberArray}}
-</div>
-{{/if}}
-{{#if parentNamedIntegerArray.[0]}}
-<div class="array-nested-array-types__parent-named-integer-array">
-{{#each parentNamedIntegerArray}}
-{{#if childStringArray.[0]}}
-<div class="array-nested-array-types__parent-named-integer-array__child-string-array">
-{{#each childStringArray}}
-{{#if this}}
-<div class="array-nested-array-types__parent-named-integer-array__child-string-array__item">
-{{this}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{#if parentIntegerArray.[0]}}
-<div class="array-nested-array-types__parent-integer-array">
-{{#each parentIntegerArray}}
-<div class="array-nested-array-types__parent-integer-array__item">
-</div>
-{{/each}}
-</div>
-{{/if}}
-{{#if integerArray}}
-<div class="array-nested-array-types__integer-array">
-{{integerArray}}
-</div>
-{{/if}}
+    {{#if parentNamedStringArray.[0]}}
+        <div class="array-nested-array-types__parent-named-string-array">
+            {{#each parentNamedStringArray}}
+                {{#if childStringArray.[0]}}
+                    <div class="array-nested-array-types__parent-named-string-array__child-string-array">
+                        {{#each childStringArray}}
+                            {{#if this}}
+                                <div class="array-nested-array-types__parent-named-string-array__child-string-array__item">
+                                    {{this}}
+                                </div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
+    {{#if parentStringArray.[0]}}
+        <div class="array-nested-array-types__parent-string-array">
+            {{#each parentStringArray}}
+                <div class="array-nested-array-types__parent-string-array__item">
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
+    {{#if parentNamedNumberArray.[0]}}
+        <div class="array-nested-array-types__parent-named-number-array">
+            {{#each parentNamedNumberArray}}
+                {{#if childNumberArray.[0]}}
+                    <div class="array-nested-array-types__parent-named-number-array__child-number-array">
+                        {{#each childNumberArray}}
+                            {{#if this}}
+                                <div class="array-nested-array-types__parent-named-number-array__child-number-array__item">
+                                    {{this}}
+                                </div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
+    {{#if parentNumberArray.[0]}}
+        <div class="array-nested-array-types__parent-number-array">
+            {{#each parentNumberArray}}
+                <div class="array-nested-array-types__parent-number-array__item">
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
+    {{#if parentNamedIntegerArray.[0]}}
+        <div class="array-nested-array-types__parent-named-integer-array">
+            {{#each parentNamedIntegerArray}}
+                {{#if childStringArray.[0]}}
+                    <div class="array-nested-array-types__parent-named-integer-array__child-string-array">
+                        {{#each childStringArray}}
+                            {{#if this}}
+                                <div class="array-nested-array-types__parent-named-integer-array__child-string-array__item">
+                                    {{this}}
+                                </div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
+    {{#if parentIntegerArray.[0]}}
+        <div class="array-nested-array-types__parent-integer-array">
+            {{#each parentIntegerArray}}
+                <div class="array-nested-array-types__parent-integer-array__item">
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
 </div>

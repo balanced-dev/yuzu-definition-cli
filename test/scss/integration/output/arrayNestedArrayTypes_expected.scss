@@ -1,0 +1,49 @@
+.array-nested-array-types {
+$this: '.array-nested-array-types';
+
+&__parent-named-string-array {
+
+&__child-string-array {
+
+&__item {
+
+}
+}
+}
+&__parent-string-array {
+
+&__item {
+
+}
+}
+&__parent-named-number-array {
+
+&__child-number-array {
+
+&__item {
+
+}
+}
+}
+&__parent-number-array {
+
+&__item {
+
+}
+}
+&__parent-named-integer-array {
+
+&__child-string-array {
+
+&__item {
+
+}
+}
+}
+&__parent-integer-array {
+
+&__item {
+
+}
+}
+}

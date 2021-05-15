@@ -9,6 +9,10 @@ module.exports = () => {
             {
                 name: 'vue.single-file-component',
                 init: require('./config/vue.single-file-component')
+            },
+            {
+                name: 'vue.prettier',
+                init: require('./config/vue.prettier')
             }
         ]
     };

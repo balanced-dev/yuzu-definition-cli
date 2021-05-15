@@ -1,11 +1,11 @@
 <div class="object-nested{{#each _modifiers}} object-nested--{{this}}{{/each}}">
-<div class="object-nested__parent-object">
-<div class="object-nested__parent-object__child-object">
-{{#if parentObject.childObject.exampleString}}
-<div class="object-nested__parent-object__child-object__example-string">
-{{parentObject.childObject.exampleString}}
-</div>
-{{/if}}
-</div>
-</div>
+    <div class="object-nested__parent-object">
+        <div class="object-nested__parent-object__child-object">
+            {{#if parentObject.childObject.exampleString}}
+                <div class="object-nested__parent-object__child-object__example-string">
+                    {{parentObject.childObject.exampleString}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
 </div>

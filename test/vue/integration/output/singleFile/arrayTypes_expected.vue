@@ -1,10 +1,6 @@
 <script>
 export default {
-    props: {
-        integers: Array,
-        numbers: Array,
-        strings: Array,
-    },
+    props: {},
 }
 </script>
 <template>

@@ -1,7 +1,7 @@
 const trimRefValue = require('../services/trimRefValue');
 
 const isValid = function (options) {
-    return options.value.$ref !== undefined &&  options.dataStructures.hasOwnProperty(trimRefValue.run(options.value.$ref));
+    return options.value.$ref !== undefined &&  options.generation.dataStructures.hasOwnProperty(trimRefValue.run(options.value.$ref));
 };
 
 const run = function (options) {

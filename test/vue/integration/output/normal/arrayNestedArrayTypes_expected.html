@@ -11,9 +11,6 @@
 <div class="array-nested-array-types__parent-string-array__item" v-for="(item_1, index) in parentStringArray" :key="index">
 </div>
 </div>
-<div class="array-nested-array-types__string-array" v-if="stringArray">
-{{stringArray}}
-</div>
 <div class="array-nested-array-types__parent-named-number-array" v-if="parentNamedNumberArray && parentNamedNumberArray.length">
 <div class="array-nested-array-types__parent-named-number-array__item" v-for="(item_1, index) in parentNamedNumberArray" :key="index">
 <div class="array-nested-array-types__parent-named-number-array__item__child-number-array" v-if="item_1.childNumberArray && item_1.childNumberArray.length">
@@ -27,9 +24,6 @@
 <div class="array-nested-array-types__parent-number-array__item" v-for="(item_1, index) in parentNumberArray" :key="index">
 </div>
 </div>
-<div class="array-nested-array-types__number-array" v-if="numberArray">
-{{numberArray}}
-</div>
 <div class="array-nested-array-types__parent-named-integer-array" v-if="parentNamedIntegerArray && parentNamedIntegerArray.length">
 <div class="array-nested-array-types__parent-named-integer-array__item" v-for="(item_1, index) in parentNamedIntegerArray" :key="index">
 <div class="array-nested-array-types__parent-named-integer-array__item__child-string-array" v-if="item_1.childStringArray && item_1.childStringArray.length">
@@ -42,7 +36,4 @@
 <div class="array-nested-array-types__parent-integer-array" v-if="parentIntegerArray && parentIntegerArray.length">
 <div class="array-nested-array-types__parent-integer-array__item" v-for="(item_1, index) in parentIntegerArray" :key="index">
 </div>
-</div>
-<div class="array-nested-array-types__integer-array" v-if="integerArray">
-{{integerArray}}
 </div>

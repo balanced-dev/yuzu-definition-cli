@@ -1,12 +1,12 @@
 const generator = require('../../../../generation/index');
 const addBlockPage = require('../../../../generation/addBlockPage');
-const localFileSource = require('../../../../generation/plugins/cardSources/localFiles');
+const localFileSource = require('../../../../modules/cardSources/localFiles/localFiles');
 const fsStub = require('./fsStub');
 const path = require('path');
 
 let addedFiles = {};
 
-module.exports = (, writeExpected) => {
+module.exports = (ext, writeExpected) => {
 
     const resultOutput = require('./readWriteResults')(ext);
     let config = {};

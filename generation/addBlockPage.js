@@ -2,12 +2,10 @@
 const data = require('./generators/data/data'),
     creation = require('../creation/index');
 
-    const logger = require('./logger');
+const addBlockPage = function(card, config, fs) {
 
-const addBlockPage = function(type, schema, config, fs) {
-
-    let json = data.createCardJson(schema.schema, config);
-    let blockTypeSettings = config.blockPaths[type];
+    let json = data.createCardJson(card, config);
+    let blockTypeSettings = config.creation.blockPaths[card.type];
 
     let interceptors = {        
         data: function(jsonData) {
@@ -16,16 +14,17 @@ const addBlockPage = function(type, schema, config, fs) {
         dataForSchemaGeneration: json,
     }
 
-    config.interceptorsPipeline.forEach(interceptor => {
-        interceptor.apply(interceptors, json, config);
+    config.interceptorsPipeline.sort(i => i.order).forEach(i => {
+
+        if(!interceptors[i.type]) interceptors[i.type] = [];
+
+        interceptors[i.type].push(i.apply(json, config));
+
     });
 
-    logger.log({
-        level: 'info',
-        message: 'createCardJson =' + JSON.stringify(json, null, 4)
-    });
+    config.logger.info('createCardJson =' + JSON.stringify(json, null, 4));
 
-    creation.addBlock(type, schema.name, '', blockTypeSettings, interceptors, config, fs);
+    creation.addBlock(card.type, card.name, '', blockTypeSettings, interceptors, config, fs);
 };
 
 module.exports = addBlockPage;

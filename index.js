@@ -8,7 +8,7 @@ var isDebugging = typeof v8debug === 'object'
 
 const getType = function(type) {
 
-    var ouput = config.blockPaths[type];
+    var ouput = config.creation.blockPaths[type];
     if(!ouput) {
         console.error("Component type not recongnized should be block or page");
     }

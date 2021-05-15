@@ -1,31 +1,31 @@
 <div class="array-object{{#each _modifiers}} array-object--{{this}}{{/each}}">
-{{#if singlePropertyObjects.[0]}}
-<div class="array-object__single-property-objects">
-{{#each singlePropertyObjects}}
-{{#if exampleProperty}}
-<div class="array-object__single-property-objects__example-property">
-{{exampleProperty}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{#if multiplePropertyObjects.[0]}}
-<div class="array-object__multiple-property-objects">
-{{#each multiplePropertyObjects}}
-<div class="array-object__multiple-property-objects__multiple-property-object">
-{{#if exampleString}}
-<div class="array-object__multiple-property-objects__multiple-property-object__example-string">
-{{exampleString}}
-</div>
-{{/if}}
-{{#if exampleInteger}}
-<div class="array-object__multiple-property-objects__multiple-property-object__example-integer">
-{{exampleInteger}}
-</div>
-{{/if}}
-</div>
-{{/each}}
-</div>
-{{/if}}
+    {{#if singlePropertyObjects.[0]}}
+        <div class="array-object__single-property-objects">
+            {{#each singlePropertyObjects}}
+                {{#if exampleProperty}}
+                    <div class="array-object__single-property-objects__example-property">
+                        {{exampleProperty}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
+    {{#if multiplePropertyObjects.[0]}}
+        <div class="array-object__multiple-property-objects">
+            {{#each multiplePropertyObjects}}
+                <div class="array-object__multiple-property-objects__multiple-property-object">
+                    {{#if exampleString}}
+                        <div class="array-object__multiple-property-objects__multiple-property-object__example-string">
+                            {{exampleString}}
+                        </div>
+                    {{/if}}
+                    {{#if exampleInteger}}
+                        <div class="array-object__multiple-property-objects__multiple-property-object__example-integer">
+                            {{exampleInteger}}
+                        </div>
+                    {{/if}}
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
 </div>

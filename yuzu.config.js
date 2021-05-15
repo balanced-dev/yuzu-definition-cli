@@ -1,6 +1,6 @@
 module.exports = {
     modules: [
-        'yuzu', 'scss', 'vue.settings', 'vue.single-file-component'
+        'yuzu', 'scss.bem', 'vue.settings', 'vue.single-file-component'
     ],
     source: {
         name: "trello",

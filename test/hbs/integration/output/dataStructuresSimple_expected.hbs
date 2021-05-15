@@ -1,17 +1,17 @@
 <div class="data-structures-simple{{#each _modifiers}} data-structures-simple--{{this}}{{/each}}">
-{{#if exampleImage.src}}
-<picture class="data-structures-simple__example-image">
-<img src="{{exampleImage.src}}" alt="{{exampleImage.alt}}">
-</picture>
-{{/if}}
-{{#if exampleLink.href}}
-<a class="data-structures-simple__example-link" href="{{exampleLink.href}}" title="{{exampleLink.title}}" {{#if exampleLink.isNewTab}}target="_blank"{{/if}} {{#if exampleLink.isExternalLink}}rel="noopener noreferrer"{{/if}}>
-{{exampleLink.label}}
-</a>
-{{/if}}
-{{#if exampleForm}}
-<div class="data-structures-simple__example-form">
-{{!-- {{> parForm exampleForm }} --}}
-</div>
-{{/if}}
+    {{#if exampleImage.src}}
+        <picture class="data-structures-simple__example-image">
+            <img src="{{exampleImage.src}}" alt="{{exampleImage.alt}}">
+        </picture>
+    {{/if}}
+    {{#if exampleLink.href}}
+        <a class="data-structures-simple__example-link" href="{{exampleLink.href}}" title="{{exampleLink.title}}" {{#if exampleLink.isNewTab}}target="_blank" {{/if}} {{#if exampleLink.isExternalLink}}rel="noopener noreferrer" {{/if}}>
+            {{exampleLink.label}}
+        </a>
+    {{/if}}
+    {{#if exampleForm}}
+        <div class="data-structures-simple__example-form">
+            {{!-- {{> parForm exampleForm }} --}}
+        </div>
+    {{/if}}
 </div>

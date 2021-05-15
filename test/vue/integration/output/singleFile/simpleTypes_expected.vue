@@ -1,13 +1,6 @@
 <script>
 export default {
-    props: {
-        default: String,
-        exampleString: String,
-        exampleBoolean: Boolean,
-        exampleInteger: Number,
-        exampleNumber: Number,
-        exampleSubBlock: Object,
-    },
+    props: {},
 }
 </script>
 <template>

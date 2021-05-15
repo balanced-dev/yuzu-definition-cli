@@ -1,32 +1,32 @@
 <div class="simple-types{{#each _modifiers}} simple-types--{{this}}{{/each}}">
-{{#if default}}
-<div class="simple-types__default">
-{{default}}
-</div>
-{{/if}}
-{{#if exampleString}}
-<div class="simple-types__example-string">
-{{exampleString}}
-</div>
-{{/if}}
-{{#if exampleBoolean}}
-<div class="simple-types__example-boolean">
-{{exampleBoolean}}
-</div>
-{{/if}}
-{{#if exampleInteger}}
-<div class="simple-types__example-integer">
-{{exampleInteger}}
-</div>
-{{/if}}
-{{#if exampleNumber}}
-<div class="simple-types__example-number">
-{{exampleNumber}}
-</div>
-{{/if}}
-{{#if exampleSubBlock}}
-<div class="simple-types__example-sub-block">
-{{> parExample exampleSubBlock }}
-</div>
-{{/if}}
+    {{#if default}}
+        <div class="simple-types__default">
+            {{default}}
+        </div>
+    {{/if}}
+    {{#if exampleString}}
+        <div class="simple-types__example-string">
+            {{exampleString}}
+        </div>
+    {{/if}}
+    {{#if exampleBoolean}}
+        <div class="simple-types__example-boolean">
+            {{exampleBoolean}}
+        </div>
+    {{/if}}
+    {{#if exampleInteger}}
+        <div class="simple-types__example-integer">
+            {{exampleInteger}}
+        </div>
+    {{/if}}
+    {{#if exampleNumber}}
+        <div class="simple-types__example-number">
+            {{exampleNumber}}
+        </div>
+    {{/if}}
+    {{#if exampleSubBlock}}
+        <div class="simple-types__example-sub-block">
+            {{> parExample exampleSubBlock }}
+        </div>
+    {{/if}}
 </div>

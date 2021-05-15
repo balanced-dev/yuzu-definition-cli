@@ -1,35 +1,35 @@
 <div class="array-types{{#each _modifiers}} array-types--{{this}}{{/each}}">
-{{#if integers.[0]}}
-<div class="array-types__integers">
-{{#each integers}}
-{{#if this}}
-<div class="array-types__integers__integer">
-{{this}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{#if numbers.[0]}}
-<div class="array-types__numbers">
-{{#each numbers}}
-{{#if this}}
-<div class="array-types__numbers__number">
-{{this}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
-{{#if strings.[0]}}
-<div class="array-types__strings">
-{{#each strings}}
-{{#if this}}
-<div class="array-types__strings__string">
-{{this}}
-</div>
-{{/if}}
-{{/each}}
-</div>
-{{/if}}
+    {{#if integers.[0]}}
+        <div class="array-types__integers">
+            {{#each integers}}
+                {{#if this}}
+                    <div class="array-types__integers__integer">
+                        {{this}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
+    {{#if numbers.[0]}}
+        <div class="array-types__numbers">
+            {{#each numbers}}
+                {{#if this}}
+                    <div class="array-types__numbers__number">
+                        {{this}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
+    {{#if strings.[0]}}
+        <div class="array-types__strings">
+            {{#each strings}}
+                {{#if this}}
+                    <div class="array-types__strings__string">
+                        {{this}}
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
 </div>

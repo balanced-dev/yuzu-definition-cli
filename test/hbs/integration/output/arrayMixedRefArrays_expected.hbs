@@ -1,0 +1,11 @@
+<div class="array-mixed-ref-arrays{{#each _modifiers}} array-mixed-ref-arrays--{{this}}{{/each}}">
+    {{#if blocks.[0]}}
+        <div class="array-mixed-ref-arrays__blocks">
+            {{#each blocks}}
+                <div class="array-mixed-ref-arrays__blocks__block">
+                    {{{ dynPartial _ref this }}}
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
+</div>

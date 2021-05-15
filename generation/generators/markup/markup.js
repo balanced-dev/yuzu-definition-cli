@@ -1,5 +1,3 @@
-const logger = require('../../logger');
-
 const scopers = [
     require('./scopers/objectScope'),
     require('./scopers/arrayScope'),
@@ -19,10 +17,7 @@ const generateMarkup = function(options) {
     for(let property in options.data) {
         options.value = options.data[property];
 
-        logger.log({
-            level: 'info',
-            message: `Checking ${JSON.stringify(property, null, 4)} ${JSON.stringify(options.value, null, 4)}`
-        });
+        options.logger.info(`Checking ${JSON.stringify(property, null, 4)} ${JSON.stringify(options.value, null, 4)}`);
 
         scopers.forEach(function(scoping) {
             if(scoping.isValid(options)) {
@@ -61,22 +56,13 @@ const generateMarkup = function(options) {
             }
         };
     }
-    logger.log({
-        level: 'info',
-        message: options.output
-    });
+    options.logger.info(options.output);
     return options.output;
 };
 
 const run = function(markup, cardSettings, json, config) {
-    logger.log({
-        level: 'info',
-        message: 'Card settings= ' + cardSettings
-    });
-    logger.log({
-        level: 'info',
-        message: 'json= ' + json
-    });
+    config.logger.info('Card settings= ' + cardSettings);
+    config.logger.info('json= ' + json);
     let options = { ...config,  ...{
         output: '', 
         cardSettings: cardSettings, 
@@ -89,10 +75,7 @@ const run = function(markup, cardSettings, json, config) {
     let insertIndicatorText = '<!-- YUZU MARKUP -->';
     let insertPosition = markup.toUpperCase().indexOf(insertIndicatorText);
 
-    logger.log({
-        level: 'info',
-        message: 'Run complete'
-    });
+    config.logger.info('Run complete');
 
     // Insert content into markup
     markup = markup.substr(0, insertPosition) + content + markup.substr(insertPosition + insertIndicatorText.length);

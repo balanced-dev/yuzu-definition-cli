@@ -7,12 +7,8 @@ const filename = function(settings) {
 }
 
 const initialContent = function(settings) {
-    var script = settings.config.script.settings.initialScript(settings);
 
-    if(settings.contentIntercepts.script)
-        script = settings.contentIntercepts.script(script, settings); 
-
-    return script;
+    return common.initialContent(settings, 'script');
 }
 
 const changeContent = function(content, oldSettings, newSettings) {

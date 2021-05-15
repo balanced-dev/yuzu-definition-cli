@@ -8,7 +8,7 @@ const isValid = function (options) {
     let isDataStructure = false; 
         
     if(isArrayRefs) {
-        isDataStructure = options.dataStructures.hasOwnProperty(trimRefValue.run(options.value[0].$ref));
+        isDataStructure = options.generation.dataStructures.hasOwnProperty(trimRefValue.run(options.value[0].$ref));
     }
     return (isArray && isArrayRefs && isSingleSubBlockType && isDataStructure);
 };

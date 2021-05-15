@@ -1,9 +1,6 @@
 <script>
 export default {
-    props: {
-        blocks: Array,
-        people: Array,
-    },
+    props: {},
 }
 </script>
 <template>

@@ -1,6 +1,7 @@
+const log = [];
 const assert = require('assert'),
     should = require('should'),
-    base = require('./base.js');
+    base = require('./base.js')(log);
 
 const simplePropertyStructure = base.structures.simpleProperty,
     subBlockAsObjectStructure = base.structures.subBlockAsObject,

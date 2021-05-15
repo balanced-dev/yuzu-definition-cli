@@ -1,9 +1,6 @@
 <script>
 export default {
-    props: {
-        singlePropertyObjects: Array,
-        multiplePropertyObjects: Array,
-    },
+    props: {},
 }
 </script>
 <template>

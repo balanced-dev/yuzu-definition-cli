@@ -1,10 +1,6 @@
 <script>
 export default {
-    props: {
-        exampleImage: Object,
-        exampleLink: Object,
-        exampleForm: Object,
-    },
+    props: {},
 }
 </script>
 <template>

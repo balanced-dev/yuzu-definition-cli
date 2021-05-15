@@ -35,7 +35,7 @@ const removeUnwantedPropertyAttributes = function(segments, structure, config) {
 
     // Remove any type keywords from segments array (e.g. string, array, object...)
     segments = segments.filter(function(segment) {
-        return config.propertyTypes[segment] === undefined;
+        return config.generation.propertyTypes[segment] === undefined;
     });
 
     // Trim end of array to remove property attributes (ie. name, subblock value)

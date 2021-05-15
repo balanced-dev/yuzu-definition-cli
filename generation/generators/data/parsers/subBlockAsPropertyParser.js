@@ -15,11 +15,11 @@ const isValid = function(segments)
     return segments.length >= segmentStructure.length && subBlockIndicatorSegment === 'subBlock';
 };
 
-const run = function(segments, object, config)
+const run = function(segments, object, config, errors)
 {
     let scope = scopeSvc.get(segments, object, segmentStructure, config);
     object = scope.object;
-    propertySettingService.set(object, segments, scope, segmentIndexes, true, config);
+    propertySettingService.set(object, segments, scope, segmentIndexes, true, config, errors);
 };
 
 module.exports= { isValid: isValid, run: run, structure: segmentStructure }

@@ -1,9 +1,6 @@
 <script>
 export default {
-    props: {
-        mixedDataStructures: Array,
-        forms: Array,
-    },
+    props: {},
 }
 </script>
 <template>

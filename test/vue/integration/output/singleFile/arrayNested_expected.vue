@@ -1,8 +1,6 @@
 <script>
 export default {
-    props: {
-        parentArray: Array,
-    },
+    props: {},
 }
 </script>
 <template>

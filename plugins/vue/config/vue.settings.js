@@ -11,7 +11,7 @@ const generateChildContext = function (options) {
 const getVuePartial = function (options) {
   const kebabCase = options.plugins.changeCase.paramCase;
   let hyphenatedPartial = kebabCase(options.value);
-  let partialPrefix = options.prefixes.block.file + "-";
+  let partialPrefix = options.markup.settings.filePrefix.block + "-";
   hyphenatedPartial =
     hyphenatedPartial.substring(0, partialPrefix.length) === partialPrefix
       ? hyphenatedPartial.substring(partialPrefix.length)
@@ -46,7 +46,7 @@ module.exports = (config) => {
   })
 
   config.script.settings.fileExtension = ".js";
-  config.script.settings.initialScript = function (options) {
+  config.script.settings.initialContent = function (options) {
     return 'export default {\nprops: <!-- YUZU PROPS -->\n};';
   };
 
@@ -168,9 +168,10 @@ module.exports = (config) => {
     };
 
     config.interceptorsPipeline.push({
-      name: 'vue-single-file',
-      apply: (interceptors, json, config) => {
-          interceptors.script = function(script, cardSettings) {
+      type: 'script',
+      order: 5,
+      apply: (json, config) => {
+          return function(script, cardSettings) {
     
             const schemaProcess = config.creators.find((item) => { return item.name == 'schema'; });
             if(schemaProcess) {

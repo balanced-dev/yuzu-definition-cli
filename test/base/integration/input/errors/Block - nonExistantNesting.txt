@@ -1,2 +1,0 @@
-Schema:
-- nonExistantObject+string+property

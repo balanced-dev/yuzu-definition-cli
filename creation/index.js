@@ -5,7 +5,7 @@ var kebabCase = require('change-case').paramCase;
 const getBlockSettings = function(type, name, area, typeSettings, initialContentIntercepts, config, fs)
 {
     return {
-        prefix: config.prefixes[type].file,
+        type: type,
         fileName: camelCase(name),
         className: kebabCase(name),
         directoryName: camelCase(name),

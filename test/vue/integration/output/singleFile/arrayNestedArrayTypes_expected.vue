@@ -1,16 +1,6 @@
 <script>
 export default {
-    props: {
-        parentNamedStringArray: Array,
-        parentStringArray: Array,
-        stringArray: String,
-        parentNamedNumberArray: Array,
-        parentNumberArray: Array,
-        numberArray: String,
-        parentNamedIntegerArray: Array,
-        parentIntegerArray: Array,
-        integerArray: String,
-    },
+    props: {},
 }
 </script>
 <template>
@@ -51,9 +41,6 @@ export default {
                 :key="index"
             ></div>
         </div>
-        <div class="array-nested-array-types__string-array" v-if="stringArray">
-            {{ stringArray }}
-        </div>
         <div
             class="array-nested-array-types__parent-named-number-array"
             v-if="parentNamedNumberArray && parentNamedNumberArray.length"
@@ -89,9 +76,6 @@ export default {
                 v-for="(item_1, index) in parentNumberArray"
                 :key="index"
             ></div>
-        </div>
-        <div class="array-nested-array-types__number-array" v-if="numberArray">
-            {{ numberArray }}
         </div>
         <div
             class="array-nested-array-types__parent-named-integer-array"
@@ -129,12 +113,6 @@ export default {
                 :key="index"
             ></div>
         </div>
-        <div
-            class="array-nested-array-types__integer-array"
-            v-if="integerArray"
-        >
-            {{ integerArray }}
-        </div>
     </div>
 </template>
 <style lang="scss">
@@ -153,8 +131,6 @@ export default {
         &__item {
         }
     }
-    &__string-array {
-    }
     &__parent-named-number-array {
         &__item {
             &__child-number-array {
@@ -167,8 +143,6 @@ export default {
         &__item {
         }
     }
-    &__number-array {
-    }
     &__parent-named-integer-array {
         &__item {
             &__child-string-array {
@@ -180,8 +154,6 @@ export default {
     &__parent-integer-array {
         &__item {
         }
-    }
-    &__integer-array {
     }
 }
 </style>

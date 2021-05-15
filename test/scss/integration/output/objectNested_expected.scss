@@ -1,0 +1,13 @@
+.object-nested {
+$this: '.object-nested';
+
+&__parent-object {
+
+&__child-object {
+
+&__example-string {
+
+}
+}
+}
+}
