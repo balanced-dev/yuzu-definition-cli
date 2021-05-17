@@ -11,6 +11,9 @@ module.exports = (config) => {
       layout: {
         path: "/layouts/",
       },
+    },
+    filenamePrefix: (generatorType, cardMeta) => {
+      return cardMeta.fileName;
     }
   };
 

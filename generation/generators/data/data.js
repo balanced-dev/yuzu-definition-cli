@@ -5,9 +5,6 @@ const propertyParsers = [
     require('./parsers/subBlockAsObjectParser')
 ];
 
-const error_not_in_scope = 'not in scope';
-const error_not_valid = 'not valid';
-
 const createCardJson = function (card, config) {
     let lines = card.content.split('\n'),
         obj = {},
@@ -39,7 +36,7 @@ const createCardJson = function (card, config) {
             }
         }
         else if (index != startIndex) {
-            errors.push(`${line} (${error_not_in_scope})`)
+            errors.push(`${line} (${'not in scope'})`)
         }
 
     });

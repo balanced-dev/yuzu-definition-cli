@@ -1,0 +1,36 @@
+{
+    "id": "/arrayObject",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "singlePropertyObjects": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "exampleProperty": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "additionalProperties": false
+            }
+        },
+        "multiplePropertyObjects": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "exampleString": {
+                        "type": "string"
+                    },
+                    "exampleInteger": {
+                        "type": "number"
+                    }
+                },
+                "type": "object",
+                "additionalProperties": false
+            }
+        }
+    },
+    "additionalProperties": false
+}

@@ -23,7 +23,6 @@ const getLists = function(config) {
 const getCards = function(list, config) {
     var output = [];
     var localFilesDirectory = path.join(config.sourceSettings.directoryPath, list);
-    const cardConfig = config.generation.card;
 
     fs.readdirSync(localFilesDirectory).forEach(file => {
         let filePath = path.join(localFilesDirectory, file);
@@ -32,25 +31,15 @@ const getCards = function(list, config) {
         if(stat.isFile()) {
             const extension = path.extname(filePath);
             const fileName = path.basename(filePath, extension);
-            let type = getType(fileName, config);
 
-            if(type && cardConfig.titlePrefixes[type]) {
-                let blockName = fileName.replace(cardConfig.titlePrefixes[type], '');
+            var file = {
+                content: fs.readFileSync(filePath, 'utf8'),
+                name: fileName
+            };
 
-                var file = {
-                    content: fs.readFileSync(filePath, 'utf8'),
-                    name: blockName,
-                    type: type
-                };
-    
-                if(isFileAllowed(fileName, config)) {
-                    output.push(file);
-                }
+            if(isFileAllowed(fileName, config)) {
+                output.push(file);
             }
-            else {
-                config.logger.error(`Card title invalid ${fileName}`)
-            }
-
 
         }
     });
@@ -66,24 +55,12 @@ const isFileAllowed = (fileName, config) => {
     return true;
 }
 
-const buildList = function(list, config, addBlockPage, fsOutput) {
+const buildList = function(list, config, cardToComponent, fsOutput) {
     var cardList = getCards(list, config);
-
     cardList.forEach(card => {
-        addBlockPage(card, config, fsOutput);
+        cardToComponent(card, config, fsOutput);
     });
-};
-
-const getType = function(name, config) {
-    let blockPrefix = config.generation.card.titlePrefixes.block,
-        pagePrefix = config.generation.card.titlePrefixes.page;
-
-    if(name.startsWith(blockPrefix)) {
-        return 'block';
-    }
-    else if(name.startsWith(pagePrefix)) {
-        return 'page';
-    }
+    return cardList;
 };
 
 module.exports = () => {

@@ -1,4 +1,5 @@
 const should = require('should');
+const formatCardName = require('../../../generation/cardToComponent').formatCardName;
 
 module.exports = (ext, createExpected) => {
 
@@ -43,9 +44,11 @@ module.exports = (ext, createExpected) => {
                     tests.load_list('standardisedTests');
                 });
             
-                tests.config.source.getCards('standardisedTests', tests.config).forEach(element => {
+                tests.config.source.getCards('standardisedTests', tests.config).forEach(card => {
             
-                    it(element.name, function() {
+                    formatCardName(card, tests.config);
+
+                    it(card.name, function() {
                         tests.actualEqualsExpected(this.test);
                     });
             

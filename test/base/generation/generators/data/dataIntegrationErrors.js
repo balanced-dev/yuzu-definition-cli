@@ -105,7 +105,7 @@ describe('base', function() {
             const output = base.svc.createCardJson(card, base.settings);
 
             assert.deepStrictEqual(output, {
-                "itemCount": 0
+                "itemCount": 0.1
             });
         });
 

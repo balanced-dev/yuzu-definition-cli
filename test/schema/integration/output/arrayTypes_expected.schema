@@ -1,0 +1,27 @@
+{
+    "id": "/arrayTypes",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "integers": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            }
+        },
+        "numbers": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            }
+        },
+        "strings": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": false
+}

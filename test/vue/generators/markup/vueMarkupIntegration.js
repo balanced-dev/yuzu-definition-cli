@@ -1,5 +1,5 @@
 const should = require('should');
-const base = require('../../../base/generation/generators/markup/base')(['yuzu', 'scss.bem', 'vue.settings']);
+const base = require('../../../base/generation/generators/markup/base')(['scss.bem', 'vue.settings']);
 
 const formatHtmlArray = function(lines) {
     return lines.join('\n') + '\n';
@@ -176,7 +176,7 @@ describe('vue unit', function() {
             let json = {
                 authors: [
                     {
-                        $ref: "/parAuthor"
+                        $ref: "/author"
                     }
                 ]
             };
@@ -221,22 +221,22 @@ describe('vue unit', function() {
                     {
                         articles: [
                             {
-                                $ref: "/parArticle"
+                                $ref: "/article"
                             }
                         ],
                         info: {
-                            $ref: "/parAuthor"
+                            $ref: "/author"
                         },                    
                         images: [
                             {
                                 thumbnail: {
-                                    $ref: "/parImage"
+                                    $ref: "/image"
                                 }
                             }
                         ],
                         links: [
                             {
-                                $ref: "/parLink"
+                                $ref: "/link"
                             }
                         ]
                     }

@@ -2,8 +2,8 @@ var path = require('path');
 var common = require('./common.js');
 
 const filename = function(settings) {
-    const prefix = settings.config.markup.settings.filePrefix[settings.type];
-    var pathName = path.join(settings.rootDirectory, `${common.prefixName(settings, prefix)}${settings.config.markup.settings.fileExtension}`);
+    const filename =  settings.config.creation.filenamePrefix('markup', settings);
+    var pathName = path.join(settings.rootDirectory, `${filename}${settings.config.markup.settings.fileExtension}`);
     return pathName;
 }
 

@@ -2,7 +2,8 @@ var path = require('path');
 var common = require('./common.js');
 
 const filename = function(settings) {
-    var pathName = path.join(settings.rootDirectory, `${common.prefixName(settings)}${settings.config.script.settings.fileExtension}`);
+    const filename = settings.config.creation.filenamePrefix('script', settings);
+    var pathName = path.join(settings.rootDirectory, `${filename}${settings.config.script.settings.fileExtension}`);
     return pathName;
 }
 

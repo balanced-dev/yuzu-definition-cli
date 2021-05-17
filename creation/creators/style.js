@@ -2,8 +2,8 @@ var path = require('path');
 var common = require('./common.js');
 
 const filename = function(settings) {
-    const prefix = settings.config.style.settings.filePrefix;
-    return path.join(settings.rootDirectory, `${common.prefixName(settings, prefix)}${settings.config.style.settings.fileExtension}`);    
+    const filename = settings.config.creation.filenamePrefix('style', settings);
+    return path.join(settings.rootDirectory, `${filename}${settings.config.style.settings.fileExtension}`);    
 }
 
 const initialContent = function(settings) {

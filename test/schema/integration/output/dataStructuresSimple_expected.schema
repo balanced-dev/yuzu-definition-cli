@@ -1,0 +1,18 @@
+{
+    "id": "/dataStructuresSimple",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "exampleImage": {
+            "$ref": "/dataImage"
+        },
+        "exampleLink": {
+            "$ref": "/dataLink"
+        },
+        "exampleForm": {
+            "$ref": "/dataForm"
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,4 +1,4 @@
-const userConfig = { modules: ['yuzu', 'scss.bem', 'vue.settings'] };
+const userConfig = { modules: ['scss.bem', 'vue.settings'] };
 let config = require('../../../../config/configFactory').createForTesting(userConfig);
 const fragments = config.markup.fragments;
 const wrapperMarkupFragments = fragments.wrapperMarkupFragments;
@@ -156,7 +156,7 @@ describe('vue unit', function() {
         });
 
         it('Creates named sub-block array child markup', function() {
-            let options = {...generateOptions(['employee']), ...{value: 'parTeamMember', isArray: true, arrayContext: ['employees']}};
+            let options = {...generateOptions(['employee']), ...{value: 'teamMember', isArray: true, arrayContext: ['employees']}};
             let settings = {...config,  ...options};
 
             let expectedOutputHtml =
@@ -168,7 +168,7 @@ describe('vue unit', function() {
         });
 
         it('Creates named sub-block array child in a parent array markup', function() {
-            let options = {...generateOptions(['employee']), ...{value: 'parTeamMember', isArray: true, arrayContext: ['staff', 'employees']}};
+            let options = {...generateOptions(['employee']), ...{value: 'teamMember', isArray: true, arrayContext: ['staff', 'employees']}};
             let settings = {...config,  ...options};
 
             let expectedOutputHtml =
@@ -180,7 +180,7 @@ describe('vue unit', function() {
         });
 
         it('Creates named sub-block child markup', function() {
-            let options = {...generateOptions(['employee']), ...{value: 'parTeamMember'}};
+            let options = {...generateOptions(['employee']), ...{value: 'teamMember'}};
             let settings = {...config,  ...options};
 
             let expectedOutputHtml =
@@ -192,7 +192,7 @@ describe('vue unit', function() {
         });
 
         it('Creates sub-block property markup', function() {
-            let options = {...generateOptions(['footer']), ...{value: 'parSiteFooter'}};
+            let options = {...generateOptions(['footer']), ...{value: 'siteFooter'}};
             let settings = {...config,  ...options};
 
             let expectedOutputHtml =
@@ -205,7 +205,7 @@ describe('vue unit', function() {
         });
 
         it('Creates sub-block array property markup', function() {
-            let options = {...generateOptions(['footer']), ...{value: 'parSiteFooter', isArray: true, arrayContext: ['footers']}};
+            let options = {...generateOptions(['footer']), ...{value: 'siteFooter', isArray: true, arrayContext: ['footers']}};
             let settings = {...config,  ...options};
 
             let expectedOutputHtml =
@@ -218,7 +218,7 @@ describe('vue unit', function() {
         });
 
         it('Creates sub-block array property in parent array markup', function() {
-            let options = {...generateOptions(['footer']), ...{value: 'parSiteFooter', isArray: true, arrayContext: ['site', 'footers']}};
+            let options = {...generateOptions(['footer']), ...{value: 'siteFooter', isArray: true, arrayContext: ['site', 'footers']}};
             let settings = {...config,  ...options};
 
             let expectedOutputHtml =

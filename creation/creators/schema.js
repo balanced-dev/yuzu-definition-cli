@@ -5,8 +5,8 @@ var jsonSchemaGenerator = require('json-schema-generator');
 var extension = ".schema";
 
 const filename = function(settings) {
-
-    return path.join(settings.rootDirectory, `${common.prefixName(settings)}${extension}`);
+    const filename =  settings.config.creation.filenamePrefix('schema', settings);
+    return path.join(settings.rootDirectory, `${filename}${extension}`);
 }
 
 const initialContent = function(settings) {
@@ -15,7 +15,8 @@ const initialContent = function(settings) {
     schemaBody.required = undefined;
 
     var schemaHeader = {};
-    schemaHeader.id = `/${common.prefixName(settings)}`;
+    const schemaName =  settings.config.creation.filenamePrefix('schema', settings);
+    schemaHeader.id = `/${schemaName}`;
 
     var schema = Object.assign({}, schemaHeader, schemaBody);
     schema.additionalProperties = false;

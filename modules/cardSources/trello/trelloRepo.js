@@ -42,7 +42,7 @@ const getBoardLists = async function(config) {
     }
 };
 
-const getCardLists = async function (list, config, addBlockPage, fs, callback) {
+const getCardLists = async function (list, config, cardToComponent, fs, processLists) {
     
     let configList = list ? list : config.list;
     
@@ -53,8 +53,9 @@ const getCardLists = async function (list, config, addBlockPage, fs, callback) {
             level: 'info',
             message: 'Get board list=' + JSON.stringify(boardList, null, 4)
         });*/
-        const card = await makeTrelloRequest("/1/lists/" + boardList.id + "/cards", params, config);
-        callback(card, config, addBlockPage, fs);
+        const cards = await makeTrelloRequest("/1/lists/" + boardList.id + "/cards", params, config);
+        processLists(cards, config, cardToComponent, fs);
+        return cards;
         /*logger.log({
             level: 'info',
             message: 'Get board list=' + JSON.stringify(boardList, null, 4)

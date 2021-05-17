@@ -1,16 +1,3 @@
-const prefixName = function(settings, prefix)
-{
-    if(prefix)
-    {
-        var filename = capitalize(settings.fileName);
-        return `${prefix}${filename}`;
-    }
-    else
-    {
-        return settings.fileName;
-    }
-}
-
 const initialContent = function(settings, type) {
     let content = settings.config[type].settings.initialContent(settings);
 
@@ -61,9 +48,4 @@ const rename = function(changeContent, filename, oldSettings, newSettings, fs) {
 
 }
 
-const capitalize = (s) => {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
-}
-
-module.exports = { prefixName, initialContent, get, add, rename };
+module.exports = { initialContent, get, add, rename };

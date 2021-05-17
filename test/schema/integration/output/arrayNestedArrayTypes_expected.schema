@@ -1,0 +1,72 @@
+{
+    "id": "/arrayNestedArrayTypes",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "parentNamedStringArray": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "childStringArray": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object",
+                "additionalProperties": false
+            }
+        },
+        "parentStringArray": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "parentNamedNumberArray": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "childNumberArray": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "type": "object",
+                "additionalProperties": false
+            }
+        },
+        "parentNumberArray": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "parentNamedIntegerArray": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "childStringArray": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object",
+                "additionalProperties": false
+            }
+        },
+        "parentIntegerArray": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": false
+}

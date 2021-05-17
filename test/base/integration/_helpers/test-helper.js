@@ -1,5 +1,5 @@
 const generator = require('../../../../generation/index');
-const addBlockPage = require('../../../../generation/addBlockPage');
+const cardToComponent = require('../../../../generation/cardToComponent').run;
 const localFileSource = require('../../../../modules/cardSources/localFiles/localFiles');
 const fsStub = require('./fsStub');
 const path = require('path');
@@ -62,7 +62,7 @@ module.exports = (ext, writeExpected) => {
         load_list: (list) => {
         
             addedFiles = {};
-            generator.runSingleList(list, config, addBlockPage, fsStub(addedFiles));
+            generator.runSingleList(list, config, cardToComponent, fsStub(addedFiles));
 
         }
     }

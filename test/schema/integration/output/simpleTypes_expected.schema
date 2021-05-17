@@ -1,0 +1,27 @@
+{
+    "id": "/simpleTypes",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "default": {
+            "type": "string"
+        },
+        "exampleString": {
+            "type": "string"
+        },
+        "exampleBoolean": {
+            "type": "boolean"
+        },
+        "exampleInteger": {
+            "type": "number"
+        },
+        "exampleNumber": {
+            "type": "number"
+        },
+        "exampleSubBlock": {
+            "$ref": "/parExample"
+        }
+    },
+    "additionalProperties": false
+}

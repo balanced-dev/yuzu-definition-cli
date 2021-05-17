@@ -1,0 +1,28 @@
+{
+    "id": "/dataStructuresRefArray",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "blocks": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "/parExample1"
+                    },
+                    {
+                        "$ref": "/parExample2"
+                    }
+                ]
+            }
+        },
+        "people": {
+            "type": "array",
+            "items": {
+                "$ref": "/parPerson"
+            }
+        }
+    },
+    "additionalProperties": false
+}

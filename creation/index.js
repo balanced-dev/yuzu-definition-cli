@@ -54,7 +54,7 @@ const addBlock = function(type, name, area, typeSettings, initialContentIntercep
 
 const addState = function(type, name, area, state, typeSettings)
 {
-    var settings = getBlockSettings(name, area, typeSettings);
+    var settings = getBlockSettings(type, name, area, typeSettings);
     state = kebabCase(state);
 
     if (fs.existsSync(settings.rootDirectory)){
@@ -73,8 +73,8 @@ const addState = function(type, name, area, state, typeSettings)
 const renameBlock = function(type, oldName, newName, area, typeSettings)
 {
 
-    var oldSettings = getBlockSettings(oldName, area, typeSettings);
-    var newSettings = getBlockSettings(newName, area, typeSettings);
+    var oldSettings = getBlockSettings(type, oldName, area, typeSettings);
+    var newSettings = getBlockSettings(type, newName, area, typeSettings);
 
     if(!fs.existsSync(newSettings.rootDirectory))
     {

@@ -1,0 +1,24 @@
+{
+    "id": "/objectNested",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "parentObject": {
+            "type": "object",
+            "properties": {
+                "childObject": {
+                    "type": "object",
+                    "properties": {
+                        "exampleString": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}

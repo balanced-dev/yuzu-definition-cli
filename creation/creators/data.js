@@ -5,12 +5,12 @@ var directories = require('./directories.js');
 var extension = ".json";
 
 const filename = function(settings, state) {
-
+    const filename =  settings.config.creation.filenamePrefix('markup', settings);
     if(state) {
-        return path.join(directories.getSubPath(settings, 'data'), `${common.prefixName(settings)}_${state}${extension}`);
+        return path.join(directories.getSubPath(settings, 'data'), `${filename}_${state}${extension}`);
     }
     else {
-        return path.join(directories.getSubPath(settings, 'data'), `${common.prefixName(settings)}${extension}`);
+        return path.join(directories.getSubPath(settings, 'data'), `${filename}${extension}`);
     }
 }
 

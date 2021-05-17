@@ -15,7 +15,7 @@ const loggers = {
 };
 
 let modules = [];
-const internalPlugins = ['hbs', 'vue', 'yuzu', 'scss'];
+const internalPlugins = ['hbs', 'vue', 'yuzu', 'scss', 'schema'];
 internalPlugins.forEach((plugin) => {
     const pluginModules = require(`../plugins/${plugin}/index`)().modules;
     modules = [...modules, ...pluginModules];

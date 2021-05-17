@@ -1,0 +1,34 @@
+{
+    "id": "/arrayRefs",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "mixedDataStructures": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "/dataImage"
+                    },
+                    {
+                        "$ref": "/dataLink"
+                    }
+                ]
+            }
+        },
+        "forms": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "dataForm": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "additionalProperties": false
+            }
+        }
+    },
+    "additionalProperties": false
+}
