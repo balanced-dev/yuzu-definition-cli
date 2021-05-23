@@ -8,22 +8,22 @@ module.exports = (config) => {
   config.creation.blockPaths.page.path = '/_dev/_templates/pages';
   config.creation.blockPaths.block.path = '/_dev/_templates/blocks';
   config.creation.blockPaths.layout.path = '/_dev/_templates/_layouts';
-  config.creation.filenamePrefix = (generatorType, cardMeta) => {
+  config.creation.filenamePrefix = (generatorType, componentMeta, config) => {
 
-    let prefix = cardMeta.config.markup.settings.filePrefix[cardMeta.type];
+    let prefix = config.markup.settings.filePrefix[componentMeta.type];
     if(generatorType == 'style') prefix = `_${prefix}`;
 
     if(prefix) {
-        var filename = capitalize(cardMeta.fileName);
+        var filename = capitalize(componentMeta.fileName);
         return `${prefix}${filename}`;
     }
     else {
-      return cardMeta.fileName;
+      return componentMeta.fileName;
     }
 
   }
 
-  config.data.settings.subdirectory.push('data');
+  config.data.settings.subdirectory = 'data';
 
   config.markup.settings.filePrefix.block = 'par';
   config.style.settings.filePrefix = '_';

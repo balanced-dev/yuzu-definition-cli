@@ -30,31 +30,34 @@ module.exports = (ext, createExpected) => {
                 });
             });
 
-            describe('card tests', function() {
+            if(context.output) {
+                describe('card tests', function() {
 
-                this.beforeAll(function() {
-                    tests.setupResultsOutput(context.output);
-                });
-            
-                beforeEach(tests.beforeEach);
-            
-                afterEach(function() { tests.afterEach(this.currentTest); });
-            
-                it('load-list', function() {
-                    tests.load_list('standardisedTests');
-                });
-            
-                tests.config.source.getCards('standardisedTests', tests.config).forEach(card => {
-            
-                    formatCardName(card, tests.config);
-
-                    it(card.name, function() {
-                        tests.actualEqualsExpected(this.test);
+                    this.beforeAll(function() {
+                        tests.setupResultsOutput(context.output);
                     });
-            
-                });
                 
-            });
+                    beforeEach(tests.beforeEach);
+                
+                    afterEach(function() { tests.afterEach(this.currentTest); });
+                
+                    it('load-list', function() {
+                        tests.load_list('standardisedTests');
+                    });
+                
+                    tests.config.source.getCards('standardisedTests', tests.config).forEach(card => {
+                
+                        formatCardName(card, tests.config);
+    
+                        it(card.name, function() {
+                            tests.actualEqualsExpected(this.test);
+                        });
+                
+                    });
+                    
+                });
+            }
+            
         }
         
     };

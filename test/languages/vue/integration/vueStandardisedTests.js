@@ -11,7 +11,7 @@ describe('vue integration', function() {
         let context = {
             name: 'single-file',
             modules: ['scss.bem', 'vue.settings', 'vue.single-file-component', 'vue.prettier'],
-            output: ['test', 'plugins', 'vue', 'integration', 'output', 'singleFile'],
+            output: ['test', 'languages', 'vue', 'integration', 'output', 'singleFile'],
             createdFiles: ['simplest.vue']
         };
 
@@ -25,7 +25,7 @@ describe('vue integration', function() {
         let context = {
             name: 'normal',
             modules: ['vue.settings'],
-            output: ['test', 'plugins', 'vue', 'integration', 'output', 'normal'],
+            output: ['test', 'languages', 'vue', 'integration', 'output', 'normal'],
             createdFiles: ['simplest.html', 'simplest.css', 'simplest.js']
         };
 

@@ -5,7 +5,7 @@ const add = function(componentMeta, config) {
     
     config.fs.mkdir(componentMeta.rootDirectory);
 
-    _.each(settings.subDirectories, function (type, key)
+    _.each(componentMeta.subDirectories, function (type, key)
     {
         var path = common.directory(componentMeta, type);
         config.fs.mkdir(path);

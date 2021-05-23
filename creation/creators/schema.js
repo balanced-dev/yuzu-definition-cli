@@ -12,7 +12,7 @@ const initialContent = function(componentMeta, config) {
     schemaBody.required = undefined;
 
     var schemaHeader = {};
-    const schemaName =  config.creation.filenamePrefix('schema', componentMeta);
+    const schemaName =  config.creation.filenamePrefix('schema', componentMeta, config);
     schemaHeader.id = `/${schemaName}`;
 
     var schema = Object.assign({}, schemaHeader, schemaBody);

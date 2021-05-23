@@ -7,7 +7,7 @@ describe('hbs integration', function() {
 
     const context = {
         modules: ['hbs.settings', 'hbs.prettier'],
-        output: ['test', 'plugins', 'hbs', 'integration', 'output'],
+        output: ['test', 'languages', 'hbs', 'integration', 'output'],
         createdFiles: ['simplest.hbs', 'simplest.css']
     };
 

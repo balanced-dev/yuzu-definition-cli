@@ -7,7 +7,7 @@ describe('scss bem integration', function() {
 
     const context = {
         modules: ['scss.bem'],
-        output: ['test', 'plugins', 'scss', 'integration', 'output'],
+        output: ['test', 'languages', 'scss', 'integration', 'output'],
         createdFiles: ['simplest.html', 'simplest.scss']
     };
 

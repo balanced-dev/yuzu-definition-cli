@@ -4,7 +4,7 @@ var common = require('./common.js');
 const getFilePath = function(componentMeta, config, state) {
 
     const extension = config.data.settings.fileExtension;
-    const filename =  config.creation.filenamePrefix('markup', componentMeta);
+    const filename =  config.creation.filenamePrefix('markup', componentMeta, config);
     if(state) {
         return path.join(common.getFileDirectory(componentMeta, 'data', config), `${filename}_${state}${extension}`);
     }

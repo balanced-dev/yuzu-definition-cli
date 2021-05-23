@@ -7,7 +7,7 @@ describe('schema integration', function() {
 
     const context = {
         modules: ['schema'],
-        output: ['test', 'plugins', 'schema', 'integration', 'output'],
+        output: ['test', 'languages', 'schema', 'integration', 'output'],
         createdFiles: ['simplest.html', 'simplest.schema', 'simplest.css']
     };
 

@@ -11,7 +11,7 @@ const run = function(card, config) {
         let json = data.createCardJson(card, config);
 
         let interceptors = {        
-            data: function(jsonData) {
+            data: function() {
                 return data.removeDataStructureRefs(json, config); 
             },
             dataForSchemaGeneration: json,

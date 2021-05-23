@@ -3,7 +3,7 @@ const path = require('path');
 const getFilePath = function(componentMeta, config, type) {
 
     const extension = config[type].settings.fileExtension;
-    const filename =  config.creation.filenamePrefix(type, componentMeta);
+    const filename =  config.creation.filenamePrefix(type, componentMeta, config);
     var pathName = path.join(getFileDirectory(componentMeta, type, config), `${filename}${extension}`);
     return pathName;
 }
@@ -11,7 +11,7 @@ const getFilePath = function(componentMeta, config, type) {
 const getFileDirectory = function(componentMeta, type, config){
     
     if(config[type].settings.subdirectory) 
-        return path.join(componentMeta.rootDirectory, config[type].settings.subDirectory);
+        return path.join(componentMeta.rootDirectory, config[type].settings.subdirectory);
     else
         return componentMeta.rootDirectory;
 };

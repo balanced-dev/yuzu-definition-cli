@@ -12,7 +12,7 @@ module.exports = (config) => {
         path: "/layouts/",
       },
     },
-    filenamePrefix: (generatorType, cardMeta) => {
+    filenamePrefix: (generatorType, cardMeta, config) => {
       return cardMeta.fileName;
     }
   };
