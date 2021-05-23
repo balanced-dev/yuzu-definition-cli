@@ -1,0 +1,15 @@
+{
+    "blocks": [
+        {
+            "$ref": "/parExample1"
+        },
+        {
+            "$ref": "/parExample2"
+        }
+    ],
+    "people": [
+        {
+            "$ref": "/parPerson"
+        }
+    ]
+}

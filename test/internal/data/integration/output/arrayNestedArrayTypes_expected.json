@@ -1,0 +1,32 @@
+{
+    "parentNamedStringArray": [
+        {
+            "childStringArray": [
+                ""
+            ]
+        }
+    ],
+    "parentStringArray": [
+        {}
+    ],
+    "parentNamedNumberArray": [
+        {
+            "childNumberArray": [
+                0.1
+            ]
+        }
+    ],
+    "parentNumberArray": [
+        {}
+    ],
+    "parentNamedIntegerArray": [
+        {
+            "childStringArray": [
+                0
+            ]
+        }
+    ],
+    "parentIntegerArray": [
+        {}
+    ]
+}

@@ -1,10 +1,9 @@
-const fs = require('../creation/services/fs');
 const cardToComponent = require('./cardToComponent').run;
 const inquirer = require('inquirer');
 
-const runSingleList = (list, config, cardToComponent, fs) => {
+const runSingleList = (list, config, cardToComponent) => {
 
-    config.source.buildList(list, config, cardToComponent, fs);
+    config.source.buildList(list, config, cardToComponent);
 
 }
 
@@ -15,7 +14,7 @@ const run = async function(config, isDebugging) {
         if(options) {
 
             if(isDebugging) {
-                runSingleList(options[0], config, cardToComponent, fs);
+                runSingleList(options[0], config, cardToComponent);
             }
             else {
                 inquirer.prompt([
@@ -27,7 +26,7 @@ const run = async function(config, isDebugging) {
                     }
                 ])
                 .then(answer => {
-                    runSingleList(answer.list, config, cardToComponent, fs);
+                    runSingleList(answer.list, config, cardToComponent);
                 });
             }
 

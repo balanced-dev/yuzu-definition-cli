@@ -1,0 +1,10 @@
+{
+    "default": "",
+    "exampleString": "",
+    "exampleBoolean": true,
+    "exampleInteger": 0,
+    "exampleNumber": 0.1,
+    "exampleSubBlock": {
+        "$ref": "/parExample"
+    }
+}

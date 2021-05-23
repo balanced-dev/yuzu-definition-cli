@@ -7,6 +7,14 @@ module.exports = (config) => {
         module: require('../../creation/creators/markup') 
     });
 
+    const basicArrayOpening = function(options) {
+        return `<${options.markup.settings.defaultTag} class="${options.style.generateClassString(options)}">\n`
+    };
+
+    const basicArrayClosing = function(options) {
+        return `</${options.markup.settings.defaultTag}>\n`;
+    };
+
     config.markup = {
         settings : {
             defaultTag: "div",
@@ -15,6 +23,7 @@ module.exports = (config) => {
                 page: ''
             },
             fileExtension: ".html",
+            subdirectory: '',
             initialContent: function (options) {
                 return ``;
             }
@@ -22,32 +31,52 @@ module.exports = (config) => {
         fragments : {
             wrapperMarkupFragments: {
                 array: {
-                    parentWrapperOpening: () => {},
-                    parentWrapperClosing: () => {},
-                    simpleTypeOpening: () => {},
-                    simpleTypeClosing: () => {},
-                    dataStructuresOpening: () => {},
-                    dataStructuresClosing: () => {},
-                    dynamicRefsOpening: () => {},
-                    dynamicRefsClosing: () => {},
-                    refsOpening: () => {},
-                    refsClosing: () => {}
+                    parentWrapperOpening: (options) => basicArrayOpening(options),
+                    parentWrapperClosing: (options) => basicArrayClosing(options),
+                    simpleTypeOpening: (options) => basicArrayOpening(options),
+                    simpleTypeClosing: (options) => basicArrayClosing(options),
+                    dataStructuresOpening: (options) => basicArrayOpening(options),
+                    dataStructuresClosing: (options) => basicArrayClosing(options),
+                    dynamicRefsOpening: (options) => basicArrayOpening(options),
+                    dynamicRefsClosing: (options) => basicArrayClosing(options),
+                    refsOpening: (options) => basicArrayOpening(options),
+                    refsClosing: (options) => basicArrayClosing(options)
                 }, 
                 object: {
-                    openingTag: () => {},
-                    closingTag: () => {}
+                    openingTag: (options) => {
+                        const tag = options.markup.settings.defaultTag;
+                        return `<${tag} class="${options.style.generateClassString(options)}">\n`; 
+                    },
+                    closingTag: (options) => {
+                        const tag = options.markup.settings.defaultTag;
+                        return `</${tag}>\n`; 
+                    }
                 }
             },
             contentMarkupFragments: {
-                dynamicSubBlockArray: () => {},
-                namedSubBlockArray: () => {},
-                subBlockObject: () => {},
-                default: () => {}
+                dynamicSubBlockArray: () => { return ''; },
+                namedSubBlockArray: () => { return ''; },
+                subBlockObject: (options) => {
+                    const tag = options.markup.settings.defaultTag;
+                    return `<${tag} class="${options.style.generateClassString(options)}">\n</${tag}>\n`
+                },
+                default: (options) => {
+                    const tag = options.markup.settings.defaultTag;
+                    return `<${tag} class="${options.style.generateClassString(options)}">\n</${tag}>\n`
+                }
             },
             dataStructureMarkupFragments: {
-                dataImage: () => {},
-                dataLink: () => {},
-                dataForm: () => {}
+                dataImage: (options) => {
+                    return `<picture class="${options.style.generateClassString(options)}">\n` +
+                                `<img src="" alt="">\n` +
+                            `</picture>\n`;
+                },
+                dataLink: (options) => {
+                    return `<a class="${options.style.generateClassString(options)}" href="" title=""></a>\n`;
+                },
+                dataForm: (options) => {
+                    return `<div class="${options.style.generateClassString(options)}">\n</div>\n`;
+                }
             }
         } 
     };
@@ -57,7 +86,7 @@ module.exports = (config) => {
         order: 5,
         apply: (json, config) => {
             return function(html, cardSettings) {
-                let markupGeneration = config.generators.markup.run(html, cardSettings, json, cardSettings.config);
+                let markupGeneration = config.generators.markup.run(html, cardSettings, json, config);
                 cardSettings.markup = markupGeneration.content;
                 return markupGeneration.full;
             } 

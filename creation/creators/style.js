@@ -1,29 +1,28 @@
 var path = require('path');
 var common = require('./common.js');
 
-const filename = function(settings) {
-    const filename = settings.config.creation.filenamePrefix('style', settings);
-    return path.join(settings.rootDirectory, `${filename}${settings.config.style.settings.fileExtension}`);    
+const getFilePath = function(componentMeta, config) {
+    return common.getFilePath(componentMeta, config, 'style');
 }
 
-const initialContent = function(settings) {
+const initialContent = function(componentMeta, config) {
 
-    return common.initialContent(settings, 'style');
+    return common.initialContent('style', componentMeta, config);
 }
 
-const changeContent = function(content, oldSettings, newSettings) {
+const changeContent = function(content, componentMetaOld, componentMetaNew) {
 
-    return content.replace(oldSettings.className, newSettings.className);
+    return content.replace(componentMetaOld.className, componentMetaNew.className);
 }
 
-const add = function(settings, fs) {
+const add = function(componentMeta, config) {
 
-    common.add(filename, initialContent, settings, fs);
+    common.add(getFilePath, initialContent, componentMeta, config);
 }
 
-const rename = function(oldSettings, newSettings, fs) {
+const rename = function(componentMetaOld, componentMetaNew, config) {
 
-    common.rename(changeContent, filename, oldSettings, newSettings, fs);
+    common.rename(changeContent, getFilePath, componentMetaOld, componentMetaNew, config);
 }
 
 module.exports = { add, rename, initialContent };

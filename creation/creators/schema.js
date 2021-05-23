@@ -2,50 +2,47 @@ var path = require('path');
 var common = require('./common.js');
 var jsonSchemaGenerator = require('json-schema-generator');
 
-var extension = ".schema";
-
-const filename = function(settings) {
-    const filename =  settings.config.creation.filenamePrefix('schema', settings);
-    return path.join(settings.rootDirectory, `${filename}${extension}`);
+const getFilePath = function(componentMeta, config) {
+    return common.getFilePath(componentMeta, config, 'schema');
 }
 
-const initialContent = function(settings) {
-    var data = settings.contentIntercepts.dataForSchemaGeneration ? settings.contentIntercepts.dataForSchemaGeneration : settings.data;
+const initialContent = function(componentMeta, config) {
+    var data = componentMeta.contentIntercepts.dataForSchemaGeneration ? componentMeta.contentIntercepts.dataForSchemaGeneration : componentMeta.data;
     var schemaBody = jsonSchemaGenerator(data);
     schemaBody.required = undefined;
 
     var schemaHeader = {};
-    const schemaName =  settings.config.creation.filenamePrefix('schema', settings);
+    const schemaName =  config.creation.filenamePrefix('schema', componentMeta);
     schemaHeader.id = `/${schemaName}`;
 
     var schema = Object.assign({}, schemaHeader, schemaBody);
     schema.additionalProperties = false;
 
-    settings.contentIntercepts.schema.forEach(i => {
-        schema = i(schema, settings); 
+    componentMeta.contentIntercepts.schema.forEach(i => {
+        schema = i(schema, componentMeta); 
     });
 
     return JSON.stringify(schema, null, 4);
 }
 
-const changeContent = function(content, oldSettings, newSettings) {
+const changeContent = function(content, componentMetaOld, componentMetaNew) {
 
-    return content.replace(common.prefixName(oldSettings), common.prefixName(newSettings));
+    return content.replace(common.prefixName(componentMetaOld), common.prefixName(componentMetaNew));
 }
 
-const get = function(settings, fs)
+const get = function(componentMeta, config)
 {
-    return common.get(filename, settings, fs);
+    return common.get(getFilePath, componentMeta, config);
 }
 
-const add = function(settings, fs) {
+const add = function(componentMeta, config) {
 
-    common.add(filename, initialContent, settings, fs);
+    common.add(getFilePath, initialContent, componentMeta, config);
 }
 
-const rename = function(oldSettings, newSettings, fs) {
+const rename = function(componentMetaOld, componentMetaNew, config) {
 
-    common.rename(changeContent, filename, oldSettings, newSettings, fs);
+    common.rename(changeContent, getFilePath, componentMetaOld, componentMetaNew, config);
 }
 
 module.exports = { get, add, rename, initialContent };

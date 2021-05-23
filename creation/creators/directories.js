@@ -1,29 +1,23 @@
-const fs = require('fs');
-const path = require('path');
 const _ = require('lodash');
+const common = require('./common.js');
 
-const getSubPath = function(settings, subDirectory){
+const add = function(componentMeta, config) {
     
-    return path.join(settings.rootDirectory, settings.subDirectories[subDirectory]);
-};
+    config.fs.mkdir(componentMeta.rootDirectory);
 
-const add = function(settings, fs) {
-    
-    fs.mkdir(settings.rootDirectory);
-
-    _.each(settings.subDirectories, function (value, key)
+    _.each(settings.subDirectories, function (type, key)
     {
-        var path = getSubPath(settings, value);
-        fs.mkdir(path);
+        var path = common.directory(componentMeta, type);
+        config.fs.mkdir(path);
     });
 }
 
-const rename = function(oldSettings, newSettings, fs) {
+const rename = function(componentMetaOld, componentMetaNew, config) {
 
-    fs.renameDir(oldSettings.rootDirectory, newSettings.rootDirectory);
+    config.fs.renameDir(componentMetaOld.rootDirectory, componentMetaNew.rootDirectory);
 
     //rename in old settings as root directory has been changed and further process needs to find root
-    oldSettings.rootDirectory = newSettings.rootDirectory;
+    componentMetaOld.rootDirectory = componentMetaNew.rootDirectory;
 }
 
-module.exports = { add, rename, getSubPath };
+module.exports = { add, rename };

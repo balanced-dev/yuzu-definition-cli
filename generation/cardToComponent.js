@@ -2,14 +2,13 @@ const data = require('./generators/data/data'),
     creation = require('../creation/index'),
     camelCase = require('change-case').camelCase;
 
-const run = function(card, config, fs) {
+const run = function(card, config) {
 
     const isCardFormatValid = formatCardName(card, config);
 
     if(isCardFormatValid) {
 
         let json = data.createCardJson(card, config);
-        let blockTypeSettings = config.creation.blockPaths[card.type];
 
         let interceptors = {        
             data: function(jsonData) {
@@ -28,7 +27,7 @@ const run = function(card, config, fs) {
 
         config.logger.info('createCardJson =' + JSON.stringify(json, null, 4));
 
-        creation.addBlock(card.type, card.name, '', blockTypeSettings, interceptors, config, fs);
+        creation.addBlock(config, card.type, '', card.name, interceptors);
     }
     else {
         config.logger.error(`Card title invalid ${card.name}`)

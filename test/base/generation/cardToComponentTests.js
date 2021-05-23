@@ -12,12 +12,14 @@ describe('base', function() {
                 createCardJson: () => {}
             },
             creation: {
-                addBlock: (type, name) => { addedBlockName = name; }
+                addBlock: (config, type, area, name) => { 
+                    addedBlockName = name; 
+                }
             },
         });
 
         let log = [];
-        const config = require('../../../config/configFactory').createForTesting({ modules: ['hbs.settings'] });
+        const config = require('../../../config/configFactory').createForTesting({ modules: [] });
         config.logger = {
             error: (message) => {
                 log.push(message);

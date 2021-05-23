@@ -6,13 +6,12 @@ const config = require('./config/configFactory.js').create();
  
 var isDebugging = typeof v8debug === 'object'
 
-const getType = function(type) {
-
-    var ouput = config.creation.blockPaths[type];
-    if(!ouput) {
+const validateType = function(type) {
+    if(config.creation.blockPaths[type]) {
         console.error("Component type not recongnized should be block or page");
+        return false;
     }
-    return ouput;
+    return true;
 };
 
 program 
@@ -23,9 +22,8 @@ program
     .command('config <type>')
     .description('Shows the current applied settings')
     .action((type) => {
-        var typeSettings = getType(type);
-        if(typeSettings) {
-            create.settings(typeSettings);
+        if(validateType(type)) {
+            create.settings(config);
         }
     });
 
@@ -34,9 +32,8 @@ program
     .alias('a')
     .description('Add a new block or page')
     .action((type, name, area = '') => {
-        var typeSettings = getType(type);
-        if(typeSettings) {
-            create.addBlock(type, name, area, typeSettings, {});
+        if(validateType(type)) {
+            create.addBlock(config, type, area, name);
         }
     });
 
@@ -47,7 +44,7 @@ program
     .action((type, name, state, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            create.addState(type, name, area, state, typeSettings);
+            create.addState(config, type, area, name, state);
         }
     });
 
@@ -58,7 +55,7 @@ program
     .action((type, oldName, newName, area = '') => {
         var typeSettings = getType(type);
         if(typeSettings) {
-            create.renameBlock(type, oldName, newName, area, typeSettings);
+            create.renameBlock(config, type, area, oldName, newName);
         }
     });
 

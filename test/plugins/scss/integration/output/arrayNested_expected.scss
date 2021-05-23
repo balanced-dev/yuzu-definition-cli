@@ -1,0 +1,16 @@
+.array-nested {
+$this: '.array-nested';
+
+&__parent-array {
+
+&__child-array {
+
+&__example-string {
+
+}
+&__example-integer {
+
+}
+}
+}
+}

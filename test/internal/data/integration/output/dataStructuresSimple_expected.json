@@ -1,0 +1,20 @@
+{
+    "exampleImage": {
+        "src": "",
+        "alt": "",
+        "height": 0,
+        "width": 0
+    },
+    "exampleLink": {
+        "label": "",
+        "href": "#",
+        "title": "",
+        "isNewTab": false,
+        "isExternalLink": false,
+        "iconName": "",
+        "isActive": false
+    },
+    "exampleForm": {
+        "testForm": {}
+    }
+}

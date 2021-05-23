@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const getPropertyCount = function(options) {
     return Object.keys(options.value[0]).length;
 }
@@ -33,7 +35,7 @@ module.exports = (config) => {
                     return basicArrayOpening(options, newContext)
                 }
                 else {
-                    let wrapperOptions = options.plugins._.cloneDeep(options);
+                    let wrapperOptions = _.cloneDeep(options);
                     options.style.appendChildContextClass(options);
                     options.relativePath = !newContext ? [] : [newContext];
                     return  basicArrayOpening(wrapperOptions, newContext) + 
@@ -134,10 +136,7 @@ module.exports = (config) => {
         },
     }
 };
-  config.createThese = ['directories', 'schema', 'data', 'markup', 'style']; 
 
-  config.plugins._ = require("lodash");
-  config.plugins.changeCase = require("change-case");
-  config.plugins.inflector = require("inflector-js");
+//config.createThese = ['directories', 'schema', 'data', 'markup', 'style']; 
 
 };

@@ -1,49 +1,28 @@
-var fs = require('fs');
-var camelCase = require('change-case').camelCase;
-var kebabCase = require('change-case').paramCase;
-
-const getBlockSettings = function(type, name, area, typeSettings, initialContentIntercepts, config, fs)
+const settings = function(config)
 {
-    return {
-        type: type,
-        fileName: camelCase(name),
-        className: kebabCase(name),
-        directoryName: camelCase(name),
-        rootDirectory: fs.getRoot(name, area, typeSettings, fs),
-        subDirectories: {
-            data: 'data'
-        },
-        contentIntercepts: initialContentIntercepts,
-        config: config,
-        markup: ''
-    };
-}
-
-const settings = function(typeSettings)
-{
-    var settings = getBlockSettings('', '', typeSettings);
+    var settings = config.creation.createComponentMeta(config);
 
     console.log(JSON.stringify(settings, null, 4));
 }
 
-const addBlock = function(type, name, area, typeSettings, initialContentIntercepts, config, fs)
+const addBlock = function(config, type, area, name, contentIntercepts)
 {
-    let settings = getBlockSettings(type, name, area, typeSettings, initialContentIntercepts, config, fs);
+    let componentMeta = config.creation.createComponentMeta(config, type, area, name, '', contentIntercepts);
 
-    if (!fs.dirExists(settings.rootDirectory)){
+    if (!config.fs.dirExists(componentMeta.rootDirectory)){
 
         let creators = config.creators
             .filter((item) => { return config.createThese.includes(item.name) })
 
         creators.forEach((creator) => {
-            creator.module.add(settings, fs);
+            creator.module.add(componentMeta, config);
         });
 
-        console.log(`Added new ${type} "${settings.fileName}"`);
+        console.log(`Added new ${type} "${componentMeta.fileName}"`);
     }
     else
     {
-        console.warn(`This block already exists at ${settings.rootDirectory}`);
+        console.warn(`This block already exists at ${componentMeta.rootDirectory}`);
     }
 
     return {
@@ -52,44 +31,45 @@ const addBlock = function(type, name, area, typeSettings, initialContentIntercep
 
 }
 
-const addState = function(type, name, area, state, typeSettings)
+const addState = function(config, type, area, name, state)
 {
-    var settings = getBlockSettings(type, name, area, typeSettings);
-    state = kebabCase(state);
+    var componentMeta = config.creation.createComponentMeta(config, type, area, name, state);
 
-    if (fs.existsSync(settings.rootDirectory)){
+    if (config.fs.existsSync(componentMeta.rootDirectory)){
 
-        dataProccess.addState(state, settings);
+        dataProccess.addState(state, componentMeta, config);
 
-        console.log(`Added new state (${name}) to ${settings.fileName}`);
+        console.log(`Added new state (${name}) to ${componentMeta.fileName}`);
     }
     else
     {
-        console.warn(`This ${type} doesn't exist ${settings.rootDirectory}`);
+        console.warn(`This ${type} doesn't exist ${componentMeta.rootDirectory}`);
     }
 
 }
 
-const renameBlock = function(type, oldName, newName, area, typeSettings)
+const renameBlock = function(config, type, area, oldName, newName)
 {
 
-    var oldSettings = getBlockSettings(type, oldName, area, typeSettings);
-    var newSettings = getBlockSettings(type, newName, area, typeSettings);
+    var componentMetaOld = config.creation.createComponentMeta(config, type, area, oldName);
+    var componentMetaNew = config.creation.createComponentMeta(config, type, area, newName);
 
     if(!fs.existsSync(newSettings.rootDirectory))
     {
-        directories.rename(oldSettings, newSettings);
-        markup.rename(oldSettings, newSettings);
-        scss.rename(oldSettings, newSettings);
-        dataProccess.rename(oldSettings, newSettings);
-        schemaProcess.rename(oldSettings, newSettings); 
+        directories.rename(componentMetaOld, componentMetaNew);
+        markup.rename(componentMetaOld, componentMetaNew);
+        scss.rename(componentMetaOld, componentMetaNew);
+        dataProccess.rename(componentMetaOld, componentMetaNew);
+        schemaProcess.rename(componentMetaOld, componentMetaNew); 
 
         console.log(`Renamed the ${type} "${oldName}" to "${newName}"`);
     }
     else
     {
-        console.warn(`Can't rename ${type}: it already exists at ${newSettings.rootDirectory}`);
+        console.warn(`Can't rename ${type}: it already exists at ${componentMetaNew.rootDirectory}`);
     }
 }
+
+
 
 module.exports = { settings, addBlock, addState, renameBlock };

@@ -4,7 +4,7 @@ const localFileSource = require('../../../../modules/cardSources/localFiles/loca
 const fsStub = require('./fsStub');
 const path = require('path');
 
-let addedFiles = {};
+const fs = fsStub();
 
 module.exports = (ext, writeExpected) => {
 
@@ -16,15 +16,15 @@ module.exports = (ext, writeExpected) => {
             return config;
         },
         get addedFiles() {
-            return addedFiles;
+            return fs.addedFiles;
         },
         beforeEach: () => {   
             expected = '';
         },
         afterEach: (test) => {
             if (test.state === 'failed') 
-                if(addedFiles && addedFiles[`${test.title}.${ext}`]) {
-                    resultOutput.writeActual(test.title, addedFiles[`${test.title}.${ext}`]);
+                if(fs.addedFiles && fs.addedFiles[`${test.title}.${ext}`]) {
+                    resultOutput.writeActual(test.title, fs.addedFiles[`${test.title}.${ext}`]);
                 }
             else    
                 resultOutput.deleteActual(test.title);
@@ -32,11 +32,11 @@ module.exports = (ext, writeExpected) => {
         setupResultsOutput: (dirs) => {
             resultOutput.setupOutputDir(dirs);
         },
-        buildConfig: (modules, sourceDirs) => {
+        buildConfig: (context, sourceDirs) => {
 
             const userConfig = 
             {
-                modules: modules,
+                modules: context.modules,
                 source: {
                     name: 'localFiles',
                     settings: {
@@ -46,10 +46,16 @@ module.exports = (ext, writeExpected) => {
             }
         
             config = require('../../../../config/configFactory').createForTesting(userConfig);
+
+            config.fs = fs;
+
+            if(context.tweakConfig) {
+                context.tweakConfig(config);
+            }
         },
         actualEqualsExpected: (test) => {
 
-            let actual = addedFiles[`${test.title}.${ext}`];
+            let actual = fs.addedFiles[`${test.title}.${ext}`];
             if(test && !writeExpected)  {
                 let expected = resultOutput.readExpected(test.title);
                 actual.should.equal(expected);
@@ -61,8 +67,8 @@ module.exports = (ext, writeExpected) => {
         },
         load_list: (list) => {
         
-            addedFiles = {};
-            generator.runSingleList(list, config, cardToComponent, fsStub(addedFiles));
+            fs.addedFiles = {};
+            generator.runSingleList(list, config, cardToComponent);
 
         }
     }

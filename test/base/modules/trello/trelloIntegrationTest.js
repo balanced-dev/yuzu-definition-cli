@@ -4,7 +4,7 @@ describe('trello integration', function() {
     
     const userConfig = 
     {
-        modules: ['hbs.settings'],
+        modules: [],
         source: {
             name: "trello",
             settings: {

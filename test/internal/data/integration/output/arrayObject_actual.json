@@ -1,0 +1,13 @@
+{
+    "singlePropertyObjects": [
+        {
+            "exampleProperty": ""
+        }
+    ],
+    "multiplePropertyObjects": [
+        {
+            "exampleString": "",
+            "exampleInteger": 0
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "parentArray": [
+        {
+            "childArray": [
+                {
+                    "exampleString": "",
+                    "exampleInteger": 0
+                }
+            ]
+        }
+    ]
+}

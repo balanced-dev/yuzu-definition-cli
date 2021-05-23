@@ -13,6 +13,7 @@ module.exports = (config) => {
         settings: {
             filePrefix: '',
             fileExtension: '.css',
+            subdirectory: '',
             classNameDivider: '__',
             backupRefArrayChildClass: 'item',
             initialContent: function(options) {

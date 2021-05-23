@@ -7,7 +7,7 @@ describe('local files integration', function() {
     
     const userConfig = 
     {
-        modules: ['hbs.settings'],
+        modules: [],
         source: {
             name: 'localFiles',
             settings: {

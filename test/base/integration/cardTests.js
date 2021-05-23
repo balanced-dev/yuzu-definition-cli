@@ -10,7 +10,7 @@ module.exports = (ext, createExpected) => {
 
         run: (context) => {
 
-            tests.buildConfig (context.modules, cardsDir);
+            tests.buildConfig (context, cardsDir);
 
             describe('basic tests', function() {
 

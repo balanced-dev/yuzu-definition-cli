@@ -1,74 +1,69 @@
 var path = require('path');
 var common = require('./common.js');
-var directories = require('./directories.js');
 
-var extension = ".json";
+const getFilePath = function(componentMeta, config, state) {
 
-const filename = function(settings, state) {
-    const filename =  settings.config.creation.filenamePrefix('markup', settings);
+    const extension = config.data.settings.fileExtension;
+    const filename =  config.creation.filenamePrefix('markup', componentMeta);
     if(state) {
-        return path.join(directories.getSubPath(settings, 'data'), `${filename}_${state}${extension}`);
+        return path.join(common.getFileDirectory(componentMeta, 'data', config), `${filename}_${state}${extension}`);
     }
     else {
-        return path.join(directories.getSubPath(settings, 'data'), `${filename}${extension}`);
+        return path.join(common.getFileDirectory(componentMeta, 'data', config), `${filename}${extension}`);
     }
 }
 
-const initialContent = function(settings){
+const initialContent = function(componentMeta){
 
     var data = {};
 
-    if(settings.contentIntercepts.data)
-        data = settings.contentIntercepts.data(data, settings); 
+    if(componentMeta.contentIntercepts.data)
+        data = componentMeta.contentIntercepts.data(data, componentMeta); 
 
-    settings.data = data;
+
+    componentMeta.data = data;
     
     return JSON.stringify(data, null, 4);
 }
 
-const initialContentState = function(settings){
+const initialContentState = function(componentMeta){
 
-    return get(settings);
+    return get(componentMeta);
 }
 
-const get = function(settings, fs)
+const get = function(componentMeta, config)
 {
-    return common.get(filename, settings, fs);
+    return common.get(getFilePath, componentMeta, config);
 }
 
-const add = function(settings, fs) {
+const add = function(componentMeta, config) {
 
-    common.add(filename, initialContent, settings, fs);
+    common.add(getFilePath, initialContent, componentMeta, config);
 }
 
-const addState = function(state, settings, fs)
+const addState = function(state, componentMeta, config)
 {
-    var filenameState = (settings) => {
-        return filename(settings, state)
+    var filenameState = () => {
+        return getFilePath(componentMeta, config, state)
     }
 
-    common.add(filenameState, initialContentState, settings, fs);
+    common.add(filenameState, initialContentState, componentMeta, config);
 }
 
-const rename = function(oldSettings, newSettings, fs) {
+const rename = function(componentMetaOld, componentMetaNew, config) {
 
-    common.rename(undefined, filename, oldSettings, newSettings, fs);
+    common.rename(undefined, getFilePath, componentMetaOld, componentMetaNew, config);
 
-    changeOtherDataFiles(oldSettings, newSettings, fs);
+    changeOtherDataFiles(oldSettings, newSettings, config);
 }
 
-module.exports = { get, add, addState, rename };
+const changeOtherDataFiles = function(componentMetaOld, componentMetaNew, config) {
 
+    var dataPath = common.getFileDirectory(componentMetaOld, 'data', config);
+    var original = getFilePath(componentMetaOld).replace(extension, '');
+    var latest = getFilePath(componentMetaNew).replace(extension, '');
 
-
-
-const changeOtherDataFiles = function(oldSettings, newSettings, fs) {
-
-    var dataPath = directories.getSubPath(oldSettings, 'data');
-    var original = filename(oldSettings).replace(extension, '');
-    var latest = filename(newSettings).replace(extension, '');
-
-    var files = fs.readDir(dataPath);
+    var files = config.fs.readDir(dataPath);
 
     files.forEach(file => {
         
@@ -76,8 +71,10 @@ const changeOtherDataFiles = function(oldSettings, newSettings, fs) {
         if(latest != current.replace(extension, ''))
         {
             var change = current.replace(original, latest);
-            fs.rename(current, change);
+            config.fs.rename(current, change);
         }
 
     });
 }
+
+module.exports = { get, add, addState, rename };

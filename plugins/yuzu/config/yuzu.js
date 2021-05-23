@@ -23,10 +23,13 @@ module.exports = (config) => {
 
   }
 
+  config.data.settings.subdirectory.push('data');
+
   config.markup.settings.filePrefix.block = 'par';
   config.style.settings.filePrefix = '_';
 
   config.creators.splice(0, 0, { name: 'directories', module: require('../../../creation/creators/directories') });
-  config.creators.splice(1, 0, { name: 'data', module: require('../../../creation/creators/data') });
+
+  config.createThese = ['directories', 'schema', 'data', 'markup', 'style']; 
 
 };

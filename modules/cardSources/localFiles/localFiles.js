@@ -55,10 +55,10 @@ const isFileAllowed = (fileName, config) => {
     return true;
 }
 
-const buildList = function(list, config, cardToComponent, fsOutput) {
+const buildList = function(list, config, cardToComponent) {
     var cardList = getCards(list, config);
     cardList.forEach(card => {
-        cardToComponent(card, config, fsOutput);
+        cardToComponent(card, config);
     });
     return cardList;
 };

@@ -6,7 +6,7 @@ const svc = require("../../../../../generation/generators/data/data.js"),
 
 const output = (logger) => {
 
-  const baseSettings = require('../../../../../config/configFactory').createForTesting({ modules: ['hbs.settings'] });
+  const baseSettings = require('../../../../../config/configFactory').createForTesting({ modules: [] });
   baseSettings.logger = logger;
 
   return {

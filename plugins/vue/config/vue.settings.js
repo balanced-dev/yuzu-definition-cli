@@ -1,15 +1,17 @@
-const configDefaults = require("../../../config/configDefaults");
+const _ = require('lodash');
+const inflector = require("inflector-js");
+const changeCase = require("change-case");
+const propsFromSchema = require('../generation/plugins/vuePropsFromSchema');
 
 const generateChildContext = function (options) {
-  const Inflector = options.plugins.inflector;
-  let lastArrayContext = options.plugins._.last(options.relativePath);
-  return Inflector.singularize(lastArrayContext) !== lastArrayContext
-    ? Inflector.singularize(lastArrayContext)
+  let lastArrayContext = _.last(options.relativePath);
+  return inflector.singularize(lastArrayContext) !== lastArrayContext
+    ? inflector.singularize(lastArrayContext)
     : "item_" + options.absolutePath.length;
 };
 
 const getVuePartial = function (options) {
-  const kebabCase = options.plugins.changeCase.paramCase;
+  const kebabCase = changeCase.paramCase;
   let hyphenatedPartial = kebabCase(options.value);
   let partialPrefix = options.markup.settings.filePrefix.block + "-";
   hyphenatedPartial =
@@ -53,7 +55,7 @@ module.exports = (config) => {
   config.markup.fragments.wrapperMarkupFragments = {
       array: {
         parentWrapperOpening: function (options) {
-          let wrapperOptions = options.plugins._.cloneDeep(options);
+          let wrapperOptions = _.cloneDeep(options);
           let childContext = generateChildContext(options);
           options.style.appendChildContextClass(options);
 
@@ -72,7 +74,7 @@ module.exports = (config) => {
         },
         simpleTypeOpening: function (options) {
           let childContext = generateChildContext(options);
-          let d = common(options.plugins._.cloneDeep(options));
+          let d = common(_.cloneDeep(options));
 
           let output = `<${d.tag} class="${d.class}" v-if="${d.path} && ${d.path}.length">\n`;
 
@@ -124,17 +126,17 @@ module.exports = (config) => {
         )}"></component>\n`;
       },
       namedSubBlockArray: function (options) {
-        let d = common(options.plugins._.cloneDeep(options));
+        let d = common(_.cloneDeep(options));
         const partialReference = getVuePartial(options);
         return `<${partialReference}${getLogic(options, d, true)}v-bind="${d.path}"></${partialReference}>\n`;
       },
       subBlockObject: function (options) {
-        let d = common(options.plugins._.cloneDeep(options));
+        let d = common(_.cloneDeep(options));
         const partialReference = getVuePartial(options);
         return `<${partialReference}${getLogic(options, d, true)}v-bind="${d.path}"></${partialReference}>\n`;
       },
       default: function (options) {
-        let d = common(options.plugins._.cloneDeep(options));
+        let d = common(_.cloneDeep(options));
         return (
           `<${d.tag} class="${d.class}"${getLogic(options, d, true)}>\n{{${d.path}}}\n</${d.tag}>\n`.replace(' >', '>')
         );
@@ -152,7 +154,7 @@ module.exports = (config) => {
         );
       },
       dataLink: function (options) {
-        let d = common(options.plugins._.cloneDeep(options));
+        let d = common(_.cloneDeep(options));
 
         var s =  (
           `<a${getLogic(options, d)}v-if="${d.path}.href && ${d.path}.label" class="${d.class}" :href="${d.path}.href" :title="${d.path}.title" :target="${d.path}.isNewTab ? '_blank' : false" :rel="${d.path}.isExternalLink ? 'noopener noreferrer' : false">\n` +
@@ -177,7 +179,7 @@ module.exports = (config) => {
             if(schemaProcess) {
               let defaultSchema = schemaProcess.module.initialContent(cardSettings);
               let schema = config.generators.schemaCleanup.processProperties(defaultSchema, json);
-              script = script.replace('<!-- YUZU PROPS -->', config.plugins.propsFromSchema(schema));
+              script = script.replace('<!-- YUZU PROPS -->', propsFromSchema(schema));
             }
     
             return script;
@@ -186,9 +188,5 @@ module.exports = (config) => {
   });
 
   config.createThese = ['markup', 'style', 'script']; 
-  config.plugins._ = require("lodash");
-  config.plugins.changeCase = require("change-case");
-  config.plugins.inflector = require("inflector-js");
-  config.plugins.propsFromSchema = require('../generation/plugins/vuePropsFromSchema');
 
 };

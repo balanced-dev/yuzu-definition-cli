@@ -1,4 +1,4 @@
-const prettier = require("prettier");
+const propsFromSchema = require('../generation/plugins/vuePropsFromSchema');
 
 module.exports = (config) => {
 
@@ -21,7 +21,7 @@ module.exports = (config) => {
   };
 
 
-  config.createThese = ['directories','data', 'markup']; 
+  config.createThese = ['markup']; 
 
   config.resetInterceptorsOfType('markup');
 
@@ -41,7 +41,7 @@ module.exports = (config) => {
             if(schemaProcess) {
               let defaultSchema = schemaProcess.module.initialContent(cardSettings);
               let schema = config.generators.schemaCleanup.processProperties(defaultSchema, json);
-              output = output.replace('<!-- YUZU PROPS -->', config.plugins.propsFromSchema(schema));
+              output = output.replace('<!-- YUZU PROPS -->', propsFromSchema(schema));
             }
             else {
               output = output.replace('<!-- YUZU PROPS -->', '{}');
@@ -51,7 +51,5 @@ module.exports = (config) => {
           } 
       }
   });
-
-  config.plugins.propsFromSchema = require('../generation/plugins/vuePropsFromSchema');
 
 };
