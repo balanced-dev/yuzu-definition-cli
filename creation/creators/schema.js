@@ -18,9 +18,11 @@ const initialContent = function(componentMeta, config) {
     var schema = Object.assign({}, schemaHeader, schemaBody);
     schema.additionalProperties = false;
 
-    componentMeta.contentIntercepts.schema.forEach(i => {
-        schema = i(schema, componentMeta); 
-    });
+    if(componentMeta.contentIntercepts.schema) {
+        componentMeta.contentIntercepts.schema.forEach(i => {
+            schema = i(schema, componentMeta); 
+        });
+    }
 
     return JSON.stringify(schema, null, 4);
 }

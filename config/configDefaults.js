@@ -1,5 +1,6 @@
 const creation = require('./defaultPlugins/creation');
 const generation = require('./defaultPlugins/generation');
+const directories = require('./defaultPlugins/directories');
 const data = require('./defaultPlugins/data');
 const markup = require('./defaultPlugins/markup');
 const style = require('./defaultPlugins/style');
@@ -16,6 +17,7 @@ module.exports = () => {
 
   creation(config);
   generation(config);
+  directories(config);
   data(config);
   markup(config);
   style(config);

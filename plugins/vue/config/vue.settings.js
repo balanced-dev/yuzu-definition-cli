@@ -119,11 +119,8 @@ module.exports = (config) => {
     };
   config.markup.fragments.contentMarkupFragments = {
       dynamicSubBlockArray: function (options) {
-        return `<component :is="${options.relativePath.join(
-          "."
-        )}._ref.replace('/par', '')" :key="index" v-bind="${options.relativePath.join(
-          "."
-        )}"></component>\n`;
+        const path = options.relativePath.join(".");
+        return `<component :is="${path}._ref.replace('/', '')" :key="index" v-bind="${path}"></component>\n`;
       },
       namedSubBlockArray: function (options) {
         let d = common(_.cloneDeep(options));
@@ -169,6 +166,8 @@ module.exports = (config) => {
       },
     };
 
+    config.createThese.push('script'); 
+
     config.interceptorsPipeline.push({
       type: 'script',
       order: 5,
@@ -186,7 +185,5 @@ module.exports = (config) => {
           } 
       }
   });
-
-  config.createThese = ['markup', 'style', 'script']; 
 
 };

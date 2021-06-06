@@ -18,7 +18,7 @@ export default {
                 :key="index"
             >
                 <component
-                    :is="mixedDataStructure._ref.replace('/', '')"
+                    :is="mixedDataStructure._ref.replace('/par', '')"
                     :key="index"
                     v-bind="mixedDataStructure"
                 ></component>

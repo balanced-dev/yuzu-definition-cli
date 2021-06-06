@@ -206,7 +206,7 @@ describe('vue unit', function() {
             let expectedHtml = [
                 `<div class="test-block__authors" v-if="authors && authors.length">`,
                     `<div class="test-block__authors__author" v-for="(author, index) in authors" :key="index">`,
-                        `<component :is="author._ref.replace('/par', '')" :key="index" v-bind="author"></component>`,
+                        `<component :is="author._ref.replace('/', '')" :key="index" v-bind="author"></component>`,
                     `</div>`,
                 `</div>`,
             ];

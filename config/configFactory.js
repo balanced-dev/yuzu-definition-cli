@@ -1,7 +1,6 @@
 const path = require("path");
 const _ = require('lodash');
 let userConfigPath = path.resolve('./yuzu.config.js');
-const overrideConfig = require('./services/overrideDefaults');
 
 const configDefaults = require('./configDefaults');
 
@@ -62,7 +61,7 @@ const create = () => {
         addModule('logger', loggers, userConfig, defaultConfig);
 
         if(userConfig.overrides) {
-            overrideConfig(defaultConfig, userConfig.overrides)
+            userConfig.overrides(defaultConfig);
         }
 
         return defaultConfig;

@@ -18,7 +18,7 @@ export default {
                 :key="index"
             >
                 <component
-                    :is="block._ref.replace('/', '')"
+                    :is="block._ref.replace('/par', '')"
                     :key="index"
                     v-bind="block"
                 ></component>
@@ -28,11 +28,11 @@ export default {
             class="data-structures-ref-array__people"
             v-if="people && people.length"
         >
-            <par-person
+            <person
                 v-for="(person, index) in people"
                 :key="index"
                 v-bind="person"
-            ></par-person>
+            ></person>
         </div>
     </div>
 </template>

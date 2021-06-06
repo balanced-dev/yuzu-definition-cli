@@ -68,7 +68,7 @@ const getCardLists = async function (list, config, cardToComponent, processLists
 
 const getCardList = function(cardType, cards, config) {
     return _.filter(cards, function (o) { 
-        let cardPrefix = config.generation.card.titlePrefixes[cardType].card;
+        let cardPrefix = config.generation.card.titlePrefixes[cardType];
         return o.name.startsWith(cardPrefix); 
     });
 };

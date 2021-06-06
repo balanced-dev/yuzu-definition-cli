@@ -9,24 +9,18 @@ const addBlock = function(config, type, area, name, contentIntercepts)
 {
     let componentMeta = config.creation.createComponentMeta(config, type, area, name, '', contentIntercepts);
 
-    if (!config.fs.dirExists(componentMeta.rootDirectory)){
-
+    if (config.fs.dirExists(componentMeta.rootDirectory) && config.directories.settings.createForComponent)
+    {
+        console.warn(`This block already exists at ${componentMeta.rootDirectory}`);
+    }
+    else
+    {
         let creators = config.creators
             .filter((item) => { return config.createThese.includes(item.name) })
 
         creators.forEach((creator) => {
             creator.module.add(componentMeta, config);
         });
-
-        console.log(`Added new ${type} "${componentMeta.fileName}"`);
-    }
-    else
-    {
-        console.warn(`This block already exists at ${componentMeta.rootDirectory}`);
-    }
-
-    return {
-
     }
 
 }

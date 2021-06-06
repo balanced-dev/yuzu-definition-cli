@@ -28,8 +28,12 @@ module.exports = (config) => {
   config.markup.settings.filePrefix.block = 'par';
   config.style.settings.filePrefix = '_';
 
-  config.creators.splice(0, 0, { name: 'directories', module: require('../../../creation/creators/directories') });
+  if(!config.createThese.includes('schema')) {
+    config.createThese.push('schema');
+  }
 
-  config.createThese = ['directories', 'schema', 'data', 'markup', 'style']; 
+  if(!config.createThese.includes('data')) {
+    config.createThese.push('data');
+  }
 
 };

@@ -147,7 +147,7 @@ describe('vue unit', function() {
             let settings = {...config,  ...generateOptions(['item'])};
 
             let expectedOutputHtml =
-                `<component :is="item._ref.replace('/par', '')" :key="index" v-bind="item"></component>\n`
+                `<component :is="item._ref.replace('/', '')" :key="index" v-bind="item"></component>\n`
             ;
 
             let output = contentMarkupFragments.dynamicSubBlockArray(settings);

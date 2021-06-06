@@ -3,13 +3,22 @@ const common = require('./common.js');
 
 const add = function(componentMeta, config) {
     
-    config.fs.mkdir(componentMeta.rootDirectory);
+    if(config.directories.settings.createForComponent) {
 
-    _.each(componentMeta.subDirectories, function (type, key)
-    {
-        var path = common.directory(componentMeta, type);
-        config.fs.mkdir(path);
-    });
+        config.fs.mkdir(componentMeta.rootDirectory);
+
+
+        _.each(config.createThese, function (type, key)
+        {
+            var path = common.getFileDirectory(componentMeta, type, config);
+            if(path != componentMeta.rootDirectory) {
+                config.fs.mkdir(path);
+            }
+        });
+
+        console.log(`Added component directory ${componentMeta.type} "${componentMeta.rootDirectory}"`);
+    }
+    
 }
 
 const rename = function(componentMetaOld, componentMetaNew, config) {

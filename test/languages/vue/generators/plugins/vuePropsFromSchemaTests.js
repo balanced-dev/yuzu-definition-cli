@@ -14,18 +14,33 @@ describe('vue unit', function() {
         it('get object prop', function() { simpleTypeTests('object', 'Object') });
         it('get array prop', function() { simpleTypeTests('array', 'Array') });
 
+        it('get data structures prop', function() { 
+
+            var schema = {
+                    properties: {
+                    p1: { $ref: "/dataImage" },
+                    p2: { $ref: "/dataLink" }
+                }
+            }
+            
+            const output = svc(JSON.stringify(schema));
+            
+            output.should.equal(`{\n    p1: Object,\n    p2: Object\n}`);
+
+        });
+
         it('get multiple props', function() { 
 
             var schema = {
-                properties: {
-                p1: { type: "string" },
-                p2: { type: "object" }
+                    properties: {
+                    p1: { type: "string" },
+                    p2: { type: "object" }
+                }
             }
-        }
-        
-        const output = svc(JSON.stringify(schema));
-        
-        output.should.equal(`{\n    p1: String,\n    p2: Object\n}`);
+            
+            const output = svc(JSON.stringify(schema));
+            
+            output.should.equal(`{\n    p1: String,\n    p2: Object\n}`);
 
         });
         
@@ -33,14 +48,14 @@ describe('vue unit', function() {
 
     const simpleTypeTests = (schemaType, vueType) => {
         var schema = {
-            properties: {
-            property: { type: schemaType }
+                properties: {
+                property: { type: schemaType }
+            }
         }
-    }
 
-    const output = svc(JSON.stringify(schema));
+        const output = svc(JSON.stringify(schema));
 
-    output.should.equal(`{\n    property: ${vueType}\n}`);
+        output.should.equal(`{\n    property: ${vueType}\n}`);
     }
     
 });

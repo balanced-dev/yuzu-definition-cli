@@ -21,7 +21,7 @@ module.exports = (config) => {
   };
 
 
-  config.createThese = ['markup']; 
+  config.createThese = config.createThese.filter((i) => { return i !== 'style' && i !== 'script' && i != 'schema' }); 
 
   config.resetInterceptorsOfType('markup');
 
@@ -39,7 +39,7 @@ module.exports = (config) => {
     
             const schemaProcess = config.creators.find((item) => { return item.name == 'schema'; });
             if(schemaProcess) {
-              let defaultSchema = schemaProcess.module.initialContent(cardSettings);
+              let defaultSchema = schemaProcess.module.initialContent(cardSettings, config);
               let schema = config.generators.schemaCleanup.processProperties(defaultSchema, json);
               output = output.replace('<!-- YUZU PROPS -->', propsFromSchema(schema));
             }

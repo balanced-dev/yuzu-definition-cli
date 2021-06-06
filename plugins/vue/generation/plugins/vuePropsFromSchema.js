@@ -30,7 +30,10 @@ module.exports = (schemaString) => {
         }  
         else if(p.type === 'object') {
             output = output + 'Object';
-        }  
+        } 
+        else if (p["$ref"]) {
+            output = output + 'Object';
+        }
 
         if(count < keys.length)
             output = output + ',';

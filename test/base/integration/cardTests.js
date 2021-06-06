@@ -50,7 +50,7 @@ module.exports = (ext, createExpected) => {
                         formatCardName(card, tests.config);
     
                         it(card.name, function() {
-                            tests.actualEqualsExpected(this.test);
+                            tests.actualEqualsExpected(context, this.test);
                         });
                 
                     });

@@ -47,15 +47,20 @@ module.exports = (ext, writeExpected) => {
         
             config = require('../../../../config/configFactory').createForTesting(userConfig);
 
+            //cleans created file path output so that its not in a containing dir or a component directory 
+            config.directories.settings.createForComponent = false;
+            config.creation.blockPaths.block.path = '';
+
             config.fs = fs;
 
             if(context.tweakConfig) {
                 context.tweakConfig(config);
             }
         },
-        actualEqualsExpected: (test) => {
+        actualEqualsExpected: (context, test) => {
 
-            let actual = fs.addedFiles[`${test.title}.${ext}`];
+            const addedFilename = context.parseFilename ? context.parseFilename(test.title) : test.title;
+            let actual = fs.addedFiles[`${addedFilename}.${ext}`];
             if(test && !writeExpected)  {
                 let expected = resultOutput.readExpected(test.title);
                 actual.should.equal(expected);

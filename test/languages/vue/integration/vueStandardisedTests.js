@@ -2,7 +2,7 @@ const tests = require('../../../testIndex');
 
 describe('vue integration', function() {
 
-    const createExpected = false;
+    const createExpected = true;
 
     describe('single-file', function() {
 
@@ -10,7 +10,7 @@ describe('vue integration', function() {
 
         let context = {
             name: 'single-file',
-            modules: ['scss.bem', 'vue.settings', 'vue.single-file-component', 'vue.prettier'],
+            modules: ['scss.bem', 'schema', 'vue.settings', 'vue.single-file-component', 'vue.prettier'],
             output: ['test', 'languages', 'vue', 'integration', 'output', 'singleFile'],
             createdFiles: ['simplest.vue']
         };

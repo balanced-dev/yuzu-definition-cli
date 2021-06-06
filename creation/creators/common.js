@@ -19,9 +19,11 @@ const getFileDirectory = function(componentMeta, type, config){
 const initialContent = function(type, componentMeta, config) {
     let content = config[type].settings.initialContent(componentMeta);
 
-    componentMeta.contentIntercepts[type].forEach(i => {
-        content = i(content, componentMeta); 
-    });
+    if(componentMeta.contentIntercepts[type]) {
+        componentMeta.contentIntercepts[type].forEach(i => {
+            content = i(content, componentMeta); 
+        });
+    }
 
     return content;
 }
@@ -37,9 +39,16 @@ const get = function(filename, componentMeta, config) {
 const add = function(filename, initialContent, componentMeta, config) {
     
     var fileName = filename(componentMeta, config);
-    var contents = initialContent(componentMeta, config);
 
-    config.fs.writeFile(fileName, contents);
+    if (config.fs.fileExists(fileName) && !config.directories.settings.createForComponent)
+    {
+        console.warn(`This component file already exists at ${fileName}`);
+    }
+    else 
+    {
+        var contents = initialContent(componentMeta, config);
+        config.fs.writeFile(fileName, contents);
+    }
 
 }
 

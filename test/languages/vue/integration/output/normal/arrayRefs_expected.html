@@ -1,6 +1,6 @@
 <div class="array-refs__mixed-data-structures" v-if="mixedDataStructures && mixedDataStructures.length">
 <div class="array-refs__mixed-data-structures__mixed-data-structure" v-for="(mixedDataStructure, index) in mixedDataStructures" :key="index">
-<component :is="mixedDataStructure._ref.replace('/par', '')" :key="index" v-bind="mixedDataStructure"></component>
+<component :is="mixedDataStructure._ref.replace('/', '')" :key="index" v-bind="mixedDataStructure"></component>
 </div>
 </div>
 <div class="array-refs__forms" v-if="forms && forms.length">

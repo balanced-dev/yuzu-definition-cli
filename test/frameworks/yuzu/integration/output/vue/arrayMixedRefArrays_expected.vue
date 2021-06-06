@@ -17,7 +17,7 @@ export default {
                 :key="index"
             >
                 <component
-                    :is="block._ref.replace('/', '')"
+                    :is="block._ref.replace('/par', '')"
                     :key="index"
                     v-bind="block"
                 ></component>

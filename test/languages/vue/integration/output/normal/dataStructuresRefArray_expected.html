@@ -1,6 +1,6 @@
 <div class="data-structures-ref-array__blocks" v-if="blocks && blocks.length">
 <div class="data-structures-ref-array__blocks__block" v-for="(block, index) in blocks" :key="index">
-<component :is="block._ref.replace('/par', '')" :key="index" v-bind="block"></component>
+<component :is="block._ref.replace('/', '')" :key="index" v-bind="block"></component>
 </div>
 </div>
 <div class="data-structures-ref-array__people" v-if="people && people.length">

@@ -27,10 +27,7 @@ export default {
         <div class="simple-types__example-number" v-if="exampleNumber">
             {{ exampleNumber }}
         </div>
-        <par-example
-            v-if="exampleSubBlock"
-            v-bind="exampleSubBlock"
-        ></par-example>
+        <example v-if="exampleSubBlock" v-bind="exampleSubBlock"></example>
     </div>
 </template>
 <style lang="scss">

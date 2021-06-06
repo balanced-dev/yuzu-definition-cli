@@ -1,7 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
+const fileExists = function(filename) {
+    return fs.existsSync(filename);
+};
+
 const fsFacade = {
+    get cwd() {
+        return process.cwd();
+    },
     dirExists: function(dir) {
         return fs.existsSync(dir);
     },
@@ -14,10 +21,7 @@ const fsFacade = {
     renameDir: function(oldDir, newDir) {
         fs.renameSync(oldDir, newDir)
     },
-
-    fileExists: function(filename) {
-        return fs.existsSync(filename);
-    },
+    fileExists: fileExists,
     readFile: function(filename) {
         return fs.readFileSync(filename, 'utf8')
     },
@@ -27,15 +31,8 @@ const fsFacade = {
     renameFile: function(oldFilename, newFilename) {
         fs.renameSync(oldFilename, newFilename)
     },
-    getRoot: function(config, type, area = '', name){
-
-        var pathForType = config.creation.blockPaths[type];
-        var isRoot = config.fs.fileExists(path.join(process.cwd(), './package.json'));
-        
-        if(isRoot)
-            return path.join(process.cwd(), pathForType, area, name);
-        else
-            return path.join(process.cwd(), name);
+    isAtRoot: function() {
+        fileExists(path.join(process.cwd(), './package.json'))
     }
  };
 
