@@ -73,7 +73,7 @@ program
     .alias('i')
     .description('Scaffold a project from schema shorthand, stored in Trello cards or .txt files')
     .action(() => {
-        generate.run(config, true);
+        generate.run(config);
     });          
 
 

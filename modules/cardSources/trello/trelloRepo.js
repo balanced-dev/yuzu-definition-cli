@@ -30,24 +30,23 @@ const getBoardLists = async function(config) {
                 return lists;
             }
             else {
-                console.error('The board "' + config.sourceSettings.board + '" cannot be found');
+                console.error(`The board "${config.sourceSettings.board}" cannot be found`);
             }
         }
         else {
-            console.error('Trello improperly configured. Key and/or secret value not applied in config/default.json');
+            console.error(`Trello improperly configured. Key and/or secret value not applied in config/default.json`);
         }
     }
     else {
-        console.error("No board name passed. Please ensure it's set in the config.json");
+        console.error(`No board name passed. Please ensure it's set in the config.json`);
     }
 };
 
 const getCardLists = async function (list, config, cardToComponent, processLists) {
     
     let configList = list ? list : config.list;
-    
-    let boardData = await getBoardLists(config),
-        boardList = _.find(boardData, function (o) { return o.name == configList.name });
+    let boardData = await getBoardLists(config);
+    let boardList = _.find(boardData, function (o) { return o.name == configList });
     if (boardList) {
         /*logger.log({
             level: 'info',
@@ -62,7 +61,7 @@ const getCardLists = async function (list, config, cardToComponent, processLists
         });*/
     }
     else {
-        console.error('The list "' + configList + '" on the board "' + config.sourceSettings.board + '" cannot be found');
+        console.error(`The list "${configList}" on the board "${config.sourceSettings.board}" cannot be found`);
     }
 };
 
