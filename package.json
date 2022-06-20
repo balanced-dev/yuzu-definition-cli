@@ -1,6 +1,6 @@
 {
   "name": "yuzu-definition-cli",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "A cli application for managing components in the Yuzu Definition pattern library",
   "preferGlobal": true,
   "main": "index.js",
@@ -19,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "ansi-colors": "^4.1.1",
-    "camelcase": "^7.0.0",
+    "camelcase": "^5.0.0",
     "change-case": "^4.1.1",
     "commander": "^2.20.0",
     "download-git-repo": "^3.0.2",
