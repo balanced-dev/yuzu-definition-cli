@@ -1,8 +1,10 @@
 const path = require("path");
 const _ = require('lodash');
-let userConfigPath = require(path.join(process.cwd(), 'yuzu.import.config.js'));
+let userConfigPath = path.join(process.cwd(), 'yuzu.import.config.js');
 
 const configDefaults = require('./configDefaults');
+const _fs = require("fs");
+const fs = require("./defaultModules/fs");
 
 const cardSources = {
     trello: require("../modules/cardSources/trello/trello"),
@@ -45,25 +47,29 @@ const initPlugins = (userConfig, defaultConfig) => {
         if(module) 
             module.init(defaultConfig);
         else 
-            throw `${name} module not found in yuzu.import.config.js`;
+            throw `${name} module not found in yuzu.config.js`;
     });
 }
 
 const create = () => {
 
     try {
-        let userConfig = require(userConfigPath);
         const defaultConfig = configDefaults();
 
-        initPlugins(userConfig, defaultConfig);
+        let userConfig;
+        if(_fs.existsSync(userConfigPath)) {
+            userConfig = require(userConfigPath);
+        
+            initPlugins(userConfig, defaultConfig);
 
-        addModule('source', cardSources, userConfig, defaultConfig);
-        addModule('logger', loggers, userConfig, defaultConfig);
-
-        if(userConfig.overrides) {
-            userConfig.overrides(defaultConfig);
+            addModule('source', cardSources, userConfig, defaultConfig);
+            addModule('logger', loggers, userConfig, defaultConfig);
+    
+            if(userConfig.overrides) {
+                userConfig.overrides(defaultConfig);
+            }
         }
-
+        
         return defaultConfig;
     }
     catch (e) {

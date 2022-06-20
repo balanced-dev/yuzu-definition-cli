@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const program = require('commander');
 const project = require('./creation/creators/project.js');
 const create = require('./creation');
