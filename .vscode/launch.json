@@ -60,6 +60,16 @@
 			]
         },
         {
+            "type": "node",
+            "request": "launch",
+            "name": "Create",
+            "program": "${workspaceFolder}\\index.js" ,
+            "args": [
+                "create",
+                "test"
+			]
+        },
+        {
             "name": "Debug Tests via NPM",
             "request": "launch",
             "runtimeArgs": [

@@ -17,7 +17,7 @@ const projectRenameFiles = [
         caseFunction: changeCase.paramCase
     },
     {
-        path: projectRootPath + '/gulpfile.js/config.js',
+        path: projectRootPath + '/dist.ps1',
         caseFunction: changeCase.pascalCase,
         caseOptions: { transform: changeCase.pascalCaseTransformMerge }
     },

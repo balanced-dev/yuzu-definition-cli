@@ -7,7 +7,7 @@ const config = require('./config/configFactory.js').create();
 var isDebugging = typeof v8debug === 'object'
 
 const validateType = function(type) {
-    if(config.creation.blockPaths[type]) {
+    if(!config.creation.blockPaths[type]) {
         console.error("Component type not recongnized should be block or page");
         return false;
     }

@@ -1,6 +1,6 @@
 const path = require("path");
 const _ = require('lodash');
-let userConfigPath = path.resolve('./yuzu.config.js');
+let userConfigPath = require(path.join(process.cwd(), 'yuzu.import.config.js'));
 
 const configDefaults = require('./configDefaults');
 
@@ -45,7 +45,7 @@ const initPlugins = (userConfig, defaultConfig) => {
         if(module) 
             module.init(defaultConfig);
         else 
-            throw `${name} module not found in yuzu.config.js`;
+            throw `${name} module not found in yuzu.import.config.js`;
     });
 }
 
