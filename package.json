@@ -1,6 +1,6 @@
 {
   "name": "yuzu-definition-cli",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A cli application for managing components in the Yuzu Definition pattern library",
   "preferGlobal": true,
   "main": "index.js",
@@ -29,7 +29,8 @@
     "json-schema-generator": "^2.0.6",
     "lodash": "^4.17.11",
     "node-trello": "^1.3.0",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "prettier": "2.2.1"
   },
   "repository": {
     "type": "git",
@@ -40,7 +41,6 @@
     "assert": "^2.0.0",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
-    "prettier": "2.2.1",
     "rewire": "^5.0.0",
     "should": "^13.2.3"
   }
