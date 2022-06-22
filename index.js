@@ -34,7 +34,7 @@ program
     .description('Add a new block or page')
     .action((type, name, area = '') => {
         if(validateType(type)) {
-            create.addBlock(config, type, area, name);
+            create.addBlock(config, type, area, name, config.creation.createComponentMeta);
         }
     });
 
@@ -43,8 +43,7 @@ program
     .alias('as')
     .description('Add new data state for an existing block or page')
     .action((type, name, state, area = '') => {
-        var typeSettings = getType(type);
-        if(typeSettings) {
+        if(validateType(type)) {
             create.addState(config, type, area, name, state);
         }
     });
@@ -54,8 +53,7 @@ program
     .alias('r')
     .description('Rename a block')
     .action((type, oldName, newName, area = '') => {
-        var typeSettings = getType(type);
-        if(typeSettings) {
+        if(validateType(type)) {
             create.renameBlock(config, type, area, oldName, newName);
         }
     });
