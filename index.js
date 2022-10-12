@@ -61,10 +61,20 @@ program
 program
     .command('create <name>')
     .alias('c')
-    .description('Generate the definition side of a project with basic configuration')
-    .action((name) => {
-        project.initProject(name);
+    .addArgument(new program.Argument('[structure]', 'Structure repository').default('balanced-dev/yuzu-definition-quickstart'))
+    .addArgument(new program.Argument('[styles]', 'Styles repository').default('crissdev/bootstrap-scss'))
+    .description('Generate the definition side of a project with basic configuration from a github repo')
+    .action((name, structure, styles) => {
+        project.initProjectRepo(name, structure, styles);
     });
+
+    program
+    .command('createLocal <name> <source>')
+    .description('Generate the definition side of a project with basic configuration from a local directory')
+    .action((name, source) => {
+        project.initProjectDir(name, source);
+    });
+
 
 program
     .command('import')

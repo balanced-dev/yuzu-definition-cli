@@ -1,12 +1,10 @@
 const fs = require('fs');
+var ncp = require('ncp').ncp;
+
 const changeCase = require('change-case');
 const downloadRepo = require('download-git-repo');
 const ansiColors = require('ansi-colors');
 
-const repositoryUrls = {
-    structure: 'balanced-dev/yuzu-definition-quickstart',
-    styles: 'crissdev/bootstrap-scss'
-};
 const projectRootPath = './definition.src';
 const projectStylePath = projectRootPath + '/_dev/_source/styles/scss/bootstrap';
 const projectNamePlaceholder = '{ProjectName}';
@@ -32,19 +30,30 @@ const readWriteSync = function(filePath, oldValue, newValue) {
     fs.writeFileSync(filePath, fileContents, 'utf-8');
 };
 
-const initProject = function(name) {
-    console.log(`Building project "${name}" from the "${repositoryUrls.structure}" repository...`);
+const initProjectRepo = function(name, structure, styles) {
+    console.log(`Building project "${name}" from the "${structure}" repository...`);
 
-    downloadRepo(repositoryUrls.structure, projectRootPath, function (error) {
+    downloadRepo(structure, projectRootPath, function (error) {
         if(error) {            
-            console.error(ansiColors.bold(ansiColors.bgRed(' ERROR ') + ' ' + ansiColors.red(`Unable to get quickstart structure from "${repositoryUrls.structure}"`)));
+            console.error(ansiColors.bold(ansiColors.bgRed(' ERROR ') + ' ' + ansiColors.red(`Unable to get quickstart structure from "${structure}"`)));
             console.error(error);
         }
         else {
             nameProject(name);
-            getQuickStartStyles();
+            getQuickStartStyles(styles);
             console.log(`Finished setting up "${name}" at "${process.cwd()}"`)
         }         
+    });
+};
+
+const initProjectDir = function(name, source) {
+    console.log(`Building project "${name}" from the "${source}" directory...`);
+
+    ncp(source, projectRootPath, function (err) {
+        if (err) {
+          return console.error(err);
+        }
+        console.log(`Finishing copying from source "${source}"`);
     });
 };
 
@@ -59,14 +68,14 @@ const nameProject = function(name) {
     });
 };
 
-const getQuickStartStyles = function() {
-    console.log(`Getting styles from the "${repositoryUrls.styles}" repository...`);
+const getQuickStartStyles = function(styles) {
+    console.log(`Getting styles from the "${styles}" repository...`);
 
-    downloadRepo(repositoryUrls.styles, projectStylePath, function (error) {
+    downloadRepo(styles, projectStylePath, function (error) {
         if(error) {
-            console.error(`Unable to get quickstart styles from "${repositoryUrls.styles}"`);
+            console.error(`Unable to get quickstart styles from "${styles}"`);
         }         
     });
 };
 
-module.exports = { initProject };
+module.exports = { initProjectRepo, initProjectDir };
