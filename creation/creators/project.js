@@ -30,7 +30,7 @@ const readWriteSync = function(filePath, oldValue, newValue) {
     fs.writeFileSync(filePath, fileContents, 'utf-8');
 };
 
-const initProjectRepo = function(name, structure, styles) {
+const initProjectRepo = function(name, structure) {
     console.log(`Building project "${name}" from the "${structure}" repository...`);
 
     downloadRepo(structure, projectRootPath, function (error) {
@@ -40,19 +40,23 @@ const initProjectRepo = function(name, structure, styles) {
         }
         else {
             nameProject(name);
-            getQuickStartStyles(styles);
             console.log(`Finished setting up "${name}" at "${process.cwd()}"`)
-        }         
+        }
     });
 };
 
 const initProjectDir = function(name, source) {
     console.log(`Building project "${name}" from the "${source}" directory...`);
 
-    ncp(source, projectRootPath, function (err) {
+    let options = {
+        filter: (path) => !path.includes('.git') && !path.includes('node_modules')
+    };
+
+    ncp(source, projectRootPath, options, function (err) {
         if (err) {
           return console.error(err);
         }
+        nameProject(name);
         console.log(`Finishing copying from source "${source}"`);
     });
 };
@@ -65,16 +69,6 @@ const nameProject = function(name) {
             casedName = file.caseFunction(casedName, caseOptions);
         }
         readWriteSync(file.path, projectNamePlaceholder, casedName);
-    });
-};
-
-const getQuickStartStyles = function(styles) {
-    console.log(`Getting styles from the "${styles}" repository...`);
-
-    downloadRepo(styles, projectStylePath, function (error) {
-        if(error) {
-            console.error(`Unable to get quickstart styles from "${styles}"`);
-        }         
     });
 };
 
