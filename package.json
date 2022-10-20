@@ -1,6 +1,6 @@
 {
   "name": "yuzu-definition-cli",
-  "version": "2.0.8",
+  "version": "3.0.0",
   "description": "A cli application for managing components in the Yuzu Definition pattern library",
   "preferGlobal": true,
   "main": "index.js",

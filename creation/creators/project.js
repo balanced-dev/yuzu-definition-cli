@@ -6,29 +6,13 @@ const downloadRepo = require('download-git-repo');
 const ansiColors = require('ansi-colors');
 
 const projectRootPath = './definition.src';
-const projectStylePath = projectRootPath + '/_dev/_source/styles/scss/bootstrap';
 const projectNamePlaceholder = '{ProjectName}';
+const projectNameKebabPlaceholder = '{ProjectName:kebab}';
 
-const projectRenameFiles = [
-    {
-        path: projectRootPath + '/package.json',
-        caseFunction: changeCase.paramCase
-    },
-    {
-        path: projectRootPath + '/dist.ps1',
-        caseFunction: changeCase.pascalCase,
-        caseOptions: { transform: changeCase.pascalCaseTransformMerge }
-    },
-    {
-        path: projectRootPath + '/_dev/templates.html'
-    }
+const filesWithPlaceholders = [
+    projectRootPath + '/package.json', 
+    projectRootPath + '/_dev/index.template.html'
 ];
-
-const readWriteSync = function(filePath, oldValue, newValue) {
-    let fileContents = fs.readFileSync(filePath, 'utf-8');  
-    fileContents = fileContents.split(oldValue).join(newValue);
-    fs.writeFileSync(filePath, fileContents, 'utf-8');
-};
 
 const initProjectRepo = function(name, structure) {
     console.log(`Building project "${name}" from the "${structure}" repository...`);
@@ -49,8 +33,8 @@ const initProjectDir = function(name, source) {
     console.log(`Building project "${name}" from the "${source}" directory...`);
 
     let options = {
-        filter: (path) => !path.includes('.git') && !path.includes('node_modules')
-    };
+        filter: (path) => !/((\.git)|(node_modules)|(dist))$/.test(path)
+    }
 
     ncp(source, projectRootPath, options, function (err) {
         if (err) {
@@ -61,14 +45,14 @@ const initProjectDir = function(name, source) {
     });
 };
 
-const nameProject = function(name) {
-    projectRenameFiles.forEach(file => {
-        let casedName = name,
-            caseOptions = file.caseOptions ? file.caseOptions : {};
-        if(file.caseFunction) {
-            casedName = file.caseFunction(casedName, caseOptions);
-        }
-        readWriteSync(file.path, projectNamePlaceholder, casedName);
+const nameProject = function(projectName) {
+    const kebabProjectName = changeCase.paramCase(projectName);
+
+    filesWithPlaceholders.forEach(file => {
+        let contents = fs.readFileSync(file, 'utf-8');
+        contents = contents.replaceAll(projectNamePlaceholder, projectName);
+        contents = contents.replaceAll(projectNameKebabPlaceholder, kebabProjectName);
+        fs.writeFileSync(file, contents, 'utf-8');
     });
 };
 

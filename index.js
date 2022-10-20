@@ -4,6 +4,7 @@ const project = require('./creation/creators/project.js');
 const create = require('./creation');
 const generate = require('./generation/index.js');
 const config = require('./config/configFactory.js').create();
+const packageJson = require('./package.json')
  
 var isDebugging = typeof v8debug === 'object'
 
@@ -16,7 +17,7 @@ const validateType = function(type) {
 };
 
 program 
-    .version('1.0.0')
+    .version(packageJson.version)
     .description('Yuzu Definition CLI');
 
 program
