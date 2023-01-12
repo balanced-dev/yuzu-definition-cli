@@ -68,7 +68,7 @@ module.exports = (config) => {
             dataStructureMarkupFragments: {
                 dataImage: (options) => {
                     return `<picture class="${options.style.generateClassString(options)}">\n` +
-                                `<img src="" alt="">\n` +
+                                `<img src="" alt="" loading="lazy" decoding="async">\n` +
                             `</picture>\n`;
                 },
                 dataLink: (options) => {
